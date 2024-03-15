@@ -85,7 +85,7 @@
                                             </div>
                                         </div>
                                         <div class="card-body px-0 py-2">
-                                            <a href="#" class="dropdown-item ai-icon ">
+                                            <a href="{{ route('admin.profile_page') }}" class="dropdown-item ai-icon ">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -98,9 +98,11 @@
                                                         stroke-linecap="round" stroke-linejoin="round" />
                                                 </svg>
 
-                                                <span class="ms-2">Profile </span>
+                                                <span class="ms-2">My Profile </span>
                                             </a>
-                                            <a href="#" class="dropdown-item ai-icon ">
+
+                                            <a href="{{ route('admin.change_password_page') }}"
+                                                class="dropdown-item ai-icon ">
                                                 <svg width="20" height="20" viewBox="0 0 24 24"
                                                     fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -114,7 +116,8 @@
 
                                                 <span class="ms-2">Change Password </span>
                                             </a>
-                                            <a href="{{ route('admin.logout') }}" class="dropdown-item ai-icon" id="logout" >
+                                            <a href="{{ route('admin.logout') }}" class="dropdown-item ai-icon"
+                                                id="logout">
                                                 <svg class="logout-svg" xmlns="http://www.w3.org/2000/svg"
                                                     width="18" height="18" viewBox="0 0 24 24" fill="none"
                                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -124,7 +127,7 @@
                                                     <line x1="21" y1="12" x2="9"
                                                         y2="12"></line>
                                                 </svg>
-                                                <span class="ms-2 text-danger" >Logout </span>
+                                                <span class="ms-2 text-danger">Logout </span>
                                             </a>
                                         </div>
                                     </div>
