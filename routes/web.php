@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -43,5 +44,8 @@ Route::prefix('/admin')->group(function () {
         Route::post('/profile/image/update', [AdminController::class, 'profile_image_update'])->name('admin.profile_image_update');
         Route::get('/change/password', [AdminController::class, 'change_password_page'])->name('admin.change_password_page');
         Route::put('/change/password/{id}', [AdminController::class, 'change_password'])->name('admin.change_password');
+
+        // resource controller
+        Route::resource('category', CategoryController::class);
     });
 });

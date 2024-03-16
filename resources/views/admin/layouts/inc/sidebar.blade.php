@@ -25,8 +25,8 @@
                     <span class="nav-text">Categories</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="#">Category List</a></li>
-                    <li><a href="#">Add Category</a></li>
+                    <li><a href="{{ route('category.index') }}">Category List</a></li>
+                    <li><a href="{{ route('category.create') }}">Add Category</a></li>
                 </ul>
             </li>
 
