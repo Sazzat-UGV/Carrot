@@ -41,8 +41,8 @@
                     <span class="nav-text">Sub Categories</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="#">Sub Category List</a></li>
-                    <li><a href="#">Add Sub Category</a></li>
+                    <li><a href="{{ route('subcategory.index') }}">Sub Category List</a></li>
+                    <li><a href="{{ route('subcategory.create') }}">Add Sub Category</a></li>
                 </ul>
             </li>
 

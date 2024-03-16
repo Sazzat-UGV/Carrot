@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,5 +48,6 @@ Route::prefix('/admin')->group(function () {
 
         // resource controller
         Route::resource('category', CategoryController::class);
+        Route::resource('subcategory', SubcategoryController::class);
     });
 });

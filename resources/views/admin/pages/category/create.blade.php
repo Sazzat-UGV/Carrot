@@ -15,7 +15,7 @@
                     <div class=" mb-3">
                         <a href="{{ route('category.index') }}" class="btn btn-primary px-4"><i
                                 class="fa-solid fa-arrow-alt-circle-left"></i>
-                            Back to Categories</a>
+                            Back to Category List</a>
                     </div>
                     <div class="basic-form">
                         <form action="{{ route('category.store') }}" method="POST">
