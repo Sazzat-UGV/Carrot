@@ -57,8 +57,8 @@
                     <span class="nav-text">Child Categories</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="#">Child Category List</a></li>
-                    <li><a href="#">Add Child Category</a></li>
+                    <li><a href="{{ route('childcategory.index') }}">Child Category List</a></li>
+                    <li><a href="{{ route('childcategory.create') }}">Add Child Category</a></li>
                 </ul>
             </li>
 
