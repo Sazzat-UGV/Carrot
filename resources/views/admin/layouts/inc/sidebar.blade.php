@@ -91,7 +91,7 @@
                     <li><a href="{{ route('seo.setting') }}">SEO Setting</a></li>
                     <li><a href="#">Website Setting</a></li>
                     <li><a href="#">Page Management</a></li>
-                    <li><a href="#">SMTP Setting</a></li>
+                    <li><a href="{{ route('smtp.setting') }}">SMTP Setting</a></li>
                     <li><a href="#">Payment Gateway</a></li>
                 </ul>
             </li>

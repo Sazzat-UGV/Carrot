@@ -65,6 +65,11 @@ Route::prefix('/admin')->group(function () {
                 Route::get('/', [SettingController::class, 'seo'])->name('seo.setting');
                 Route::put('/update/{id}', [SettingController::class, 'seoUpdate'])->name('seo.settingUpdate');
             });
+            // smtp setting
+            Route::prefix('smtp')->group(function () {
+                Route::get('/', [SettingController::class, 'smtp'])->name('smtp.setting');
+                Route::put('/update/{id}', [SettingController::class, 'smtpUpdate'])->name('smtp.settingUpdate');
+            });
 
         });
     });
