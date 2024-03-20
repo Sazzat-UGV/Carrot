@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ChildcategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -55,6 +56,16 @@ Route::prefix('/admin')->group(function () {
         Route::resource('brand', BrandController::class);
 
         //change status
-        Route::get('change/status/{id}',[BrandController::class,'changeStatus'])->name('admin.changeBrandStatus');
+        Route::get('change/status/{id}', [BrandController::class, 'changeStatus'])->name('admin.changeBrandStatus');
+
+        //setting route
+        Route::prefix('/setting')->group(function () {
+            // seo setting
+            Route::prefix('seo')->group(function () {
+                Route::get('/', [SettingController::class, 'seo'])->name('seo.setting');
+                Route::put('/update/{id}', [SettingController::class, 'seoUpdate'])->name('seo.settingUpdate');
+            });
+
+        });
     });
 });
