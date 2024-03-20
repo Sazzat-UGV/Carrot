@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title')
-    Category List
+    Brand List
 @endsection
 @push('admin_style')
 @endpush
@@ -10,7 +10,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-end mb-3">
-                        <a href="{{ route('category.create') }}" class="btn btn-primary px-4"><i class="fa-solid fa-plus"></i>
+                        <a href="{{ route('brand.create') }}" class="btn btn-primary px-4"><i class="fa-solid fa-plus"></i>
                             Add New</a>
                     </div>
                     <div class="table-responsive">
@@ -18,23 +18,37 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Category Name</th>
-                                    <th>Category Slug</th>
+                                    <th>Brand Image</th>
+                                    <th>Brand Name</th>
+                                    <th>Brand Slug</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $index => $category)
+                                @foreach ($brands as $index => $brand)
                                     <tr>
                                         <th>{{ $index + 1 }}</th>
-                                        <td>{{ $category->category_name }}</td>
-                                        <td>{{ $category->category_slug }}</td>
+                                        <td><img src="{{ asset('uploads/brand_logo') }}/{{ $brand->brand_logo }}"
+                                                class="rounded-lg me-2" width="24" alt="" alt="brand logo"></td>
+                                        <td>{{ $brand->brand_name }}</td>
+                                        <td>{{ $brand->brand_slug }}</td>
+                                        <td>
+                                            <select class="default-select status-select changeStatus"
+                                                data-id="{{ $brand->id }}">
+                                                <option value="1" @if ($brand->is_active == 1) selected @endif>
+                                                    Active</option>
+                                                <option value="0" @if ($brand->is_active == 0) selected @endif>
+                                                    Deactive</option>
+                                            </select>
+
+                                        </td>
                                         <td class="d-flex">
-                                            <a href="{{ route('category.edit', ['category' => $category->id]) }}"
+                                            <a href="{{ route('brand.edit', ['brand' => $brand->id]) }}"
                                                 class="badge light badge-warning"><i
                                                     class="fa-solid fa-pen-to-square"></i></a>
 
-                                            <form action="{{ route('category.destroy', ['category' => $category->id]) }}"
+                                            <form action="{{ route('brand.destroy', ['brand' => $brand->id]) }}"
                                                 method="POST" class="show_confirm">
                                                 @csrf
                                                 @method('DELETE')
@@ -100,6 +114,27 @@
                             Swal.fire({
                                 title: "Canceled!",
                             });
+                        }
+                    });
+                });
+
+                // Event listener for changing status
+                $('.changeStatus').on('change', function(event) {
+                    var item = $(this).data('id')
+                    $.ajax({
+                        url: '{{ route('admin.changeBrandStatus', ['id' => ':id']) }}'.replace(
+                            ':id',
+                            item),
+                        method: 'GET',
+                        success: function(data) {
+                            Swal.fire({
+                                title: "Updated!",
+                                text: "Status has been updated.",
+                                icon: "success"
+                            })
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error)
                         }
                     });
                 });

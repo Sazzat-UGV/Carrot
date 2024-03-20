@@ -17,7 +17,7 @@
         _mixin
         _variable
 
-    2. bootstrap 
+    2. bootstrap
         -Here goes all official bootstrap scss files
 
     3. Global/Base
@@ -33987,7 +33987,7 @@ div#mCSB_1 {
   background-color: rgba(255, 159, 0, 0.2) !important;
   color: #FF9F00 !important;
 }
-.status-select [title=Pending], .status-select [title=Low] {
+.status-select [title=Pending], .status-select [title=Low], .status-select [title=Deactive] {
   background-color: rgba(255, 94, 94, 0.2) !important;
   color: #FF5E5E !important;
 }
@@ -33995,7 +33995,7 @@ div#mCSB_1 {
   background-color: rgba(187, 107, 217, 0.2) !important;
   color: #BB6BD9 !important;
 }
-.status-select [title=Complete], .status-select [title=High] {
+.status-select [title=Complete], .status-select [title=High], .status-select [title=Active] {
   background-color: rgba(58, 155, 148, 0.2) !important;
   color: #3A9B94 !important;
 }

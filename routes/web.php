@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ChildcategoryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -51,6 +52,9 @@ Route::prefix('/admin')->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('subcategory', SubcategoryController::class);
         Route::resource('childcategory', ChildcategoryController::class);
+        Route::resource('brand', BrandController::class);
 
+        //change status
+        Route::get('change/status/{id}',[BrandController::class,'changeStatus'])->name('admin.changeBrandStatus');
     });
 });
