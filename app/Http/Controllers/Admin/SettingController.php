@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SeoUpdateRequest;
+use App\Http\Requests\SettingUpdateRequest;
 use App\Http\Requests\SmtpUpdateRequest;
 use App\Models\Seo;
+use App\Models\Setting;
 use App\Models\Smtp;
 use Brian2694\Toastr\Facades\Toastr;
+use Image;
 
 class SettingController extends Controller
 {
@@ -53,6 +56,52 @@ class SettingController extends Controller
             'mail_encryption' => $request->mail_encryption,
         ]);
         Toastr::success('SMTP setting updated successfully!');
+        return back();
+    }
+
+    public function website()
+    {
+        $setting = Setting::findOrFail(1);
+        return view('admin.pages.setting.website', compact('setting'));
+    }
+
+    public function websiteUpdate(SettingUpdateRequest $request, $id)
+    {
+        $setting = Setting::findOrFail($id);
+        $setting->update([
+            'currency' => $request->currency,
+            'phone_one' => $request->phone_one,
+            'phone_two' => $request->phone_two,
+            'main_email' => $request->main_email,
+            'support_email' => $request->support_email,
+            'address' => $request->address,
+            'facebook' => $request->facebook,
+            'twitter' => $request->twitter,
+            'instagram' => $request->instagram,
+            'linkedin' => $request->linkedin,
+            'youtube' => $request->youtube,
+        ]);
+        if ($request->hasFile('logo')) {
+            $photo_loation = 'public/uploads/setting/';
+            $uploaded_photo = $request->file('logo');
+            $new_photo_name = 'logo' . '.' . $uploaded_photo->getClientOriginalExtension();
+            $new_photo_location = $photo_loation . $new_photo_name;
+            $status = Image::make($uploaded_photo)->resize(320, 120)->save(base_path($new_photo_location));
+            $setting->update([
+                'logo' => $new_photo_name,
+            ]);
+        }
+        if ($request->hasFile('favicon')) {
+            $photo_loation = 'public/uploads/setting/';
+            $uploaded_photo = $request->file('favicon');
+            $new_photo_name = 'favicon' . '.' . $uploaded_photo->getClientOriginalExtension();
+            $new_photo_location = $photo_loation . $new_photo_name;
+            $status = Image::make($uploaded_photo)->resize(32, 32)->save(base_path($new_photo_location));
+            $setting->update([
+                'favicon' => $new_photo_name,
+            ]);
+        }
+        Toastr::success('Website setting updated successfully!');
         return back();
     }
 }

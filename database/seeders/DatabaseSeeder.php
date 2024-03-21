@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             SeoSeeder::class,
             SmtpSeeder::class,
+            SettingSeeder::class,
         ]);
     }
 }

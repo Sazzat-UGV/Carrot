@@ -80,6 +80,11 @@ Route::prefix('/admin')->group(function () {
                 Route::get('/update/{id}', [PageController::class, 'edit'])->name('page.edit');
                 Route::put('/update/{id}', [PageController::class, 'update'])->name('page.update');
             });
+            // smtp setting
+            Route::prefix('website')->group(function () {
+                Route::get('/', [SettingController::class, 'website'])->name('website.setting');
+                Route::put('/update/{id}', [SettingController::class, 'websiteUpdate'])->name('website.settingUpdate');
+            });
 
         });
     });
