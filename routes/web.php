@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ChildcategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Auth\LoginController;
@@ -69,6 +70,15 @@ Route::prefix('/admin')->group(function () {
             Route::prefix('smtp')->group(function () {
                 Route::get('/', [SettingController::class, 'smtp'])->name('smtp.setting');
                 Route::put('/update/{id}', [SettingController::class, 'smtpUpdate'])->name('smtp.settingUpdate');
+            });
+            // page setting
+            Route::prefix('page')->group(function () {
+                Route::get('/', [PageController::class, 'index'])->name('page.index');
+                Route::get('/create', [PageController::class, 'create'])->name('page.create');
+                Route::post('/store', [PageController::class, 'store'])->name('page.store');
+                Route::delete('/delete/{id}', [PageController::class, 'delete'])->name('page.delete');
+                Route::get('/update/{id}', [PageController::class, 'edit'])->name('page.edit');
+                Route::put('/update/{id}', [PageController::class, 'update'])->name('page.update');
             });
 
         });
