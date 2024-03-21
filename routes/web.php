@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,7 @@ Route::prefix('/admin')->group(function () {
         Route::resource('subcategory', SubcategoryController::class);
         Route::resource('childcategory', ChildcategoryController::class);
         Route::resource('brand', BrandController::class);
+        Route::resource('warehouse', WarehouseController::class);
 
         //change status
         Route::get('change/status/{id}', [BrandController::class, 'changeStatus'])->name('admin.changeBrandStatus');
@@ -85,7 +87,6 @@ Route::prefix('/admin')->group(function () {
                 Route::get('/', [SettingController::class, 'website'])->name('website.setting');
                 Route::put('/update/{id}', [SettingController::class, 'websiteUpdate'])->name('website.settingUpdate');
             });
-
         });
     });
 });
