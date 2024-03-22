@@ -37,7 +37,7 @@
                                 </div>
 
                                 <div class="mb-3 col-12">
-                                    <label class="form-label">Warehouse Phone <span class="text-danger">*</span></label>
+                                    <label class="form-label">Warehouse Phone</label>
                                     <input type="text"
                                         class="form-control @error('warehouse_phone')
                                     is-invalid
@@ -51,7 +51,7 @@
                                 </div>
 
                                 <div class="mb-3 col-12">
-                                    <label class="form-label">Warehouse Address <span class="text-danger">*</span></label>
+                                    <label class="form-label">Warehouse Address</label>
                                     <input type="text"
                                         class="form-control @error('warehouse_address')
                                     is-invalid

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ChildcategoryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\SettingController;
@@ -57,9 +58,11 @@ Route::prefix('/admin')->group(function () {
         Route::resource('childcategory', ChildcategoryController::class);
         Route::resource('brand', BrandController::class);
         Route::resource('warehouse', WarehouseController::class);
+        Route::resource('coupon', CouponController::class);
 
         //change status
         Route::get('change/status/{id}', [BrandController::class, 'changeStatus'])->name('admin.changeBrandStatus');
+        Route::get('change/status/{id}', [CouponController::class, 'changeStatus'])->name('admin.changeCouponStatus');
 
         //setting route
         Route::prefix('/setting')->group(function () {
