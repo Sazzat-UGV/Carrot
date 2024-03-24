@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ChildcategoryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PickupPointController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\WarehouseController;
@@ -59,6 +60,7 @@ Route::prefix('/admin')->group(function () {
         Route::resource('brand', BrandController::class);
         Route::resource('warehouse', WarehouseController::class);
         Route::resource('coupon', CouponController::class);
+        Route::resource('pickup_point', PickupPointController::class);
 
         //change status
         Route::get('change/status/{id}', [BrandController::class, 'changeStatus'])->name('admin.changeBrandStatus');
