@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PickupPointController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\WarehouseController;
@@ -61,10 +62,15 @@ Route::prefix('/admin')->group(function () {
         Route::resource('warehouse', WarehouseController::class);
         Route::resource('coupon', CouponController::class);
         Route::resource('pickup_point', PickupPointController::class);
+        Route::resource('product', ProductController::class);
 
-        //change status
-        Route::get('change/status/{id}', [BrandController::class, 'changeStatus'])->name('admin.changeBrandStatus');
-        Route::get('change/status/{id}', [CouponController::class, 'changeStatus'])->name('admin.changeCouponStatus');
+        //ajax routes
+        Route::get('change/status/brand/{id}', [BrandController::class, 'changeStatus'])->name('admin.changeBrandStatus');
+        Route::get('change/status/coupon/{id}', [CouponController::class, 'changeStatus'])->name('admin.changeCouponStatus');
+        Route::get('get-child-category/{id}', [ProductController::class, 'getChildCategory'])->name('ajax.getChildCategory');
+        Route::get('featured/update/{id}', [ProductController::class, 'featuredUpdate'])->name('ajax.featuredUpdate');
+        Route::get('today_deal/update/{id}', [ProductController::class, 'todayDealUpdate'])->name('ajax.todayDealUpdate');
+        Route::get('status/update/{id}', [ProductController::class, 'statusUpdate'])->name('ajax.statusUpdate');
 
         //setting route
         Route::prefix('/setting')->group(function () {

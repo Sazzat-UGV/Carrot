@@ -19,16 +19,6 @@ class BrandSeeder extends Seeder
             'brand-3',
             'brand-4',
             'brand-5',
-            'brand-6',
-            'brand-7',
-            'brand-8',
-            'brand-9',
-            'brand-10',
-            'brand-11',
-            'brand-12',
-            'brand-13',
-            'brand-14',
-            'brand-15',
         ];
         foreach ($brands as $brand) {
             Brand::create([

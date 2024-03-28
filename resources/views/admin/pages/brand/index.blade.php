@@ -119,12 +119,10 @@
                 });
 
                 // Event listener for changing status
-                $('.changeStatus').on('change', function(event) {
-                    var item = $(this).data('id')
+                $('.changeStatus').change(function(event) {
+                    var id = $(this).data('id')
                     $.ajax({
-                        url: '{{ route('admin.changeBrandStatus', ['id' => ':id']) }}'.replace(
-                            ':id',
-                            item),
+                        url: '/admin/change/status/brand/' + id,
                         method: 'GET',
                         success: function(data) {
                             Swal.fire({
@@ -133,7 +131,7 @@
                                 icon: "success"
                             })
                         },
-                        error: function(xhr, status, error) {
+                        error: function(error) {
                             console.log(error)
                         }
                     });
