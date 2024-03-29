@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
  */
 Route::prefix('/')->group(function(){
 
-    Route::get(' ',[IndexController::class,'mainPage'])->name('mainPage');
+    Route::get(' ',[IndexController::class,'homePage'])->name('homePage');
 
 });
 
@@ -37,7 +37,7 @@ Route::prefix('/')->group(function(){
 
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
 

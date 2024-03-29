@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function mainPage()
+    public function homePage()
     {
         $categories=Category::all();
         return view('frontend.pages.home',compact('categories'));

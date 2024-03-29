@@ -3,9 +3,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="top-header">
-                    <a href="index.html" class="cr-logo">
+                    <a href="{{ url(' ') }}" class="cr-logo">
                         <img src="{{ asset('assets/frontend') }}/img/logo/logo.png" alt="logo" class="logo">
-                        <img src="{{ asset('assets/frontend') }}/img/logo/dark-logo.png" alt="logo" class="dark-logo">
+                        <img src="{{ asset('assets/frontend') }}/img/logo/dark-logo.png" alt="logo"
+                            class="dark-logo">
                     </a>
                     <form class="cr-search">
                         <input class="search-input" type="text" placeholder="Search For items...">
@@ -68,175 +69,76 @@
                             <div class="cr-cat-tab">
                                 <div class="cr-tab-list nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                     aria-orientation="vertical">
-                                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-home" type="button" role="tab"
-                                        aria-controls="v-pills-home" aria-selected="true">
-                                        Dairy &amp; Bakery</button>
-                                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-profile" type="button" role="tab"
-                                        aria-controls="v-pills-profile" aria-selected="false" tabindex="-1">
-                                        Fruits &amp; Vegetable</button>
-                                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-messages" type="button" role="tab"
-                                        aria-controls="v-pills-messages" aria-selected="false" tabindex="-1">
-                                        Snack &amp; Spice</button>
-                                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-settings" type="button" role="tab"
-                                        aria-controls="v-pills-settings" aria-selected="false" tabindex="-1">
-                                        Juice &amp; Drinks </button>
-                                    <a class="nav-link" href="shop-left-sidebar.html">
-                                        View All </a>
+                                    @foreach ($categories as $category)
+                                        <button class="nav-link @if ($loop->first) active @endif"
+                                            id="v-{{ $category->id }}-tab" data-bs-toggle="pill"
+                                            data-bs-target="#v-{{ $category->id }}" type="button" role="tab"
+                                            aria-controls="v-{{ $category->id }}"
+                                            aria-selected="@if ($loop->first) true @else false @endif">
+                                            {{ $category->category_name }}</button>
+                                    @endforeach
                                 </div>
                                 <div class="tab-content" id="v-pills-tabContent">
-                                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                                        aria-labelledby="v-pills-home-tab">
-                                        <div class="tab-list row">
-                                            <div class="col">
-                                                <h6 class="cr-col-title">Dairy</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">Milk</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Ice cream</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Cheese</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Frozen
-                                                            custard</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Frozen
-                                                            yogurt</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col">
-                                                <h6 class="cr-col-title">Bakery</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">Cake and
-                                                            Pastry</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Rusk Toast</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Bread &amp;
-                                                            Buns</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Chocolate
-                                                            Brownie</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Cream Roll</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                                        aria-labelledby="v-pills-profile-tab">
-                                        <div class="tab-list row">
-                                            <div class="col">
-                                                <h6 class="cr-col-title">Fruits</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">Cauliflower</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Bell
-                                                            Peppers</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Broccoli</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Cabbage</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Tomato</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col">
-                                                <h6 class="cr-col-title">Vegetable</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">Cauliflower</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Bell
-                                                            Peppers</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Broccoli</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Cabbage</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Tomato</a></li>
-                                                </ul>
+                                    @foreach ($categories as $category)
+                                        <div class="tab-pane fade @if ($loop->first) show active @endif"
+                                            id="v-{{ $category->id }}" role="tabpanel"
+                                            aria-labelledby="v-{{ $category->id }}-tab">
+                                            <div class="tab-list row">
+                                                @php
+                                                    $subcategories = \App\Models\Subcategory::where(
+                                                        'category_id',
+                                                        $category->id,
+                                                    )->get();
+                                                    $subcategoriesCount = $subcategories->count();
+                                                    $subcategoriesPerColumn = ceil($subcategoriesCount / 2);
+                                                @endphp
+                                                <div class="col">
+                                                    <ul class="cat-list">
+                                                        @foreach ($subcategories->take($subcategoriesPerColumn) as $index => $subcategory)
+                                                            <li><a class="nav-link @if ($index === 0) active @endif"
+                                                                    id="v-sub-{{ $subcategory->id }}-tab"
+                                                                    data-bs-toggle="pill"
+                                                                    data-bs-target="#v-sub-{{ $subcategory->id }}"
+                                                                    href="#">{{ $subcategory->subcategory_name }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                                <div class="col">
+                                                    <ul class="cat-list">
+                                                        @foreach ($subcategories->slice($subcategoriesPerColumn) as $index => $subcategory)
+                                                            <li><a class="nav-link @if ($index === 0) active @endif"
+                                                                    id="v-sub-{{ $subcategory->id }}-tab"
+                                                                    data-bs-toggle="pill"
+                                                                    data-bs-target="#v-sub-{{ $subcategory->id }}"
+                                                                    href="#">{{ $subcategory->subcategory_name }}</a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                                        aria-labelledby="v-pills-messages-tab">
-                                        <div class="tab-list row">
-                                            <div class="col">
-                                                <h6 class="cr-col-title">Snacks</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">French
-                                                            fries</a></li>
-                                                    <li><a href="shop-left-sidebar.html">potato
-                                                            chips</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Biscuits &amp;
-                                                            Cookies</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Popcorn</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Rice Cakes</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col">
-                                                <h6 class="cr-col-title">Spice</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">Cinnamon
-                                                            Powder</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Cumin
-                                                            Powder</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Fenugreek
-                                                            Powder</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Pepper
-                                                            Powder</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Long Pepper</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
-                                        aria-labelledby="v-pills-settings-tab">
-                                        <div class="tab-list row">
-                                            <div class="col">
-                                                <h6 class="cr-col-title">Juice</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">Mango Juice</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Coconut
-                                                            Water</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Tetra Pack</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Apple
-                                                            Juices</a></li>
-                                                    <li><a href="shop-left-sidebar.html">Lychee
-                                                            Juice</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col">
-                                                <h6 class="cr-col-title">soft drink</h6>
-                                                <ul class="cat-list">
-                                                    <li><a href="shop-left-sidebar.html">Breizh Cola</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Green Cola</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Jolt Cola</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Mecca Cola</a>
-                                                    </li>
-                                                    <li><a href="shop-left-sidebar.html">Topsia Cola</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
+
+                            <script>
+                                $(document).ready(function() {
+                                    // Show the first category's subcategories by default
+                                    $('.tab-pane:first').addClass('show active');
+
+                                    // Handle click on category tab
+                                    $('.nav-link').click(function() {
+                                        $('.tab-pane').removeClass('show active'); // Hide all tab contents
+                                        var target = $(this).attr('data-bs-target'); // Get target tab ID
+                                        $(target).addClass('show active'); // Show target tab
+                                    });
+                                });
+                            </script>
+
                         </div>
                     </div>
+
                 </div>
 
                 <nav class="navbar navbar-expand-lg">
@@ -356,56 +258,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="javascript:void(0)">
-                                    Blog
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="blog-left-sidebar.html">Left
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-right-sidebar.html">Right
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-full-width.html">Full
-                                            Width</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-detail-left-sidebar.html">Detail
-                                            Left
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-detail-right-sidebar.html">Detail
-                                            Right
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-detail-full-width.html">Detail
-                                            Full
-                                            Width</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="javascript:void(0)">
-                                    Elements
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="elements-products.html">Products</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="elements-typography.html">Typography</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="elements-buttons.html">Buttons</a>
-                                    </li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </div>
                 </nav>
