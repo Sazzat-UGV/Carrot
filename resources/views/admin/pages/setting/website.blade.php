@@ -91,6 +91,8 @@
                                             </option>
                                             <option value="$" @if ($setting->currency == '$') selected @endif>USD
                                             </option>
+                                            <option value="₹" @if ($setting->currency == '₹') selected @endif>Rupee
+                                            </option>
                                         </select>
                                         @error('currency')
                                             <span class="invalid-feedback"

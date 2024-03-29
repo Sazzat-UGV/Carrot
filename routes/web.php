@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,14 +27,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
  */
+Route::prefix('/')->group(function(){
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::get(' ',[IndexController::class,'mainPage'])->name('mainPage');
+
 });
 
-Auth::routes();
+
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
+
+
+
+
 
 Route::prefix('/admin')->group(function () {
 
