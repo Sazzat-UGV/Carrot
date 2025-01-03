@@ -1,0 +1,34 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo ">
+        <a href="index.html" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <img src="{{ asset('assets/frontend/img/logo/logo.png') }}" alt="" style="max-height: 50">
+            </span>
+        </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+
+    <ul class="menu-inner py-1">
+        <li class="menu-item active">
+            <a href="app-email.html" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate">Dashboard</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate">Dashboards</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item active">
+                    <a href="dashboards-analytics.html" class="menu-link">
+                        <div class="text-truncate">Analytics</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</aside>

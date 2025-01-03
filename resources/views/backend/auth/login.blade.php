@@ -40,26 +40,43 @@
                                 </span>
                             </a>
                         </div>
-                        <form id="" class="mb-6" action="index.html" method="GET">
+                        <form id="" class="mb-6" action="{{ route('admin.login') }}" method="POST">
+                            @csrf
                             <div class="mb-6">
                                 <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="email-username"
-                                    placeholder="Enter your email" autofocus>
+                                <input type="text"
+                                    class="form-control @error('email')
+                                    is-invalid
+                                @enderror"
+                                    name="email" placeholder="Enter your email">
+                                @error('email')
+                                    <span class="invalid-feedback"
+                                        role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
                             </div>
                             <div class="mb-6 form-password-toggle">
                                 <label class="form-label" for="password">Password<span
                                         class="text-danger">*</span></label>
                                 <div class="input-group input-group-merge">
-                                    <input type="password" class="form-control" name="password"
+                                    <input type="password"
+                                        class="form-control @error('password')
+                                        is-invalid
+                                    @enderror"
+                                        name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password" />
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                    @error('password')
+                                        <span class="invalid-feedback"
+                                            role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-8">
                                 <div class="d-flex justify-content-between mt-8">
                                     <div class="form-check mb-0 ms-2">
-                                        <input class="form-check-input" type="checkbox" id="remember-me">
+                                        <input class="form-check-input" type="checkbox" id="remember-me"
+                                            name="remember">
                                         <label class="form-check-label" for="remember-me">
                                             Remember Me
                                         </label>
