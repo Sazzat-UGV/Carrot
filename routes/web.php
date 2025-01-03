@@ -11,7 +11,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
     Route::get('login', [AuthenticationController::class, 'loginPage'])->name('login.page')->middleware('auth.redirect');
     Route::post('login', [AuthenticationController::class, 'login'])->name('login');
 
-    Route::middleware(['auth','admin'])->group(function () {
+    Route::middleware(['auth', 'admin'])->group(function () {
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         //profile routes
