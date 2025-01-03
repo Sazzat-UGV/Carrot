@@ -18,10 +18,8 @@
             <div class="layout-page">
                 @include('backend.layouts.include.navbar')
                 <div class="content-wrapper">
-                    <div class="container-xxl flex-grow-1 container-p-y">
-                        <div class="row">
+                    <div class="container-fluid flex-grow-1 container-p-y">
                             @yield('content')
-                        </div>
                     </div>
                     @include('backend.layouts.include.footer')
                     <div class="content-backdrop fade"></div>

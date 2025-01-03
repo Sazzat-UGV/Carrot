@@ -48,7 +48,7 @@
                                     class="form-control @error('email')
                                     is-invalid
                                 @enderror"
-                                    name="email" placeholder="Enter your email">
+                                    name="email" placeholder="Enter your email" value="{{ old('email') }}">
                                 @error('email')
                                     <span class="invalid-feedback"
                                         role="alert"><strong>{{ $message }}</strong></span>

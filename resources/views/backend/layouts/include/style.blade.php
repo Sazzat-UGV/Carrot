@@ -15,5 +15,7 @@
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/typeahead-js/typeahead.css" />
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/apex-charts/apex-charts.css" />
-
+<script src="{{ asset('assets/backend') }}/vendor/js/helpers.js"></script>
+<script src="{{ asset('assets/backend') }}/vendor/js/template-customizer.js"></script>
+<script src="{{ asset('assets/backend') }}/js/config.js"></script>
 @stack('style')
