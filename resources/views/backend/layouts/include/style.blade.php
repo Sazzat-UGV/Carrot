@@ -15,6 +15,9 @@
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/typeahead-js/typeahead.css" />
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/apex-charts/apex-charts.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css" />
+
 <script src="{{ asset('assets/backend') }}/vendor/js/helpers.js"></script>
 <script src="{{ asset('assets/backend') }}/vendor/js/template-customizer.js"></script>
 <script src="{{ asset('assets/backend') }}/js/config.js"></script>

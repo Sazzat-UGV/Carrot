@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
+use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,12 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::post('profile', [ProfileController::class, 'profile'])->name('profile');
         Route::get('change-password', [ProfileController::class, 'changePasswordPage'])->name('changePassword.page');
         Route::post('change-password', [ProfileController::class, 'changePassword'])->name('changePassword');
+
+        //resource controller
+        Route::resource('backup', BackupController::class);
+
+        // backup download route
+        Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');
     });
 });
 

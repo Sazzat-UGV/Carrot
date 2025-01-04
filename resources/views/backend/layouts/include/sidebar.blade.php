@@ -31,5 +31,12 @@
                 </li>
             </ul>
         </li>
+
+        <li class="menu-item @if (Route::is('admin.backup.index')) active @endif">
+            <a href="{{ route('admin.backup.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-data"></i>
+                <div class="text-truncate">Database Backup</div>
+            </a>
+        </li>
     </ul>
 </aside>
