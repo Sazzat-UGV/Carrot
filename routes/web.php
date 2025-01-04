@@ -19,6 +19,16 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::post('profile', [ProfileController::class, 'profile'])->name('profile');
         Route::get('change-password', [ProfileController::class, 'changePasswordPage'])->name('changePassword.page');
         Route::post('change-password', [ProfileController::class, 'changePassword'])->name('changePassword');
+
+
+
+
+
+
+
+        Route::get('demo',function(){
+            return view('backend.pages.index');
+        })->name('index');
     });
 });
 
