@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 
@@ -90,6 +90,7 @@ class BackupController extends Controller
         return redirect()->back()->with('success', 'Backup deleted successfully');
 
     }
+
     public function byteToHuman($bytes)
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
@@ -101,7 +102,7 @@ class BackupController extends Controller
 
     public function download($file_name)
     {
-        
+
         $file = config('backup.backup.name') . '/' . $file_name;
         $disk = Storage::disk(config('backup.backup.destination.disks')[0]);
 

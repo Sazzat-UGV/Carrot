@@ -11,94 +11,26 @@
     </style>
 @endpush
 @section('content')
-    {{-- <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    @can('add-database-backup')
-                        <div class="row mb-3">
-                            <div class="col-sm-12">
-                                <div class="text-sm-end">
-                                    <button type="button"
-                                        class="btn btn-success btn-rounded waves-effect waves-light addContact-modal mb-2"
-                                        onclick="event.preventDefault(); document.getElementById('new-backup-form').submit();">
-                                        <i class="mdi mdi-plus me-1"></i> New Backup</button>
-                                    <form action="{{ route('admin.backup.store') }}" method="POST" class="d-none"
-                                        id="new-backup-form">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    @endcan
-                    <table id="datatable" class="table table-bordered dt-responsive nowrap w-100">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Last Backup</th>
-                                <th>File Name</th>
-                                <th>File Size</th>
-                                @if (Auth::user()->haspermission('download-database-backup') || Auth::user()->haspermission('delete-database-backup'))
-                                    <th>Action</th>
-                                @endif
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($backups as $index => $backup)
-                                <tr>
-                                    <th>{{ $index + 1 }}</th>
-                                    <td>{{ $backup['created_at'] }}</td>
-                                    <td>{{ $backup['file_name'] }}</td>
-                                    <td>{{ $backup['file_size'] }}</td>
-                                    @if (Auth::user()->haspermission('download-database-backup') || Auth::user()->haspermission('delete-database-backup'))
-                                        <td>
-                                            @can('download-database-backup')
-                                                <a href="{{ route('admin.backupDownload', $backup['file_name']) }}"
-                                                    class="btn btn-info position-relative p-0 avatar-xs rounded editModule-btn">
-                                                    <span class="avatar-title bg-transparent">
-                                                        <i class="bx bxs-download" style="font-size: 16px"></i>
-                                                    </span>
-                                                </a>
-                                            @endcan
-                                            @can('delete-database-backup')
-                                                <form action="{{ route('admin.backup.destroy', $backup['file_name']) }}"
-                                                    method="POST"
-                                                    class="btn btn-danger position-relative p-0 avatar-xs rounded">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-danger position-relative p-0 avatar-xs rounded show_confirm">
-                                                        <span class="avatar-title bg-transparent">
-                                                            <i class="bx bx-trash" style="font-size: 16px"></i>
-                                                        </span>
-                                                    </button>
-                                                </form>
-                                            @endcan
-                                        </td>
-                                    @endif
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> <!-- end col -->
-    </div> --}}
-
-
-
-
-
-
-
-
-
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="col-12">
+                    <h5 class="card-header">Backup List</h5>
+                    <div class="col-md-12 col-lg-12 col-sm-12 py-4">
+                        <div class="d-flex justify-content-end">
 
+                            <div class="text-sm-end">
+                                <button type="button" class="btn btn-primary"
+                                    onclick="event.preventDefault(); document.getElementById('new-backup-form').submit();">
+                                    <i class="bx bx-plus"></i> New Backup</button>
+                                <form action="{{ route('admin.backup.store') }}" method="POST" class="d-none"
+                                    id="new-backup-form">
+                                    @csrf
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
                         <table id="example" class="table table-" style="width:100%">
                             <thead>
                                 <tr>
@@ -117,24 +49,24 @@
                                         <td>{{ $backup['file_name'] }}</td>
                                         <td>{{ $backup['file_size'] }}</td>
                                         <td>
-                                            <a href="{{ route('admin.backupDownload', $backup['file_name']) }}"
-                                                class="btn btn-info position-relative p-0 avatar-xs rounded editModule-btn">
-                                                <span class="avatar-title bg-transparent">
-                                                    <i class="bx bxs-download" style="font-size: 16px"></i>
-                                                </span>
-                                            </a>
-                                            <form action="{{ route('admin.backup.destroy', $backup['file_name']) }}"
-                                                method="POST"
-                                                class="btn btn-danger position-relative p-0 avatar-xs rounded">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="btn btn-danger position-relative p-0 avatar-xs rounded show_confirm">
-                                                    <span class="avatar-title bg-transparent">
-                                                        <i class="bx bx-trash" style="font-size: 16px"></i>
-                                                    </span>
-                                                </button>
-                                            </form>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown"><i
+                                                        class="bx bx-dots-vertical-rounded"></i></button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('admin.backupDownload', $backup['file_name']) }}"><i
+                                                            class="bx bxs-download me-1"></i> Download</a>
+                                                    <form action="{{ route('admin.backup.destroy', $backup['file_name']) }}"
+                                                        class="show_confirm" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="dropdown-item" type="submit"><i
+                                                                class="bx bx-trash me-1"></i>
+                                                            Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
