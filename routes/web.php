@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Backend\Auth\AuthenticationController;
-use App\Http\Controllers\Backend\BackupController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Auth\AuthenticationController;
+use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 
 Route::redirect('admin', 'admin/login');
 
@@ -23,6 +24,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         //resource controller
         Route::resource('backup', BackupController::class);
+
+        // general setting route
+        Route::get('general-setting', [GeneralSettingController::class, 'index'])->name('general_setting_page');
+        Route::post('general-setting', [GeneralSettingController::class, 'setting_submit'])->name('general_setting_submit');
 
         // backup download route
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');

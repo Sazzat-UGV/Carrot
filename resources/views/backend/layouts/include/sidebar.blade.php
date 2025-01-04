@@ -30,6 +30,34 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item @if (Route::is('admin.general_setting_page')) active @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div class="text-truncate">Settings</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item @if (Route::is('admin.general_setting_page')) active @endif">
+                    <a href="{{ route('admin.general_setting_page', ['stage' => 'site']) }}" class="menu-link">
+                        <div class="text-truncate">General Setting</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <div class="text-truncate">Email Configuration</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="#" class="menu-link">
+                        <div class="text-truncate">Terms & Conditions</div>
+                    </a>
+                </li>
+                <li class="menu-item ">
+                    <a href="#" class="menu-link">
+                        <div class="text-truncate">Privacy Policy</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
         <li class="menu-item @if (Route::is('admin.backup.index')) active @endif">
             <a href="{{ route('admin.backup.index') }}" class="menu-link">
