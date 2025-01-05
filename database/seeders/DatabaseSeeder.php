@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GeneralSettingSeeder::class,
             PageSeeder::class,
-            
+            FaqSeeder::class,
         ]);
     }
 }

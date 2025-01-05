@@ -17,15 +17,20 @@
                 <div class="text-truncate">Dashboard</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item  @if (Route::is('admin.faq.index') || Route::is('admin.faq.create')) active open @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                <div class="text-truncate">Dashboards</div>
+                <i class="menu-icon tf-icons bx bx-comment-dots"></i>
+                <div class="text-truncate">Faqs</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item active">
-                    <a href="dashboards-analytics.html" class="menu-link">
-                        <div class="text-truncate">Analytics</div>
+                <li class="menu-item  @if (Route::is('admin.faq.index')) active @endif">
+                    <a href="{{ route('admin.faq.index') }}" class="menu-link">
+                        <div class="text-truncate">FAQ List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.faq.create')) active @endif">
+                    <a href="{{ route('admin.faq.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New FAQ</div>
                     </a>
                 </li>
             </ul>

@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
-use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\EmailConfigurationController;
-use App\Http\Controllers\Backend\Auth\AuthenticationController;
+use App\Http\Controllers\Backend\FaqController;
+use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
+use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
 
@@ -26,6 +27,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         //resource controller
         Route::resource('backup', BackupController::class);
+        Route::resource('faq', FaqController::class);
 
         // general setting route
         Route::get('general-setting', [GeneralSettingController::class, 'index'])->name('general_setting_page');
