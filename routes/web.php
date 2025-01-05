@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\BackupController;
-use App\Http\Controllers\Backend\ProfileController;
-use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
+use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\EmailConfigurationController;
+use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
+use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
 
@@ -28,6 +29,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
         // general setting route
         Route::get('general-setting', [GeneralSettingController::class, 'index'])->name('general_setting_page');
         Route::post('general-setting', [GeneralSettingController::class, 'setting_submit'])->name('general_setting_submit');
+
+        // email configuration setting route
+        Route::get('email-configuration', [EmailConfigurationController::class, 'index'])->name('email_configuration_page');
+        Route::post('email-configuration', [EmailConfigurationController::class, 'setting_submit'])->name('email_configuration_submit');
 
         // backup download route
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');

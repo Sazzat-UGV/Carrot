@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 @section('title')
-    Dashboard
+General Setting
 @endsection
 @push('style')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css"

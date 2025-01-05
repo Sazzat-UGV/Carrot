@@ -30,7 +30,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item @if (Route::is('admin.general_setting_page')) active @endif">
+        <li class="menu-item @if (Route::is('admin.general_setting_page') || Route::is('admin.email_configuration_page')) active open @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div class="text-truncate">Settings</div>
@@ -41,8 +41,8 @@
                         <div class="text-truncate">General Setting</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
+                <li class="menu-item  @if (Route::is('admin.email_configuration_page')) active @endif">
+                    <a href="{{ route('admin.email_configuration_page') }}" class="menu-link">
                         <div class="text-truncate">Email Configuration</div>
                     </a>
                 </li>
