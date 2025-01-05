@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\Backend\Auth\AuthenticationController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\EmailConfigurationController;
-use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
-use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
 
@@ -34,6 +35,13 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('email-configuration', [EmailConfigurationController::class, 'index'])->name('email_configuration_page');
         Route::post('email-configuration', [EmailConfigurationController::class, 'setting_submit'])->name('email_configuration_submit');
 
+        //  terms condition route
+        Route::get('terms-condition', [PageController::class, 'termsConditionPage'])->name('termsConditionPage');
+        Route::post('terms-condition', [PageController::class, 'termsCondition'])->name('termsCondition');
+
+        // privacy policy route
+        Route::get('privacy-policy', [PageController::class, 'privacyPolicyPage'])->name('privacyPolicyPage');
+        Route::post('privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacyPolicy');
         // backup download route
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');
     });

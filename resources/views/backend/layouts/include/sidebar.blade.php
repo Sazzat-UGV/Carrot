@@ -30,7 +30,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item @if (Route::is('admin.general_setting_page') || Route::is('admin.email_configuration_page')) active open @endif">
+        <li class="menu-item @if (Route::is('admin.general_setting_page') || Route::is('admin.email_configuration_page') || Route::is('admin.privacyPolicyPage') || Route::is('admin.termsConditionPage')) active open @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div class="text-truncate">Settings</div>
@@ -46,13 +46,13 @@
                         <div class="text-truncate">Email Configuration</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="#" class="menu-link">
+                <li class="menu-item  @if (Route::is('admin.termsConditionPage')) active @endif">
+                    <a href="{{ route('admin.termsConditionPage') }}" class="menu-link">
                         <div class="text-truncate">Terms & Conditions</div>
                     </a>
                 </li>
-                <li class="menu-item ">
-                    <a href="#" class="menu-link">
+                <li class="menu-item  @if (Route::is('admin.privacyPolicyPage')) active @endif">
+                    <a href="{{ route('admin.privacyPolicyPage') }}" class="menu-link">
                         <div class="text-truncate">Privacy Policy</div>
                     </a>
                 </li>
