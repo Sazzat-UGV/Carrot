@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Backend\Auth\AuthenticationController;
-use App\Http\Controllers\Backend\BackupController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\EmailConfigurationController;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\PageController;
+use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\EmailConfigurationController;
+use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
-use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
 
@@ -49,6 +50,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
     });
 });
 
+Route::get('index',function(){
+    $user=User::paginate(1);
+    return view('backend.pages.index',compact('user'));
+})->name('demo');
 // user routes
 Route::get('/', function () {
     return view('welcome');

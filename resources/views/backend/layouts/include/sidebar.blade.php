@@ -17,6 +17,12 @@
                 <div class="text-truncate">Dashboard</div>
             </a>
         </li>
+        <li class="menu-item @if (Route::is('demo')) active @endif">
+            <a href="{{ route('demo') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-smile"></i>
+                <div class="text-truncate">demo</div>
+            </a>
+        </li>
         <li class="menu-item  @if (Route::is('admin.faq.index') || Route::is('admin.faq.create')) active open @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-comment-dots"></i>

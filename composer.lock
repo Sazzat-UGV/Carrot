@@ -3688,16 +3688,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "9.1.3",
+            "version": "9.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "61a2a3f743463e9c37b4f9c527389169ca69192a"
+                "reference": "2ba1da56fdc608c82a9cc79c9132d9c1284aea6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/61a2a3f743463e9c37b4f9c527389169ca69192a",
-                "reference": "61a2a3f743463e9c37b4f9c527389169ca69192a",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/2ba1da56fdc608c82a9cc79c9132d9c1284aea6c",
+                "reference": "2ba1da56fdc608c82a9cc79c9132d9c1284aea6c",
                 "shasum": ""
             },
             "require": {
@@ -3772,7 +3772,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-backup/issues",
-                "source": "https://github.com/spatie/laravel-backup/tree/9.1.3"
+                "source": "https://github.com/spatie/laravel-backup/tree/9.2.0"
             },
             "funding": [
                 {
@@ -3784,7 +3784,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2024-10-21T13:39:58+00:00"
+            "time": "2025-01-06T09:19:23+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -7890,16 +7890,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "6.2.1",
+            "version": "6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "43d129d6a0f81c78bee378b46688293eb7ea3739"
+                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/43d129d6a0f81c78bee378b46688293eb7ea3739",
-                "reference": "43d129d6a0f81c78bee378b46688293eb7ea3739",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
+                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
                 "shasum": ""
             },
             "require": {
@@ -7911,6 +7911,9 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^11.4"
+            },
+            "suggest": {
+                "ext-bcmath": "For comparing BcMath\\Number objects"
             },
             "type": "library",
             "extra": {
@@ -7955,7 +7958,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/6.2.1"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/6.3.0"
             },
             "funding": [
                 {
@@ -7963,7 +7966,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-31T05:30:08+00:00"
+            "time": "2025-01-06T10:28:19+00:00"
         },
         {
             "name": "sebastian/complexity",
@@ -8818,12 +8821,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
