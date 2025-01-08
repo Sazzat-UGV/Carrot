@@ -17,10 +17,10 @@
                 <div class="text-truncate">Dashboard</div>
             </a>
         </li>
-        <li class="menu-item @if (Route::is('demo')) active @endif">
-            <a href="{{ route('demo') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-smile"></i>
-                <div class="text-truncate">demo</div>
+        <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
+            <a href="{{ route('admin.user.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div class="text-truncate">Users</div>
             </a>
         </li>
         <li class="menu-item  @if (Route::is('admin.faq.index') || Route::is('admin.faq.create')) active open @endif">
@@ -41,7 +41,10 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item @if (Route::is('admin.general_setting_page') || Route::is('admin.email_configuration_page') || Route::is('admin.privacyPolicyPage') || Route::is('admin.termsConditionPage')) active open @endif">
+        <li class="menu-item @if (Route::is('admin.general_setting_page') ||
+                Route::is('admin.email_configuration_page') ||
+                Route::is('admin.privacyPolicyPage') ||
+                Route::is('admin.termsConditionPage')) active open @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div class="text-truncate">Settings</div>

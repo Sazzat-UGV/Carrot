@@ -16,9 +16,8 @@ class AuthUserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
-        if ($user) {
-            return back();
+        if (Auth::check() && Auth::user()->role == 'Admin') {
+            return redirect()->route('admin.dashboard');
         }
         return $next($request);
     }

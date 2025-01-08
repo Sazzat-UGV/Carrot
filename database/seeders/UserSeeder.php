@@ -28,5 +28,54 @@ class UserSeeder extends Seeder
             'email_verified_at'=>now(),
             'password'=>Hash::make(1234),
         ]);
+        User::create([
+            'name'=>'Sarah Moni',
+            'email'=>'user1@gmail.com',
+            'role'=>'User',
+            'email_verified_at'=>now(),
+            'password'=>Hash::make(1234),
+        ]);
+        User::create([
+            'name'=>'Sarah Moni',
+            'email'=>'user2@gmail.com',
+            'role'=>'User',
+            'email_verified_at'=>now(),
+            'password'=>Hash::make(1234),
+        ]);
+        User::create([
+            'name'=>'Sarah Moni',
+            'email'=>'user3@gmail.com',
+            'role'=>'User',
+            'email_verified_at'=>now(),
+            'password'=>Hash::make(1234),
+        ]);
+        User::create([
+            'name'=>'Sarah Moni',
+            'email'=>'user4@gmail.com',
+            'role'=>'User',
+            'email_verified_at'=>now(),
+            'password'=>Hash::make(1234),
+        ]);
+        User::create([
+            'name'=>'Sarah Moni',
+            'email'=>'user5@gmail.com',
+            'role'=>'User',
+            'email_verified_at'=>now(),
+            'password'=>Hash::make(1234),
+        ]);
+        User::create([
+            'name'=>'Sarah Moni',
+            'email'=>'user6@gmail.com',
+            'role'=>'User',
+            'email_verified_at'=>now(),
+            'password'=>Hash::make(1234),
+        ]);
+        User::create([
+            'name'=>'Sarah Moni',
+            'email'=>'user7@gmail.com',
+            'role'=>'User',
+            'email_verified_at'=>now(),
+            'password'=>Hash::make(1234),
+        ]);
     }
 }

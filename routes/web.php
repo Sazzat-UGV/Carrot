@@ -1,15 +1,15 @@
 <?php
 
-use App\Models\User;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\FaqController;
-use App\Http\Controllers\Backend\PageController;
-use App\Http\Controllers\Backend\BackupController;
-use App\Http\Controllers\Backend\ProfileController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\EmailConfigurationController;
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
+use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\FaqController;
+use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
+use App\Http\Controllers\Backend\Setting\PageController;
+use App\Http\Controllers\Backend\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
 
@@ -17,7 +17,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
     Route::get('login', [AuthenticationController::class, 'loginPage'])->name('login.page')->middleware('auth.redirect');
     Route::post('login', [AuthenticationController::class, 'login'])->name('login');
 
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware(['auth', 'user'])->group(function () {
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
         //profile routes
@@ -29,6 +29,12 @@ Route::prefix('admin')->as('admin.')->group(function () {
         //resource controller
         Route::resource('backup', BackupController::class);
         Route::resource('faq', FaqController::class);
+
+        //user controller
+        Route::get('user', [UserController::class, 'index'])->name('user.index');
+        Route::get('user/details/{id}', [UserController::class, 'show'])->name('user.show');
+        Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
+        Route::delete('user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
         // general setting route
         Route::get('general-setting', [GeneralSettingController::class, 'index'])->name('general_setting_page');
@@ -50,11 +56,6 @@ Route::prefix('admin')->as('admin.')->group(function () {
     });
 });
 
-Route::get('index',function(){
-    $user=User::paginate(1);
-    return view('backend.pages.index',compact('user'));
-})->name('demo');
-// user routes
 Route::get('/', function () {
     return view('welcome');
 });

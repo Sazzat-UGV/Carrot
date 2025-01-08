@@ -34,7 +34,7 @@
                 <div class="card px-sm-6 px-0">
                     <div class="card-body">
                         <div class="app-brand justify-content-center">
-                            <a href="index.html" class="app-brand-link gap-2">
+                            <a href="{{ route('admin.login.page') }}" class="app-brand-link gap-2">
                                 <span class="app-brand-logo demo">
                                     <img src="{{ asset('assets/frontend/img/logo/logo.png') }}" alt="">
                                 </span>
