@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Export\UserExportController;
 use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
@@ -20,6 +21,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
     Route::middleware(['auth', 'user'])->group(function () {
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
         //profile routes
         Route::get('profile', [ProfileController::class, 'profilePage'])->name('profile.page');
         Route::post('profile', [ProfileController::class, 'profile'])->name('profile');
@@ -48,9 +50,14 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('terms-condition', [PageController::class, 'termsConditionPage'])->name('termsConditionPage');
         Route::post('terms-condition', [PageController::class, 'termsCondition'])->name('termsCondition');
 
+        // export route
+        Route::get('user_export/excel', [UserExportController::class, 'exportExcel'])->name('exportExcel');
+        Route::get('user_export/pdf', [UserExportController::class, 'exportPDF'])->name('exportPDF');
+
         // privacy policy route
         Route::get('privacy-policy', [PageController::class, 'privacyPolicyPage'])->name('privacyPolicyPage');
         Route::post('privacy-policy', [PageController::class, 'privacyPolicy'])->name('privacyPolicy');
+
         // backup download route
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');
     });

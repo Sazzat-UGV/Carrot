@@ -26,10 +26,10 @@
                                         <span>Export</span>
                                     </a>
                                     <div class="dropdown-menu" style="">
-                                        <li><a class="dropdown-item" href="#"><i
+                                        <li><a class="dropdown-item" href="{{ route('admin.exportPDF') }}"><i
                                                     class="bx bxs-file-pdf font-size-16"></i> Export as PDF</a>
                                         </li>
-                                        <li><a class="dropdown-item" href="#"><i
+                                        <li><a class="dropdown-item" href="{{ route('admin.exportExcel') }}"><i
                                                     class="bx bxs-file-export font-size-16"></i> Export as Excel</a>
                                         </li>
                                     </div>
