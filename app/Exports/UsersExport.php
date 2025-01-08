@@ -2,57 +2,42 @@
 
 namespace App\Exports;
 
+use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class UsersExport implements FromCollection
+class UsersExport implements FromCollection, WithHeadings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    protected $search;
+
+    public function __construct($search)
     {
-        //
+        $this->search = $search;
     }
 
-    // protected $search;
+    public function collection()
+    {
+        return User::select('name', 'email', 'phone', 'address')
+            ->latest('id')
+            ->where('role', 'User')
+            ->when($this->search, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%')
+                        ->orWhere('phone', 'like', '%' . $search . '%')
+                        ->orWhere('address', 'like', '%' . $search . '%');
+                });
+            })
+            ->get();
+    }
 
-    // public function __construct($search)
-    // {
-    //     $this->search = $search;
-    // }
-
-    // public function collection()
-    // {
-    //     return User::with('role:id,name')
-    //         ->latest('id')
-    //         ->whereNotIn('id', [1, 2])
-    //         ->when($this->search, function ($query, $search) {
-    //             $query->where(function ($query) use ($search) {
-    //                 $query->where('first_name', 'like', "%{$search}%")
-    //                     ->orWhere('last_name', 'like', "%{$search}%")
-    //                     ->orWhere(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', "%{$search}%")
-    //                     ->orWhere('email', 'like', "%{$search}%")
-    //                     ->orWhere('phone', 'like', "%{$search}%")
-    //                     ->orWhere('address', 'like', "%{$search}%")
-    //                     ->orWhereHas('role', function ($query) use ($search) {
-    //                         $query->where('name', 'like', "%{$search}%");
-    //                     });
-    //             });
-    //         })
-    //         ->get([
-    //             DB::raw("CONCAT(first_name, ' ', last_name) as full_name"),
-    //             'email',
-    //             'phone',
-    //             'address',
-    //         ]);
-    // }
-
-    // public function headings(): array
-    // {
-    //     return [
-    //         'Name',
-    //         'Email',
-    //         'Phone',
-    //         'Address',
-    //     ];
+    public function headings(): array
+    {
+        return [
+            'Name',
+            'Email',
+            'Phone',
+            'Address',
+        ];
+    }
 }
