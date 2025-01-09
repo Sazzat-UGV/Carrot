@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Export\UserExportController;
@@ -35,6 +36,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('faq', FaqController::class);
         Route::resource('category', CategoryController::class);
         Route::resource('subcategory', SubCategoryController::class);
+        Route::resource('brand', BrandController::class);
 
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');

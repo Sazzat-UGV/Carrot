@@ -53,6 +53,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.brand.index') || Route::is('admin.brand.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-category-alt"></i>
+                <div class="text-truncate">Brands</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.brand.index')) active @endif">
+                    <a href="{{ route('admin.brand.index') }}" class="menu-link">
+                        <div class="text-truncate">Brand List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.brand.create')) active @endif">
+                    <a href="{{ route('admin.brand.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Brand</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
