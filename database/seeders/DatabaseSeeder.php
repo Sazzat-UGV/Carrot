@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class,
             FaqSeeder::class,
             CategorySeeder::class,
+            SubCategorySeeder::class,
         ]);
     }
 }

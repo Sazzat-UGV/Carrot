@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\PageController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('backup', BackupController::class);
         Route::resource('faq', FaqController::class);
         Route::resource('category', CategoryController::class);
+        Route::resource('subcategory', SubCategoryController::class);
 
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
@@ -65,6 +67,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         // status routes
         Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
         Route::get('category/status/{id}', [CategoryController::class, 'changeStatus'])->name('category.status');
+        Route::get('subcategory/status/{id}', [SubCategoryController::class, 'changeStatus'])->name('subcategory.status');
     });
 });
 

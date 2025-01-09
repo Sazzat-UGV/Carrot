@@ -35,6 +35,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.subcategory.index') || Route::is('admin.subcategory.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-category"></i>
+                <div class="text-truncate">Subcategories</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.subcategory.index')) active @endif">
+                    <a href="{{ route('admin.subcategory.index') }}" class="menu-link">
+                        <div class="text-truncate">Subcategory List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.subcategory.create')) active @endif">
+                    <a href="{{ route('admin.subcategory.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Subcategory</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
