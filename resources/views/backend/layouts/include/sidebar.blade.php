@@ -17,6 +17,24 @@
                 <div class="text-truncate">Dashboard</div>
             </a>
         </li>
+        <li class="menu-item  @if (Route::is('admin.category.index') || Route::is('admin.category.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-category-alt"></i>
+                <div class="text-truncate">Categories</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.category.index')) active @endif">
+                    <a href="{{ route('admin.category.index') }}" class="menu-link">
+                        <div class="text-truncate">Category List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.category.create')) active @endif">
+                    <a href="{{ route('admin.category.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Category</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
