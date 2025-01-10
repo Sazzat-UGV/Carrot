@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Export\UserExportController;
 use App\Http\Controllers\Backend\FaqController;
@@ -9,6 +11,7 @@ use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\PageController;
+use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,11 +34,13 @@ Route::prefix('admin')->as('admin.')->group(function () {
         //resource controller
         Route::resource('backup', BackupController::class);
         Route::resource('faq', FaqController::class);
+        Route::resource('category', CategoryController::class);
+        Route::resource('subcategory', SubCategoryController::class);
+        Route::resource('brand', BrandController::class);
 
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('user/details/{id}', [UserController::class, 'show'])->name('user.show');
-        Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
         Route::delete('user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
         // general setting route
@@ -60,6 +65,11 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         // backup download route
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');
+
+        // status routes
+        Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
+        Route::get('category/status/{id}', [CategoryController::class, 'changeStatus'])->name('category.status');
+        Route::get('subcategory/status/{id}', [SubCategoryController::class, 'changeStatus'])->name('subcategory.status');
     });
 });
 
