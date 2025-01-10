@@ -2,7 +2,7 @@
     <div class="app-brand demo ">
         <a href="{{ route('admin.dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
-                <img src="{{ asset('assets/frontend/img/logo/logo.png') }}" alt="" style="max-height: 50">
+                <img src="{{ asset('uploads/settings') }}/{{ $setting->site_logo }}" alt="" style="max-height: 50">
             </span>
         </a>
     </div>

@@ -36,7 +36,7 @@
                         <div class="app-brand justify-content-center">
                             <a href="{{ route('admin.login.page') }}" class="app-brand-link gap-2">
                                 <span class="app-brand-logo demo">
-                                    <img src="{{ asset('assets/frontend/img/logo/logo.png') }}" alt="">
+                                    <img src="{{ asset('uploads/settings') }}/{{ $setting->site_logo }}" alt="">
                                 </span>
                             </a>
                         </div>
