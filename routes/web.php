@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\PageController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
@@ -37,6 +38,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('subcategory', SubCategoryController::class);
         Route::resource('brand', BrandController::class);
+        Route::resource('warehouse', WarehouseController::class);
 
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
