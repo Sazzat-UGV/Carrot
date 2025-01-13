@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Export\UserExportController;
 use App\Http\Controllers\Backend\FaqController;
+use App\Http\Controllers\Backend\PickupPointController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
@@ -41,6 +42,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('brand', BrandController::class);
         Route::resource('warehouse', WarehouseController::class);
         Route::resource('coupon', CouponController::class);
+        Route::resource('pickup-point', PickupPointController::class);
 
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');

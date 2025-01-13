@@ -107,6 +107,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.pickup-point.index') || Route::is('admin.pickup-point.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-truck"></i>
+                <div class="text-truncate">Pickup Point</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.pickup-point.index')) active @endif">
+                    <a href="{{ route('admin.pickup-point.index') }}" class="menu-link">
+                        <div class="text-truncate">Pickup Point List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.pickup-point.create')) active @endif">
+                    <a href="{{ route('admin.pickup-point.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Pickup Point</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
