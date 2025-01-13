@@ -89,6 +89,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.coupon.index') || Route::is('admin.coupon.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-coupon"></i>
+                <div class="text-truncate">Coupons</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.coupon.index')) active @endif">
+                    <a href="{{ route('admin.coupon.index') }}" class="menu-link">
+                        <div class="text-truncate">Coupon List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.coupon.create')) active @endif">
+                    <a href="{{ route('admin.coupon.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Coupon</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>

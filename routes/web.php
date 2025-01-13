@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Export\UserExportController;
 use App\Http\Controllers\Backend\FaqController;
@@ -39,6 +40,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('subcategory', SubCategoryController::class);
         Route::resource('brand', BrandController::class);
         Route::resource('warehouse', WarehouseController::class);
+        Route::resource('coupon', CouponController::class);
 
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
@@ -72,6 +74,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
         Route::get('category/status/{id}', [CategoryController::class, 'changeStatus'])->name('category.status');
         Route::get('subcategory/status/{id}', [SubCategoryController::class, 'changeStatus'])->name('subcategory.status');
+        Route::get('coupon/status/{id}', [CouponController::class, 'changeStatus'])->name('coupon.status');
     });
 });
 
