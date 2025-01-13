@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SubCategorySeeder::class,
             WarehouseSeeder::class,
+            BrandSeeder::class,
+            PickupPointSeeder::class,
         ]);
     }
 }

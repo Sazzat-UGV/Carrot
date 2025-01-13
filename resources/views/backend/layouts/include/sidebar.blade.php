@@ -125,6 +125,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.product.index') || Route::is('admin.product.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
+                <div class="text-truncate">Products</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.product.index')) active @endif">
+                    <a href="{{ route('admin.product.index') }}" class="menu-link">
+                        <div class="text-truncate">Product List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.product.create')) active @endif">
+                    <a href="{{ route('admin.product.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Product</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>

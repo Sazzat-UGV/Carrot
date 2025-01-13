@@ -13,28 +13,29 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
+            // $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            // $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('sub_category_id')->constrained('sub_categories')->cascadeOnDelete();
-            $table->foreignId('brand_id')->nullable()->constrained('brands')->cascadeOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
+            // $table->foreignId('brand_id')->nullable()->constrained('brands')->cascadeOnDelete();
             $table->foreignId('warehouse_id')->nullable()->constrained('warehouses')->cascadeOnDelete();
-            $table->string('name');
-            $table->string('code');
-            $table->string('unit')->nullable();
-            $table->string('tags')->nullable();
-            $table->string('video')->nullable();
-            $table->string('purchase_price')->nullable();
-            $table->string('selling_price')->nullable();
-            $table->string('discount_price')->nullable();
-            $table->string('stock_quantity')->nullable();
+            // $table->foreignId('pickup_point_id')->nullable()->constrained('pickup_points')->cascadeOnDelete();
+            // $table->string('name');
+            // $table->string('code');
+            // $table->string('unit')->nullable();
+            $table->json('tags')->nullable();
+            $table->text('video')->nullable();
+            $table->unsignedBigInteger('purchase_price')->nullable();
+            $table->unsignedBigInteger('selling_price')->nullable();
+            $table->unsignedBigInteger('discount_price')->nullable();
+            $table->string('color')->nullable();
+            $table->string('size')->nullable();
+            $table->unsignedBigInteger('stock_quantity')->nullable();
             $table->longText('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->json('images')->nullable();
-            $table->integer('featured')->nullable();
-            $table->integer('today_deal')->nullable();
-            $table->integer('status')->nullable();
-            $table->integer('flash_deal_id')->nullable();
-            $table->integer('cash_on_delivery')->nullable();
+            $table->boolean('featured')->nullable();
+            $table->boolean('today_deal')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }
