@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 @section('title')
-    User List
+    Product List
 @endsection
 @push('style')
     <style>
@@ -15,28 +15,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-header mb-1 ">User List</h5>
-                    <form action="{{ route('admin.user.index') }}" method="GET">
-                        <div class="row d-flex justify-content-between">
-                            <div class="col-auto mb-4">
-                                <div class="dropdown mt-4 mt-sm-0">
-                                    <a href="#"
-                                        class="btn bg-label-primary dropdown-toggle d-flex align-items-center justify-content-center"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span>Export</span>
-                                    </a>
-                                    <div class="dropdown-menu" style="">
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('admin.exportPDF', ['search' => request('search')]) }}"><i
-                                                    class="bx bxs-file-pdf font-size-16"></i> Export as PDF</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('admin.exportExcel', ['search' => request('search')]) }}"><i
-                                                    class="bx bxs-file-export font-size-16"></i> Export as Excel</a>
-                                        </li>
-                                    </div>
-                                </div>
-                            </div>
+                    <h5 class="card-header mb-1 ">Product List</h5>
+                    <div class="text-sm-end mb-4">
+                        <a href="{{ route('admin.product.create') }}" class="btn btn-primary"><i class="bx bx-plus"></i> New
+                            Product</a>
+                    </div>
+                    <form action="{{ route('admin.product.index') }}" method="GET">
+                        <div class="row d-flex justify-content-end">
                             <div class="col-auto mb-4 d-flex">
                                 <input class="form-control me-2" type="text" placeholder="Search" name="search"
                                     value="{{ request('search') }}">
@@ -51,32 +36,66 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Photo</th>
+                                    <th>Thumbnail</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
+                                    <th>Code</th>
+                                    <th>Category</th>
+                                    <th>Subcategory</th>
+                                    <th>Brand</th>
+                                    <th>Featured</th>
+                                    <th>Total Deal</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $index => $user)
+                                @foreach ($products as $index => $product)
                                     <tr>
                                         <th>{{ $index + 1 }}</th>
                                         <td>
-                                            <img src="{{ asset('uploads/user') }}/{{ $user->image }}" alt="Image"
-                                                height="50" width="50" class="me-3">
+                                            <img src="{{ asset('uploads/product') }}/{{ $product->thumbnail }}"
+                                                alt="Image" height="50" width="50" class="me-3">
                                         </td>
-                                        <td class="wrap">{{ $user->name }}</td>
-                                        <td class="wrap">{{ $user->email }}</td>
-                                        <td class="wrap">{{ $user->phone }}</td>
-                                        <td class="wrap">{{ $user->address }}</td>
+                                        <td class="wrap">{{ $product->name }}</td>
+                                        <td class="wrap">{{ $product->code }}</td>
+                                        <td class="wrap">{{ $product->category->name }}</td>
+                                        <td class="wrap">{{ $product->subcategory->name }}</td>
+                                        <td class="wrap">{{ $product->brand->name }}</td>
                                         <td>
                                             <label class="switch switch-success">
                                                 <input class="switch-input toggle-class" type="checkbox"
-                                                    data-id="{{ $user->id }}" id="user-{{ $user->id }}"
-                                                    {{ $user->status ? 'checked' : '' }}>
+                                                    data-id="{{ $product->id }}" id="product-{{ $product->id }}"
+                                                    {{ $product->featured ? 'checked' : '' }}>
+                                                <span class="switch-toggle-slider">
+                                                    <span class="switch-on">
+                                                        <i class="bx bx-check"></i>
+                                                    </span>
+                                                    <span class="switch-off">
+                                                        <i class="bx bx-x"></i>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label class="switch switch-success">
+                                                <input class="switch-input toggle-class" type="checkbox"
+                                                    data-id="{{ $product->id }}" id="product-{{ $product->id }}"
+                                                    {{ $product->today_deal ? 'checked' : '' }}>
+                                                <span class="switch-toggle-slider">
+                                                    <span class="switch-on">
+                                                        <i class="bx bx-check"></i>
+                                                    </span>
+                                                    <span class="switch-off">
+                                                        <i class="bx bx-x"></i>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label class="switch switch-success">
+                                                <input class="switch-input toggle-class" type="checkbox"
+                                                    data-id="{{ $product->id }}" id="product-{{ $product->id }}"
+                                                    {{ $product->status ? 'checked' : '' }}>
                                                 <span class="switch-toggle-slider">
                                                     <span class="switch-on">
                                                         <i class="bx bx-check"></i>
@@ -94,9 +113,12 @@
                                                         class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu" style="">
                                                     <a class="dropdown-item"
-                                                        href="{{ route('admin.user.show', $user->id) }}"><i
+                                                        href="{{ route('admin.product.edit', $product->id) }}"><i
+                                                            class="bx bx-edit me-1"></i> Edit</a>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('admin.product.show', $product->id) }}"><i
                                                             class="bx bx-show-alt me-1"></i> View</a>
-                                                    <form action="{{ route('admin.user.destroy', $user->id) }}"
+                                                    <form action="{{ route('admin.product.destroy', $product->id) }}"
                                                         class="show_confirm" method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -113,7 +135,7 @@
                         </table>
                     </div>
                     <div class="mt-2">
-                        {{ $users->links() }}
+                        {{ $products->links() }}
                     </div>
                 </div>
             </div>

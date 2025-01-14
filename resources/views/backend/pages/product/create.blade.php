@@ -59,13 +59,15 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
+                                    <div class="col-12 col-md-6 mb-4">
                                         <label class="form-label">Category<span class="text-danger">*</span></label>
                                         <select id="category" class="form-select @error('category') is-invalid @enderror"
                                             name="category">
                                             <option value="">Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}
+                                                <option value="{{ $category->id }}"
+                                                    {{ old('category') == $category->id ? 'selected' : '' }}>
+                                                    {{ $category->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -75,7 +77,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    {{-- <div class="col-6 mb-4">
+                                    <div class="col-12  col-md-6 mb-4">
                                         <label class="form-label">SubCategory<span class="text-danger">*</span></label>
                                         <select id="sub_category"
                                             class="form-select @error('sub_category') is-invalid @enderror"
@@ -92,14 +94,15 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div> --}}
-                                    <div class="col-6 mb-4">
+                                    </div>
+                                    <div class="col-12 col-md-6 mb-4">
                                         <label class="form-label">Brand<span class="text-danger">*</span></label>
                                         <select id="brand" class="form-select @error('brand') is-invalid @enderror"
                                             name="brand">
                                             <option value="">Select Brand</option>
                                             @foreach ($brands as $brand)
-                                                <option value="{{ $brand->id }}" {{ old('brand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
+                                                <option value="{{ $brand->id }}"
+                                                    {{ old('brand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -109,16 +112,18 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
+                                    <div class="col-12 col-md-6 mb-4">
                                         <label class="form-label">Pickup Point</label>
                                         <select id="pickup_point"
                                             class="form-select @error('pickup_point') is-invalid @enderror"
                                             name="pickup_point">
                                             <option value="">Select Pickup Point</option>
                                             @foreach ($pickup_points as $pickup_point)
-                                            <option value="{{ $pickup_point->id }}" {{ old('pickup_point') == $pickup_point->id ? 'selected' : '' }}>{{ $pickup_point->name }}
-                                            </option>
-                                        @endforeach
+                                                <option value="{{ $pickup_point->id }}"
+                                                    {{ old('pickup_point') == $pickup_point->id ? 'selected' : '' }}>
+                                                    {{ $pickup_point->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         @error('pickup_point')
                                             <span class="invalid-feedback" role="alert">
@@ -126,7 +131,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
+                                    <div class="col-12 col-md-6 mb-4">
                                         <label class="form-label">Unit<span class="text-danger">*</span></label>
                                         <input class="form-control @error('unit') is-invalid @enderror" type="number"
                                             placeholder="Enter unit" name="unit" value="{{ old('unit') }}">
@@ -136,18 +141,8 @@
                                             </span>
                                         @enderror
                                     </div>
-
-
-
-
-
-
-
-
-
-
-                                    <div class="col-6 mb-4">
-                                        <label class="form-label">Tags<span class="text-danger">*</span></label>
+                                    <div class="col-12 col-md-6 mb-4">
+                                        <label class="form-label">Tags</label>
                                         <input class="form-control @error('tags') is-invalid @enderror" type="text"
                                             placeholder="Enter tags" name="tags" value="{{ old('tags') }}"
                                             id="siteKeywords">
@@ -157,36 +152,18 @@
                                             </span>
                                         @enderror
                                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                    <div class="col-6 mb-4">
-                                        <label class="form-label">Discount Price<span class="text-danger">*</span></label>
-                                        <input class="form-control @error('discount_price') is-invalid @enderror"
-                                            type="number" placeholder="Enter discount price" name="discount_price"
-                                            value="{{ old('discount_price') }}">
-                                        @error('discount_price')
+                                    <div class="col-12 col-md-4 mb-4">
+                                        <label class="form-label">Purchase Price</label>
+                                        <input class="form-control @error('purchase_price') is-invalid @enderror"
+                                            type="number" placeholder="Enter purchase price" name="purchase_price"
+                                            value="{{ old('purchase_price') }}">
+                                        @error('purchase_price')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
+                                    <div class="col-12 col-md-4 mb-4">
                                         <label class="form-label">Selling Price<span class="text-danger">*</span></label>
                                         <input class="form-control @error('selling_price') is-invalid @enderror"
                                             type="number" placeholder="Enter selling price" name="selling_price"
@@ -197,8 +174,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
-                                        <label class="form-label">Discount Price<span class="text-danger">*</span></label>
+                                    <div class="col-12 col-md-4 mb-4">
+                                        <label class="form-label">Discount Price</label>
                                         <input class="form-control @error('discount_price') is-invalid @enderror"
                                             type="number" placeholder="Enter discount price" name="discount_price"
                                             value="{{ old('discount_price') }}">
@@ -208,18 +185,18 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
+                                    <div class="col-12 col-md-6 mb-4">
                                         <label class="form-label">Warehouse<span class="text-danger">*</span></label>
                                         <select id="warehouse"
                                             class="form-select @error('warehouse') is-invalid @enderror"
                                             name="warehouse">
-                                            <option value="">Select Type</option>
-                                            <option value="Fixed" {{ old('type') == 'Fixed' ? 'selected' : '' }}>Fixed
-                                            </option>
-                                            <option value="Percentage"
-                                                {{ old('type') == 'Percentage' ? 'selected' : '' }}>
-                                                Percentage
-                                            </option>
+                                            <option value="">Select Warehouse</option>
+                                            @foreach ($warehouses as $warehouse)
+                                                <option value="{{ $warehouse->id }}"
+                                                    {{ old('warehouse') == $warehouse->id ? 'selected' : '' }}>
+                                                    {{ $warehouse->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         @error('warehouse')
                                             <span class="invalid-feedback" role="alert">
@@ -227,8 +204,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
-                                        <label class="form-label">Stock<span class="text-danger">*</span></label>
+                                    <div class="col-12 col-md-6 mb-4">
+                                        <label class="form-label">Stock</label>
                                         <input class="form-control @error('stock') is-invalid @enderror" type="number"
                                             placeholder="Enter stock" name="stock" value="{{ old('stock') }}">
                                         @error('stock')
@@ -237,9 +214,9 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
-                                        <label class="form-label">Color<span class="text-danger">*</span></label>
-                                        <input class="form-control @error('color') is-invalid @enderror" type="number"
+                                    <div class="col-12 col-md-6 mb-4">
+                                        <label class="form-label">Color</label>
+                                        <input class="form-control @error('color') is-invalid @enderror" type="text"
                                             placeholder="Enter color" name="color" value="{{ old('color') }}">
                                         @error('color')
                                             <span class="invalid-feedback" role="alert">
@@ -247,9 +224,9 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-6 mb-4">
-                                        <label class="form-label">Size<span class="text-danger">*</span></label>
-                                        <input class="form-control @error('size') is-invalid @enderror" type="number"
+                                    <div class="col-12 col-md-6 mb-4">
+                                        <label class="form-label">Size</label>
+                                        <input class="form-control @error('size') is-invalid @enderror" type="text"
                                             placeholder="Enter size" name="size" value="{{ old('size') }}">
                                         @error('size')
                                             <span class="invalid-feedback" role="alert">
@@ -271,12 +248,12 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-4">
-                                        <label class="form-label">Embeded Video<span class="text-danger">*</span></label>
-                                        <textarea name="embeded_video" id="" cols="30" rows="5"
+                                        <label class="form-label">Embeded Video</label>
+                                        <textarea name="embeded_video" id="" cols="30" rows="3"
                                             class="form-control @error('embeded_video')
                                     is-invalid
                                     @enderror"
-                                            placeholder="Enter product embeded video">{{ old('embeded_video') }}</textarea>
+                                            placeholder="Enter embeded video">{{ old('embeded_video') }}</textarea>
                                         @error('size')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -303,10 +280,9 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-5">
-                                        <label class="form-label">Multiple Images<span
-                                                class="text-danger">*</span></label>
+                                        <label class="form-label">Multiple Images</label>
                                         <input class="form-control @error('multiple_images') is-invalid @enderror"
-                                            type="file" placeholder="Enter images" name="multiple_images"
+                                            type="file" placeholder="Enter images" name="multiple_images[]" multiple
                                             value="{{ old('multiple_images') }}">
                                         @error('multiple_images')
                                             <span class="invalid-feedback" role="alert">
@@ -314,10 +290,15 @@
                                             </span>
                                         @enderror
                                     </div>
+
+                                    <hr>
                                     <div class="col-12 mb-5">
-                                        <input class="switch-input toggle-class" type="checkbox" name="feature_product">
-                                        <label class="switch switch-success">Feature Product<span
-                                                class="text-danger">*</span>
+                                        <label for="">Feature Product</label>
+                                        <br>
+                                        <label class="switch switch-success">
+                                            <input class="switch-input toggle-class" type="checkbox" name="featured"
+                                                value="1"
+                                                {{ old('featured', $featured ?? 0) == 1 ? 'checked' : '' }}>
                                             <span class="switch-toggle-slider">
                                                 <span class="switch-on">
                                                     <i class="bx bx-check"></i>
@@ -326,16 +307,21 @@
                                                     <i class="bx bx-x"></i>
                                                 </span>
                                             </span>
-                                            @error('feature_product')
+                                            @error('featured')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </label>
                                     </div>
+                                    <hr>
                                     <div class="col-12 mb-5">
-                                        <label class="switch switch-success">Today Deal<span class="text-danger">*</span>
-                                            <input class="switch-input toggle-class" type="checkbox" name="today_deal">
+                                        <label for="">Today Deal</label>
+                                        <br>
+                                        <label class="switch switch-success">
+                                            <input class="switch-input toggle-class" type="checkbox" name="today_deal"
+                                                value="1"
+                                                {{ old('today_deal', $today_deal ?? 0) == 1 ? 'checked' : '' }}>
                                             <span class="switch-toggle-slider">
                                                 <span class="switch-on">
                                                     <i class="bx bx-check"></i>
@@ -351,9 +337,13 @@
                                             @enderror
                                         </label>
                                     </div>
+                                    <hr>
                                     <div class="col-12 mb-5">
-                                        <label class="switch switch-success">Status<span class="text-danger">*</span>
-                                            <input class="switch-input toggle-class" type="checkbox" name="status">
+                                        <label for="">Status</label>
+                                        <br>
+                                        <label class="switch switch-success">
+                                            <input class="switch-input toggle-class" type="checkbox" name="status"
+                                                value="1" {{ old('status', $status ?? 0) == 1 ? 'checked' : '' }}>
                                             <span class="switch-toggle-slider">
                                                 <span class="switch-on">
                                                     <i class="bx bx-check"></i>
@@ -369,7 +359,7 @@
                                             @enderror
                                         </label>
                                     </div>
-
+                                    <hr>
                                 </div>
                             </div>
                         </div>
