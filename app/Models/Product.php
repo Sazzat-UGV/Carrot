@@ -20,4 +20,7 @@ class Product extends Model
     public function brand(){
         return $this->belongsTo(Brand::class);
     }
+    public function warehouse(){
+        return $this->belongsTo(related: Warehouse::class);
+    }
 }

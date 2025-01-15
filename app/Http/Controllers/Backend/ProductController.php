@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\PickupPoint;
 use App\Models\Product;
+use App\Models\SubCategory;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,11 +18,34 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $products = Product::with('category:id,name', 'subcategory:id,name', 'brand:id,name')->latest('id')->paginate(10);
-        return view('backend.pages.product.index', compact('products'));
+        $categories = Category::latest()->get();
+        $brands     = Brand::latest()->get();
+        $warehouses = Warehouse::latest()->get();
+        $products   = Product::with('category:id,name', 'subcategory:id,name', 'brand:id,name')->latest('id');
+        if ($request->category) {
+            $products = $products->where('category_id', $request->category);
+        }
+        if ($request->brand) {
+            $products = $products->where('brand_id', $request->brand);
+        }
+        if ($request->warehouse) {
+            $products = $products->where('warehouse_id', $request->warehouse);
+        }
+        if ($request->status == 'active' || $request->status == 'inactive') {
+            if ($request->status == 'active') {
+                $status = 1;
+            } else {
+                $status = 0;
+            }
+            $products = $products->where('status', $status);
+        }
+        if ($request->search) {
+            $products = $products->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        $products = $products->paginate(10);
+        return view('backend.pages.product.index', compact('products', 'categories', 'brands', 'warehouses'));
     }
 
     /**
@@ -62,9 +86,9 @@ class ProductController extends Controller
             'code'            => $request->product_code,
             'user_id'         => Auth::user()->id,
             'category_id'     => $request->category,
-            'sub_category_id' => $request->category,
+            'sub_category_id' => $request->subcategory,
             'brand_id'        => $request->brand,
-            'Warehouse_id'    => $request->warehouse,
+            'warehouse_id'    => $request->warehouse,
             'pickup_point_id' => $request->pickup_point,
             'unit'            => $request->unit,
             'tags'            => $request->tags,
@@ -94,7 +118,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::with('category:id,name', 'subcategory:id,name', 'brand:id,name', 'warehouse:id,name')->where('id', $id)->first();
+        return view('backend.pages.product.show', compact('product'));
     }
 
     /**
@@ -102,7 +127,12 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories    = Category::where("status", 1)->latest("id")->get();
+        $brands        = Brand::latest("id")->get();
+        $pickup_points = PickupPoint::latest("id")->get();
+        $warehouses    = Warehouse::latest("id")->get();
+        $product       = Product::findOrFail($id);
+        return view('backend.pages.product.edit', compact('categories', 'brands', 'pickup_points', 'warehouses', 'product'));
     }
 
     /**
@@ -110,7 +140,55 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'product_name'      => 'required|string|max:255',
+            'product_code'      => 'required|string|max:255',
+            'category'          => 'required|numeric',
+            'brand'             => 'required|numeric',
+            'warehouse'         => 'required|numeric',
+            'pickup_point'      => 'nullable|numeric',
+            'unit'              => 'required|string',
+            'purchase_price'    => 'nullable|numeric',
+            'selling_price'     => 'required|numeric',
+            'discount_price'    => 'nullable|numeric',
+            'description'       => 'required|string',
+            'thumbnail'         => 'sometimes|image|mimes:png,jpg,jpeg|max:10240',
+            'multiple_images'   => 'sometimes|array',
+            'multiple_images.*' => 'image|mimes:png,jpg,jpeg|max:10240',
+        ]);
+        $product = Product::findOrFail($id);
+        $product->update([
+            'name'            => $request->product_name,
+            'code'            => $request->product_code,
+            'user_id'         => Auth::user()->id,
+            'category_id'     => $request->category,
+            'sub_category_id' => $request->subcategory ?? $product->sub_category_id,
+            'brand_id'        => $request->brand,
+            'warehouse_id'    => $request->warehouse,
+            'pickup_point_id' => $request->pickup_point,
+            'unit'            => $request->unit,
+            'tags'            => $request->tags,
+            'purchase_price'  => $request->purchase_price,
+            'selling_price'   => $request->selling_price,
+            'discount_price'  => $request->discount_price,
+            'color'           => $request->color,
+            'size'            => $request->size,
+            'stock_quantity'  => $request->stock,
+            'description'     => $request->description,
+            'video'           => $request->embeded_video,
+            'featured'        => $request->featured,
+            'today_deal'      => $request->today_deal,
+            'status'          => $request->status,
+        ]);
+
+        if ($request->hasFile('thumbnail')) {
+            $this->image_upload($request, $product);
+        }
+        if ($request->hasFile('multiple_images')) {
+            $this->multiple_images_upload($request, $product);
+        }
+        return redirect()->route('admin.product.index')->with('success', 'Product updated successfully.');
+
     }
 
     /**
@@ -118,7 +196,17 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+        if ($product->thumbnail) {
+            $this->deleteImages($product->thumbnail);
+        }
+
+        if ($product->images) {
+            $images = json_decode($product->images, true);
+            $this->deleteImages($images);
+        }
+        $product->delete();
+        return back()->with('success', 'Product deleted successfully.');
     }
 
     public function image_upload($request, $product)
@@ -141,8 +229,14 @@ class ProductController extends Controller
 
     public function multiple_images_upload(Request $request, $product)
     {
+        $currentImages = json_decode($product->images, true);
+        if ($currentImages) {
+            $this->deleteImages($currentImages);
+        }
         $images = [];
+
         if ($request->hasFile('multiple_images')) {
+            // Loop through the uploaded images
             foreach ($request->file('multiple_images') as $image) {
                 $photo_location = 'public/uploads/product/';
                 $photo_name     = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
@@ -156,18 +250,18 @@ class ProductController extends Controller
         }
     }
 
-    public function changeStatus($id)
+    public function featured($id)
     {
         $product = Product::findOrFail($id);
-        if ($product->status == 1) {
-            $product->status = 0;
+        if ($product->featured == 1) {
+            $product->featured = 0;
         } else {
-            $product->status = 1;
+            $product->featured = 1;
         }
         $product->update();
         return response()->json([
-            'type' => 'success',
-            'message' => 'Status Updated',
+            'type'    => 'success',
+            'message' => 'Featured Updated',
         ]);
     }
     public function todayDeal($id)
@@ -180,23 +274,45 @@ class ProductController extends Controller
         }
         $product->update();
         return response()->json([
-            'type' => 'success',
-            'message' => 'Status Updated',
+            'type'    => 'success',
+            'message' => 'Today Deal Updated',
         ]);
     }
-    public function featured($id)
+    public function changeStatus($id)
     {
         $product = Product::findOrFail($id);
-        if ($product->featured == 1) {
-            $product->featured = 0;
+        if ($product->status == 1) {
+            $product->status = 0;
         } else {
-            $product->featured = 1;
+            $product->status = 1;
         }
         $product->update();
         return response()->json([
-            'type' => 'success',
+            'type'    => 'success',
             'message' => 'Status Updated',
         ]);
     }
 
+    public function subCategory($id)
+    {
+        $subcategories = SubCategory::where('category_id', $id)->get();
+        return response()->json([
+            'status'        => true,
+            'message'       => 'Subcategory retrieve successfully.',
+            'subcategories' => $subcategories,
+        ]);
+    }
+
+    public function deleteImages($paths)
+    {
+        $paths = is_array($paths) ? $paths : [$paths];
+
+        foreach ($paths as $path) {
+            $fullPath = base_path('public/uploads/product/' . $path);
+
+            if (File::exists($fullPath) && ! is_dir($fullPath)) {
+                File::delete($fullPath);
+            }
+        }
+    }
 }

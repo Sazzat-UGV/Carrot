@@ -65,7 +65,7 @@
                                             name="category">
                                             <option value="">Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}"
+                                                <option value="{{ $category->id }}" data-id="{{ $category->id }}"
                                                     {{ old('category') == $category->id ? 'selected' : '' }}>
                                                     {{ $category->name }}
                                                 </option>
@@ -77,19 +77,13 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12  col-md-6 mb-4">
-                                        <label class="form-label">SubCategory<span class="text-danger">*</span></label>
-                                        <select id="sub_category"
-                                            class="form-select @error('sub_category') is-invalid @enderror"
-                                            name="sub_category">
-                                            <option value="">Select Type</option>
-                                            <option value="Fixed" {{ old('type') == 'Fixed' ? 'selected' : '' }}>Fixed
-                                            </option>
-                                            <option value="Percentage" {{ old('type') == 'Percentage' ? 'selected' : '' }}>
-                                                Percentage
-                                            </option>
-                                        </select>
-                                        @error('sub_category')
+                                    <div class="col-12 col-md-6 mb-4">
+                                        <label class="form-label">Subcategory<span class="text-danger">*</span></label>
+                                        <select id="subcategory"
+                                            class="form-select @error('subcategory') is-invalid @enderror"
+                                            name="subcategory"></select>
+
+                                        @error('subcategory')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -391,5 +385,42 @@
             .catch(error => {
                 console.error(error);
             });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#category').change(function() {
+                var categoryId = $(this).val();
+                if (categoryId) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/admin/product/sub-category/' + categoryId,
+                        dataType: 'JSON',
+                        success: function(response) {
+                            if (response.subcategories && response.subcategories.length > 0) {
+                                $('#subcategory').html(
+                                    '<option value="">Select Subcategory</option>');
+                                $.each(response.subcategories, function(index, subcategory) {
+
+                                    $('#subcategory').append('<option value="' +
+                                        subcategory.id + '">' + subcategory.name +
+                                        '</option>');
+                                });
+                            } else {
+                                $('#subcategory').html(
+                                    '<option value="">No subcategories available</option>');
+                            }
+                        },
+                        error: function(err) {
+                            console.error(err);
+                            Swal.fire('Error!',
+                                'Unable to fetch subcategories, please try again later.',
+                                'error');
+                        }
+                    });
+                } else {
+                    $('#subcategory').html('<option value="">Select Subcategory</option>');
+                }
+            });
+        });
     </script>
 @endpush

@@ -79,6 +79,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('category/status/{id}', [CategoryController::class, 'changeStatus'])->name('category.status');
         Route::get('subcategory/status/{id}', [SubCategoryController::class, 'changeStatus'])->name('subcategory.status');
         Route::get('coupon/status/{id}', [CouponController::class, 'changeStatus'])->name('coupon.status');
+        Route::get('product/status/{id}', [ProductController::class, 'changeStatus'])->name('product.status');
+        Route::get('product/featured/{id}', [ProductController::class, 'featured'])->name('product.featured');
+        Route::get('product/today-deal/{id}', [ProductController::class, 'todayDeal'])->name('product.todayDeal');
+        Route::get('product/sub-category/{id}', [ProductController::class, 'subCategory'])->name('product.subCategory');
     });
 });
 

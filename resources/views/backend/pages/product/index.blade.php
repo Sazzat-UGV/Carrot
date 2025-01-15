@@ -21,6 +21,62 @@
                             Product</a>
                     </div>
                     <form action="{{ route('admin.product.index') }}" method="GET">
+                        <div class="row">
+                            <div class="col-12 d-flex flex-wrap gap-3">
+                                <div class="col-12 col-md-2 mb-4">
+                                    <label class="form-label">Category</label>
+                                    <select id="category" class="form-select" name="category">
+                                        <option value="">Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                @if (request('category') == $category->id) selected @endif>{{ $category->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-2 mb-4">
+                                    <label class="form-label">Brand</label>
+                                    <select id="brand" class="form-select @error('brand') is-invalid @enderror"
+                                        name="brand">
+                                        <option value="">Select Brand</option>
+                                        @foreach ($brands as $brand)
+                                            <option value="{{ $brand->id }}"
+                                                @if (request('brand') == $brand->id) selected @endif>{{ $brand->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-2 mb-4">
+                                    <label class="form-label">Warehouse</label>
+                                    <select id="warehouse" class="form-select @error('warehouse') is-invalid @enderror"
+                                        name="warehouse">
+                                        <option value="">Select Warehouse</option>
+                                        @foreach ($warehouses as $warehouse)
+                                            <option value="{{ $warehouse->id }}"
+                                                @if (request('warehouse') == $warehouse->id) selected @endif>{{ $warehouse->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-2 mb-4">
+                                    <label class="form-label">Status</label>
+                                    <select id="status" class="form-select @error('status') is-invalid @enderror"
+                                        name="status">
+                                        <option>Select Status</option>
+                                        <option value="active" @if (request('status') == 'active') selected @endif>Active
+                                        </option>
+                                        <option value="inactive" @if (request('status') == 'inactive') selected @endif>Inactive
+                                        </option>
+                                    </select>
+                                    @error('status')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row d-flex justify-content-end">
                             <div class="col-auto mb-4 d-flex">
                                 <input class="form-control me-2" type="text" placeholder="Search" name="search"
@@ -37,7 +93,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Thumbnail</th>
-                                    <th>Name</th>
+                                    <th>Product Name</th>
                                     <th>Code</th>
                                     <th>Category</th>
                                     <th>Subcategory</th>
@@ -63,7 +119,7 @@
                                         <td class="wrap">{{ $product->brand->name }}</td>
                                         <td>
                                             <label class="switch switch-success">
-                                                <input class="switch-input toggle-class" type="checkbox"
+                                                <input class="switch-input featured" type="checkbox"
                                                     data-id="{{ $product->id }}" id="product-{{ $product->id }}"
                                                     {{ $product->featured ? 'checked' : '' }}>
                                                 <span class="switch-toggle-slider">
@@ -78,7 +134,7 @@
                                         </td>
                                         <td>
                                             <label class="switch switch-success">
-                                                <input class="switch-input toggle-class" type="checkbox"
+                                                <input class="switch-input today-deal" type="checkbox"
                                                     data-id="{{ $product->id }}" id="product-{{ $product->id }}"
                                                     {{ $product->today_deal ? 'checked' : '' }}>
                                                 <span class="switch-toggle-slider">
@@ -93,7 +149,7 @@
                                         </td>
                                         <td>
                                             <label class="switch switch-success">
-                                                <input class="switch-input toggle-class" type="checkbox"
+                                                <input class="switch-input status" type="checkbox"
                                                     data-id="{{ $product->id }}" id="product-{{ $product->id }}"
                                                     {{ $product->status ? 'checked' : '' }}>
                                                 <span class="switch-toggle-slider">
@@ -147,10 +203,10 @@
     <script>
         $(document).ready(function() {
 
-            $('.toggle-class').change(function() {
+            $('.featured').change(function() {
                 var is_active = $(this).prop('checked') ? 1 : 0;
                 var item_id = $(this).data('id');
-                var url = '{{ route('admin.user.status', ':id') }}'.replace(':id', item_id);
+                var url = '{{ route('admin.product.featured', ':id') }}'.replace(':id', item_id);
 
                 $.ajax({
                     type: "GET",
@@ -159,7 +215,59 @@
                     success: function(response) {
                         Swal.fire(
                             'Status Updated!',
-                            'The user status has been successfully updated.',
+                            'The status has been successfully updated.',
+                            'success'
+                        );
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        Swal.fire(
+                            'Error!',
+                            'Unable to update status. Please try again later.',
+                            'error'
+                        );
+                    }
+                });
+            });
+            $('.today-deal').change(function() {
+                var is_active = $(this).prop('checked') ? 1 : 0;
+                var item_id = $(this).data('id');
+                var url = '{{ route('admin.product.todayDeal', ':id') }}'.replace(':id', item_id);
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "JSON",
+                    success: function(response) {
+                        Swal.fire(
+                            'Status Updated!',
+                            'The status has been successfully updated.',
+                            'success'
+                        );
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        Swal.fire(
+                            'Error!',
+                            'Unable to update status. Please try again later.',
+                            'error'
+                        );
+                    }
+                });
+            });
+            $('.status').change(function() {
+                var is_active = $(this).prop('checked') ? 1 : 0;
+                var item_id = $(this).data('id');
+                var url = '{{ route('admin.product.status', ':id') }}'.replace(':id', item_id);
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "JSON",
+                    success: function(response) {
+                        Swal.fire(
+                            'Status Updated!',
+                            'The status has been successfully updated.',
                             'success'
                         );
                     },
