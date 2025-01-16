@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('site_name')->nullable();
             $table->string('site_logo')->nullable();
             $table->string('site_favicon')->nullable();
+            $table->string('currency')->default('$');
             $table->text('site_description')->nullable();
             $table->text('site_keywords')->nullable();
             $table->text('map')->nullable();

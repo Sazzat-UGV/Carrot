@@ -111,10 +111,20 @@ General Setting
                                             role="alert"><strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
-                                <div class="col-12 mb-4">
+                                <div class="col-12 col-md-10 mb-4">
                                     <label class="form-label">Site Keywords</label>
                                     <input type="text" id="siteKeywords" name="site_keywords"
                                         value="{{ old('site_keywords', $setting->site_keywords) }}" class="form-control">
+                                </div>
+                                <div class="col-12 col-md-2 mb-4">
+                                    <label class="form-label">Currency</label>
+                                    <select id="currency" class="form-select @error('currency') is-invalid @enderror" name="currency">
+                                        <option value="$" {{ $setting->currency=='$'?'selected':'' }}>USD</option>
+                                        <option value="৳" {{ $setting->currency=='৳'?'selected':'' }}>Taka</option>
+                                    </select>
+                                    @error('currency')
+                                        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                    @enderror
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary px-4" type="submit">Save</button>
