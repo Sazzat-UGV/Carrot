@@ -8,6 +8,12 @@
             white-space: normal !important;
             word-wrap: break-word;
         }
+
+        .description-content {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
+        }
     </style>
 @endpush
 @section('content')
@@ -171,9 +177,11 @@
                                                     <a class="dropdown-item"
                                                         href="{{ route('admin.product.edit', $product->id) }}"><i
                                                             class="bx bx-edit me-1"></i> Edit</a>
-                                                    <a class="dropdown-item"
-                                                        href="{{ route('admin.product.show', $product->id) }}"><i
+
+                                                    <a class="dropdown-item" data-bs-toggle="modal"
+                                                        data-bs-target="#addNewAddress{{ $product->id }}"><i
                                                             class="bx bx-show-alt me-1"></i> View</a>
+
                                                     <form action="{{ route('admin.product.destroy', $product->id) }}"
                                                         class="show_confirm" method="POST">
                                                         @csrf
@@ -186,6 +194,125 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <div class="modal fade" id="addNewAddress{{ $product->id }}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-lg modal-simple modal-add-new-address">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                    <div class="container-fluid">
+                                                        <div class="row">
+                                                            <div class="col-12 mb-1">
+                                                                <div class="row">
+                                                                    <img src="{{ asset('uploads/product') }}/{{ $product->thumbnail }}"
+                                                                        alt="" class="img-fluid"
+                                                                        style="max-height: 200px; object-fit: cover;">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 mb-5">
+                                                                <div class="row">
+                                                                    @foreach (json_decode($product->images, true) as $image)
+                                                                        <img src="{{ asset('uploads/product/' . $image) }}"
+                                                                            alt="" class="w-20 mb-1">
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-md-8 mb-4">
+                                                                <label class="form-label">Product Name</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->name }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-4 mb-4">
+                                                                <label class="form-label">Product Code</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->code }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Category</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->category->name }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Subcategory</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->subcategory->name }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Brand</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->brand->name }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Pickup Point</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->pickup_point->name }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Unit</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->unit }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Tags</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ implode(', ', array_column(json_decode($product->tags, true), 'value')) }}"
+                                                                    disabled>
+                                                            </div>
+
+                                                            <div class="col-12 col-md-4 mb-4">
+                                                                <label class="form-label">Purchase Price</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->purchase_price }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-4 mb-4">
+                                                                <label class="form-label">Selling Price</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->selling_price }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-4 mb-4">
+                                                                <label class="form-label">Discount Price</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->discount_price }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Warehouse</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->warehouse->name }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Stock</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->stock_quantity }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Color</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->color }}" disabled>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 mb-4">
+                                                                <label class="form-label">Size</label>
+                                                                <input class="form-control" type="text"
+                                                                    value="{{ $product->size }}" disabled>
+                                                            </div>
+                                                            <hr>
+                                                            <div class="col-12 mb-4">
+                                                                <label class="form-label">Description</label>
+                                                                <div class="description-content my-0">
+                                                                    {!! $product->description !!}
+                                                                </div>
+                                                            </div>
+                                                            <hr>
+                                                            @if ($product->video)
+                                                                <label class="form-label">Video</label>
+                                                                {!! $product->video !!}
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>

@@ -118,8 +118,6 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        $product = Product::with('category:id,name', 'subcategory:id,name', 'brand:id,name', 'warehouse:id,name')->where('id', $id)->first();
-        return view('backend.pages.product.show', compact('product'));
     }
 
     /**

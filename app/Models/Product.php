@@ -21,6 +21,9 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
     public function warehouse(){
-        return $this->belongsTo(related: Warehouse::class);
+        return $this->belongsTo( Warehouse::class);
+    }
+    public function pickup_point(){
+        return $this->belongsTo( PickupPoint::class,'pickup_point_id');
     }
 }

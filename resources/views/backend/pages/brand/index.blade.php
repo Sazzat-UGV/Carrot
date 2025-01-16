@@ -42,7 +42,7 @@
                                         <th>{{ $index + 1 }}</th>
                                         <td>{{ $brand->created_at->diffForHumans() }}</td>
                                         <td><img src="{{ asset('uploads/brand') }}/{{ $brand->photo }}" alt=""
-                                                class="w-50"></td>
+                                                class="w-25"></td>
                                         <td class="wrap">{{ $brand->name }}</td>
                                         <td>
                                             <div class="dropdown">
