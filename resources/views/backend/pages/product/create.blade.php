@@ -139,7 +139,7 @@
                                         <label class="form-label">Tags</label>
                                         <input class="form-control @error('tags') is-invalid @enderror" type="text"
                                             placeholder="Enter tags" name="tags" value="{{ old('tags') }}"
-                                            id="siteKeywords">
+                                            id="tags">
                                         @error('tags')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -211,7 +211,8 @@
                                     <div class="col-12 col-md-6 mb-4">
                                         <label class="form-label">Color</label>
                                         <input class="form-control @error('color') is-invalid @enderror" type="text"
-                                            placeholder="Enter color" name="color" value="{{ old('color') }}">
+                                            placeholder="Enter color" name="color" id="color"
+                                            value="{{ old('color') }}">
                                         @error('color')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -221,7 +222,8 @@
                                     <div class="col-12 col-md-6 mb-4">
                                         <label class="form-label">Size</label>
                                         <input class="form-control @error('size') is-invalid @enderror" type="text"
-                                            placeholder="Enter size" name="size" value="{{ old('size') }}">
+                                            placeholder="Enter size" name="size" id="size"
+                                            value="{{ old('size') }}">
                                         @error('size')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -377,8 +379,12 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>
         $('.dropify').dropify();
-        var input = document.querySelector('#siteKeywords');
-        var tagify = new Tagify(input);
+        var tags = document.querySelector('#tags');
+        var color = document.querySelector('#color');
+        var size = document.querySelector('#size');
+        var tagify1 = new Tagify(tags);
+        var tagify2 = new Tagify(color);
+        var tagify3 = new Tagify(size);
 
         ClassicEditor
             .create(document.querySelector('#editor'))

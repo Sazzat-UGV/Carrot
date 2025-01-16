@@ -288,12 +288,14 @@
                                                             <div class="col-12 col-md-6 mb-4">
                                                                 <label class="form-label">Color</label>
                                                                 <input class="form-control" type="text"
-                                                                    value="{{ $product->color }}" disabled>
+                                                                    value="{{ implode(', ', array_column(json_decode($product->color, true), 'value')) }}"
+                                                                    disabled>
                                                             </div>
                                                             <div class="col-12 col-md-6 mb-4">
                                                                 <label class="form-label">Size</label>
                                                                 <input class="form-control" type="text"
-                                                                    value="{{ $product->size }}" disabled>
+                                                                    value="{{ implode(', ', array_column(json_decode($product->size, true), 'value')) }}"
+                                                                    disabled>
                                                             </div>
                                                             <hr>
                                                             <div class="col-12 mb-4">

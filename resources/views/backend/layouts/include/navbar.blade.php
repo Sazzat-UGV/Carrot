@@ -6,8 +6,8 @@
         </a>
     </div>
     <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+       <a href="{{ route('homePage') }}" class="btn btn-outline-warning">Home Page</a>
         <ul class="navbar-nav flex-row align-items-center ms-auto">
-
             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" aria-expanded="false">

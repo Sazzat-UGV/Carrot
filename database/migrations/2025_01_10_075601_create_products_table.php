@@ -27,8 +27,8 @@ return new class extends Migration
             $table->unsignedBigInteger('purchase_price')->nullable();
             $table->unsignedBigInteger('selling_price')->nullable();
             $table->unsignedBigInteger('discount_price')->nullable();
-            $table->string('color')->nullable();
-            $table->string('size')->nullable();
+            $table->json('color')->nullable();
+            $table->json('size')->nullable();
             $table->unsignedBigInteger('stock_quantity')->nullable();
             $table->longText('description')->nullable();
             $table->string('thumbnail')->nullable();
