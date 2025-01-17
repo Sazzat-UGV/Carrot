@@ -5,11 +5,12 @@
                 <div class="col-xl-4 col-lg-6 col-sm-12 col-12 cr-footer-border">
                     <div class="cr-footer-logo">
                         <div class="image">
-                            <img src="{{ asset('assets/frontend') }}/img/logo/logo.png" alt="logo" class="logo">
-                            <img src="{{ asset('assets/frontend') }}/img/logo/dark-logo.png" alt="logo"
+                            <img src="{{ asset('uploads/settings') }}/{{ $setting->site_logo }}" alt="logo"
+                                class="logo">
+                            <img src="{{ asset('uploads/settings') }}/{{ $setting->site_logo }}" alt="logo"
                                 class="dark-logo">
                         </div>
-                        <p>Carrot is the biggest market of grocery products. Get your daily needs from our store.
+                        <p>{{ $setting->site_description }}
                         </p>
                     </div>
                     <div class="cr-footer">
@@ -19,13 +20,13 @@
                         </h4>
                         <ul class="cr-footer-links cr-footer-dropdown">
                             <li class="location-icon">
-                                51 Green St.Huntington ohaio beach ontario, NY 11746 KY 4783, USA.
+                                {{ $setting->physical_address }}
                             </li>
                             <li class="mail-icon">
-                                <a href="javascript:void(0)">example@email.com</a>
+                                <a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a>
                             </li>
                             <li class="phone-icon">
-                                <a href="javascript:void(0)"> +91 123 4567890</a>
+                                <a href="{{ $setting->phone_number }}">{{ $setting->phone_number }}</a>
                             </li>
                         </ul>
                     </div>
@@ -78,10 +79,25 @@
                             </form>
                         </div>
                         <div class="cr-social-media">
-                            <span><a href="javascript:void(0)"><i class="ri-facebook-line"></i></a></span>
-                            <span><a href="javascript:void(0)"><i class="ri-twitter-x-line"></i></a></span>
-                            <span><a href="javascript:void(0)"><i class="ri-dribbble-line"></i></a></span>
-                            <span><a href="javascript:void(0)"><i class="ri-instagram-line"></i></a></span>
+                            @if ($setting->facebook_url)
+                                <span><a href="{{ $setting->facebook_url }}"><i
+                                            class="ri-facebook-line"></i></a></span>
+                            @endif
+                            @if ($setting->twitter_url)
+                                <span><a href="{{ $setting->twitter_url }}"><i
+                                            class="ri-twitter-x-line"></i></a></span>
+                            @endif
+                            @if ($setting->instagram_url)
+                                <span><a href="{{ $setting->instagram_url }}"><i
+                                            class="ri-instagram-line"></i></a></span>
+                            @endif
+                            @if ($setting->linkedin_url)
+                                <span><a href="{{ $setting->linkedin_url }}"><i
+                                            class="ri-linkedin-line"></i></a></span>
+                            @endif
+                            @if ($setting->youtube_url)
+                                <span><a href="{{ $setting->youtube_url }}"><i class="ri-youtube-line"></i></a></span>
+                            @endif
                         </div>
                         <div class="cr-apps">
                             <a href="#" class="app-img"><img
@@ -95,7 +111,8 @@
                 </div>
             </div>
             <div class="cr-last-footer">
-                <p>&copy; <span id="copyright_year"></span> <a href="index.html">Carrot</a>, All rights reserved.
+                <p>&copy; <span id="copyright_year"></span> <a
+                        href="{{ route('homePage') }}">{{ $setting->site_name }}</a>, All rights reserved.
                 </p>
                 <div class="payment-link">
                     <img src="{{ asset('assets/frontend') }}/img/banner/payment.png" alt="payment">

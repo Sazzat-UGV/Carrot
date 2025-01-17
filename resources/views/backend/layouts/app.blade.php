@@ -19,7 +19,7 @@
                 @include('backend.layouts.include.navbar')
                 <div class="content-wrapper">
                     <div class="container-fluid flex-grow-1 container-p-y">
-                            @yield('content')
+                        @yield('content')
                     </div>
                     @include('backend.layouts.include.footer')
                     <div class="content-backdrop fade"></div>

@@ -18,6 +18,6 @@
 
 <!-- Main CSS -->
 <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/demo-2.css">
-<link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/color-3.css" id="add_class">
-
+{{-- <link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/color-3.css" id="add_class"> --}}
+<link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/style.css">
 @stack('style')

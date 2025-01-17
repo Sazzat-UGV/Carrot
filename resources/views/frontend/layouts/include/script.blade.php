@@ -15,4 +15,27 @@
 <script src="{{ asset('assets/frontend') }}/js/main.js"></script>
 <script src="{{ asset('assets/frontend') }}/js/demo-2.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Logout confirmation-->
+<script>
+    $(document).ready(function() {
+        $('.logout').on('submit', function(event) {
+            event.preventDefault();
+            var link = $(this).attr('href');
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#64B496",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, logout!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            });
+        });
+    });
+</script>
 @stack('script')

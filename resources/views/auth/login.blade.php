@@ -1,47 +1,78 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+@extends('frontend.layouts.app')
+@section('title')
+    Register
+@endsection
+@push('style')
+@endpush
+@section('content')
+    @include('frontend.layouts.include.breadcrumb', ['page_name' => 'Login'])
+    <section class="section-login padding-tb-100">
+        <div class="container">
+            <div class="row d-none">
+                <div class="col-lg-12">
+                    <div class="mb-30 aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
+                        <div class="cr-banner">
+                            <h2>Login</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="cr-register aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000"
+                        data-aos-delay="400">
+                        <div class="form-logo">
+                            <img src="{{ asset('uploads/settings') }}/{{ $setting->site_logo }}" alt="logo">
+                        </div>
+                        @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                        <form class="cr-content-form" method="POST" action="{{ route('login') }}">
+                            @csrf
+                            <div class="form-group">
+                                <label>Email<span class="text-danger">*</span></label>
+                                <input type="email" placeholder="Enter your email"
+                                    class="cr-form-control form-control @error('email')
+                                    is-invalid
+                                @enderror"
+                                    name="email">
+                                @error('email')
+                                    <span class="invalid-feedback" style="font-size: 11px"
+                                        role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Password<span class="text-danger">*</span></label>
+                                <input type="password" placeholder="Enter your password"
+                                    class="cr-form-control form-control @error('password')
+                                    is-invalid
+                                @enderror"
+                                    name="password">
+                                @error('password')
+                                    <span class="invalid-feedback" style="font-size: 11px"
+                                        role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                            <div class="cr-register-buttons d-flex align-items-center">
+                                <input id="remember_me" type="checkbox" name="remember">
+                                <label for="html" class="ms-2 me-auto">Remember Me</label>
+                                <a class="link" href="{{ route('password.request') }}">Forgot Password?</a>
+                            </div>
+                            <br>
+                            <div class="cr-register-buttons">
+                                <button type="submit" class="cr-button">Login</button>
+                                <a href="{{ route('register') }}" class="link">
+                                    Signup?
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </section>
+@endsection
+@push('script')
+@endpush
