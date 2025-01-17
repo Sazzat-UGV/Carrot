@@ -1,5 +1,5 @@
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="{{ asset('assets/frontend/img/logo/favicon.png') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('uploads/settings') }}/{{ $setting->site_favicon }}" />
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com/">
 <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>

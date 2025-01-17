@@ -19,7 +19,7 @@ class GeneralSettingController extends Controller
     {
         $setting = GeneralSetting::where('id', 1)->first();
 
-        if ($request->hasAny(['site_name', 'site_logo', 'site_favicon', 'site_description', 'site_keywords'])) {
+        if ($request->hasAny(['site_name', 'site_logo', 'site_favicon', 'site_description', 'site_keywords','currency'])) {
             $request->validate([
                 'site_name' => 'nullable|string|max:50',
                 'site_logo' => 'sometimes|image|mimes:png,jpg,jpeg',
@@ -29,6 +29,7 @@ class GeneralSettingController extends Controller
                 'site_name' => $request->site_name,
                 'site_description' => $request->site_description,
                 'site_keywords' => $request->site_keywords,
+                'currency' => $request->currency,
             ]);
             $this->image_upload($request, $setting);
             return redirect()->route('admin.general_setting_page', ['stage' => 'site'])->with('success', 'Setting has been updated.');
