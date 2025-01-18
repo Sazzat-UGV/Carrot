@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Kevin J. Harter',
-            'email' => 'KevinJHarter@rhyta.com',
+            'email' => 'user@gmail.com',
             'address' => '115 Rainbow Drive Richfield, OH 44286',
             'phone' => '330-523-6618',
             'role' => 'User',

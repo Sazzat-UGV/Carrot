@@ -40,8 +40,8 @@
                                     @auth
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a class=" text-start" href="dashboard.html">
-                                                    Dashboard
+                                                <a class=" text-start" href="{{ route('dashboard') }}">
+                                                    My Profile
                                                 </a>
                                             </li>
                                             <li>
@@ -154,7 +154,7 @@
                                     <ul class="dropdown-menu">
                                         @auth
                                             <li>
-                                                <a class="dropdown-item" href="register.html">Dashboard</a>
+                                                <a class="dropdown-item" href="{{ route('dashboard') }}">My Profile</a>
                                             </li>
                                             <li>
                                                 <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 logout">

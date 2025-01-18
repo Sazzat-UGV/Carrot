@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\WarehouseController;
+use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -95,14 +96,8 @@ Route::prefix('/')->group(function () {
     Route::get('product/details/{slug}', [HomeController::class, 'productDetail'])->name('productDetail');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', [FrontendDashboardController::class, 'dashboard'])->name('dashboard');
+});
 
 require __DIR__ . '/auth.php';
