@@ -862,7 +862,7 @@ a.back-to-top .back-to-top-wrap svg path {
   width: 70px;
   height: 60px;
   content: "";
-  background-image: url("../img/blog/shape-3.png");
+  /* background-image: url("../img/blog/shape-3.png"); */
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -875,7 +875,7 @@ a.back-to-top .back-to-top-wrap svg path {
   width: 60px;
   height: 60px;
   content: "";
-  background-image: url("../img/shape/12.png");
+  /* background-image: url("../img/shape/12.png"); */
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -891,7 +891,7 @@ a.back-to-top .back-to-top-wrap svg path {
   width: 120px;
   height: 60px;
   content: "";
-  background-image: url("../img/shape/13.png");
+  /* background-image: url("../img/shape/13.png"); */
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;
