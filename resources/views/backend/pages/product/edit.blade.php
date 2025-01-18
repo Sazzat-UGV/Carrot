@@ -128,18 +128,8 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-6 mb-4">
-                                        <label class="form-label">Unit<span class="text-danger">*</span></label>
-                                        <input class="form-control @error('unit') is-invalid @enderror" type="number"
-                                            placeholder="Enter unit" name="unit"
-                                            value="{{ old('unit', $product->unit) }}">
-                                        @error('unit')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-12 col-md-6 mb-4">
+
+                                    <div class="col-12 mb-4">
                                         <label class="form-label">Tags</label>
                                         <input class="form-control @error('tags') is-invalid @enderror" type="text"
                                             placeholder="Enter tags" name="tags"
@@ -236,31 +226,32 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-4">
-                                        <label class="form-label">Description<span class="text-danger">*</span></label>
-                                        <textarea name="description" id="editor" cols="30" rows="5"
-                                            class="form-control @error('description')
+                                        <label class="form-label">Short Description<span class="text-danger">*</span></label>
+                                        <textarea name="short_description" id="" cols="30" rows="5"
+                                            class="form-control @error('short_description')
                                     is-invalid
                                     @enderror"
-                                            placeholder="Enter product description">{{ old('description', $product->description) }}</textarea>
-                                        @error('size')
+                                            placeholder="Enter short description">{{ old('short_description', $product->short_description) }}</textarea>
+                                        @error('short_description')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-4">
-                                        <label class="form-label">Embeded Video</label>
-                                        <textarea name="embeded_video" id="" cols="30" rows="3"
-                                            class="form-control @error('embeded_video')
+                                        <label class="form-label">Description<span class="text-danger">*</span></label>
+                                        <textarea name="description" id="editor" cols="30" rows="5"
+                                            class="form-control @error('description')
                                     is-invalid
                                     @enderror"
-                                            placeholder="Enter embeded video">{{ old('embeded_video', $product->video) }}</textarea>
-                                        @error('size')
+                                            placeholder="Enter product description">{{ old('description', $product->description) }}</textarea>
+                                        @error('description')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
                                     </div>
+                                   
                                 </div>
                             </div>
 

@@ -20,16 +20,16 @@ return new class extends Migration
             $table->foreignId('warehouse_id')->nullable()->constrained('warehouses')->cascadeOnDelete();
             $table->foreignId('pickup_point_id')->nullable()->constrained('pickup_points')->cascadeOnDelete();
             $table->string('name');
+            $table->string('slug');
             $table->string('code');
-            $table->string('unit')->nullable();
             $table->json('tags')->nullable();
-            $table->text('video')->nullable();
             $table->unsignedBigInteger('purchase_price')->nullable();
             $table->unsignedBigInteger('selling_price')->nullable();
             $table->unsignedBigInteger('discount_price')->nullable();
             $table->json('color')->nullable();
             $table->json('size')->nullable();
             $table->unsignedBigInteger('stock_quantity')->nullable();
+            $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->json('images')->nullable();

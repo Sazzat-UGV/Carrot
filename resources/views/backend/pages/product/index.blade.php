@@ -248,12 +248,7 @@
                                                                 <input class="form-control" type="text"
                                                                     value="{{ $product->pickup_point->name }}" disabled>
                                                             </div>
-                                                            <div class="col-12 col-md-6 mb-4">
-                                                                <label class="form-label">Unit</label>
-                                                                <input class="form-control" type="text"
-                                                                    value="{{ $product->unit }}" disabled>
-                                                            </div>
-                                                            <div class="col-12 col-md-6 mb-4">
+                                                            <div class="col-12 mb-4">
                                                                 <label class="form-label">Tags</label>
                                                                 <input class="form-control" type="text"
                                                                     value="{{ implode(', ', array_column(json_decode($product->tags, true), 'value')) }}"
@@ -297,6 +292,12 @@
                                                                     value="{{ implode(', ', array_column(json_decode($product->size, true), 'value')) }}"
                                                                     disabled>
                                                             </div>
+                                                            <div class="col-12 mb-4">
+                                                                <label class="form-label">Short Description</label>
+                                                                <textarea cols="30" rows="5" disabled
+                                                                class="form-control "
+                                                               >{{ $product->short_description}}</textarea>
+                                                            </div>
                                                             <hr>
                                                             <div class="col-12 mb-4">
                                                                 <label class="form-label">Description</label>
@@ -304,11 +305,7 @@
                                                                     {!! $product->description !!}
                                                                 </div>
                                                             </div>
-                                                            <hr>
-                                                            @if ($product->video)
-                                                                <label class="form-label">Video</label>
-                                                                {!! $product->video !!}
-                                                            @endif
+                                                          
                                                         </div>
                                                     </div>
                                                 </div>

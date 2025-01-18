@@ -1,17 +1,18 @@
 <?php
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use Image;
 use App\Models\Brand;
-use App\Models\Category;
-use App\Models\PickupPoint;
 use App\Models\Product;
-use App\Models\SubCategory;
+use App\Models\Category;
 use App\Models\Warehouse;
+use App\Models\PickupPoint;
+use App\Models\SubCategory;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Image;
 
 class ProductController extends Controller
 {
@@ -66,13 +67,12 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'product_name'      => 'required|string|max:255',
+            'product_name'      => 'required|string|max:255|unique:products,name',
             'product_code'      => 'required|string|max:255',
             'category'          => 'required|numeric',
             'brand'             => 'required|numeric',
             'warehouse'         => 'required|numeric',
             'pickup_point'      => 'nullable|numeric',
-            'unit'              => 'required|string',
             'purchase_price'    => 'nullable|numeric',
             'selling_price'     => 'required|numeric',
             'discount_price'    => 'nullable|numeric',
@@ -83,6 +83,7 @@ class ProductController extends Controller
         ]);
         $product = Product::create([
             'name'            => $request->product_name,
+            'slug'=>Str::slug($request->product_name),
             'code'            => $request->product_code,
             'user_id'         => Auth::user()->id,
             'category_id'     => $request->category,
@@ -90,7 +91,6 @@ class ProductController extends Controller
             'brand_id'        => $request->brand,
             'warehouse_id'    => $request->warehouse,
             'pickup_point_id' => $request->pickup_point,
-            'unit'            => $request->unit,
             'tags'            => $request->tags,
             'purchase_price'  => $request->purchase_price,
             'selling_price'   => $request->selling_price,
@@ -138,14 +138,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $product = Product::findOrFail($id);
         $request->validate([
-            'product_name'      => 'required|string|max:255',
+            'product_name'      => 'required|string|max:255|unique:products,name,'.$product->id,
             'product_code'      => 'required|string|max:255',
             'category'          => 'required|numeric',
             'brand'             => 'required|numeric',
             'warehouse'         => 'required|numeric',
             'pickup_point'      => 'nullable|numeric',
-            'unit'              => 'required|string',
             'purchase_price'    => 'nullable|numeric',
             'selling_price'     => 'required|numeric',
             'discount_price'    => 'nullable|numeric',
@@ -154,9 +154,9 @@ class ProductController extends Controller
             'multiple_images'   => 'sometimes|array',
             'multiple_images.*' => 'image|mimes:png,jpg,jpeg|max:10240',
         ]);
-        $product = Product::findOrFail($id);
         $product->update([
             'name'            => $request->product_name,
+               'slug'=>Str::slug($request->product_name),
             'code'            => $request->product_code,
             'user_id'         => Auth::user()->id,
             'category_id'     => $request->category,
@@ -164,7 +164,6 @@ class ProductController extends Controller
             'brand_id'        => $request->brand,
             'warehouse_id'    => $request->warehouse,
             'pickup_point_id' => $request->pickup_point,
-            'unit'            => $request->unit,
             'tags'            => $request->tags,
             'purchase_price'  => $request->purchase_price,
             'selling_price'   => $request->selling_price,

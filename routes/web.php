@@ -92,6 +92,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
 Route::prefix('/')->group(function () {
     Route::get('', [HomeController::class, 'homePage'])->name('homePage');
+    Route::get('product/details/{slug}', [HomeController::class, 'productDetail'])->name('productDetail');
 });
 
 Route::get('/dashboard', function () {
