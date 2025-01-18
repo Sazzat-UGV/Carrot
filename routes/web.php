@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\PageController;
+use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\WarehouseController;
@@ -46,6 +47,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('coupon', CouponController::class);
         Route::resource('pickup-point', PickupPointController::class);
         Route::resource('product', ProductController::class);
+        Route::resource('slider', SliderController::class);
 
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
@@ -84,6 +86,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('product/featured/{id}', [ProductController::class, 'featured'])->name('product.featured');
         Route::get('product/today-deal/{id}', [ProductController::class, 'todayDeal'])->name('product.todayDeal');
         Route::get('product/sub-category/{id}', [ProductController::class, 'subCategory'])->name('product.subCategory');
+        Route::get('slider/status/{id}', [SliderController::class, 'changeStatus'])->name('slider.status');
     });
 });
 

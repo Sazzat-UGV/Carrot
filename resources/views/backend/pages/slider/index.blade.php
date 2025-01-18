@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 @section('title')
-    Brand List
+    Slider List
 @endsection
 @push('style')
     <style>
@@ -15,13 +15,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-header">Brand List</h5>
+                    <h5 class="card-header">Slider List</h5>
                     <div class="col-md-12 col-lg-12 col-sm-12 py-4">
                         <div class="d-flex justify-content-end">
 
                             <div class="text-sm-end">
-                                <a href="{{ route('admin.brand.create') }}" class="btn btn-primary"><i class="bx bx-plus"></i>
-                                    New Brand</a>
+                                <a href="{{ route('admin.slider.create') }}" class="btn btn-primary"><i
+                                        class="bx bx-plus"></i>
+                                    New Slider</a>
                             </div>
                         </div>
                     </div>
@@ -30,20 +31,38 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Created At</th>
-                                    <th>Photo</th>
-                                    <th>Name</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Heading</th>
+                                    <th>Description</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($brands as $index => $brand)
+                                @foreach ($sliders as $index => $slider)
                                     <tr>
                                         <th>{{ $index + 1 }}</th>
-                                        <td>{{ $brand->created_at->diffForHumans() }}</td>
-                                        <td><img src="{{ asset('uploads/brand') }}/{{ $brand->photo }}" alt=""
+                                        <td><img src="{{ asset('uploads/slider') }}/{{ $slider->image }}" alt=""
                                                 style="max-width: 100px;"></td>
-                                        <td class="wrap">{{ $brand->name }}</td>
+                                        <td class="wrap">{{ $slider->title }}</td>
+                                        <td class="wrap">{{ $slider->heading }}</td>
+                                        <td class="wrap">{{ $slider->description }}</td>
+                                        <td>
+                                            <label class="switch switch-success">
+                                                <input class="switch-input toggle-class" type="checkbox"
+                                                    data-id="{{ $slider->id }}" id="slider-{{ $slider->id }}"
+                                                    {{ $slider->status ? 'checked' : '' }}>
+                                                <span class="switch-toggle-slider">
+                                                    <span class="switch-on">
+                                                        <i class="bx bx-check"></i>
+                                                    </span>
+                                                    <span class="switch-off">
+                                                        <i class="bx bx-x"></i>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </td>
                                         <td>
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -51,9 +70,9 @@
                                                         class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu" style="">
                                                     <a class="dropdown-item"
-                                                        href="{{ route('admin.brand.edit', $brand->id) }}"><i
+                                                        href="{{ route('admin.slider.edit', $slider->id) }}"><i
                                                             class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                    <form action="{{ route('admin.brand.destroy', $brand->id) }}"
+                                                    <form action="{{ route('admin.slider.destroy', $slider->id) }}"
                                                         class="show_confirm" method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -80,6 +99,35 @@
     <script>
         $(document).ready(function() {
             var table = new DataTable('#example');
+
+            $('.toggle-class').change(function() {
+                var is_active = $(this).prop('checked') ? 1 : 0;
+                var item_id = $(this).data('id');
+                var url = '{{ route('admin.slider.status', ':id') }}'.replace(':id', item_id);
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "JSON",
+                    success: function(response) {
+                        Swal.fire(
+                            'Status Updated!',
+                            'The status has been successfully updated.',
+                            'success'
+                        );
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        Swal.fire(
+                            'Error!',
+                            'Unable to update status. Please try again later.',
+                            'error'
+                        );
+                    }
+                });
+            });
+
+
             $('#example').on('click', '.show_confirm', function(event) {
                 event.preventDefault();
                 var form = $(this).closest('form');

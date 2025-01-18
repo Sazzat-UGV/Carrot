@@ -1,13 +1,14 @@
 <?php
-
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Slider;
 
 class HomeController extends Controller
 {
-    public function homePage(){
-        return view('frontend.pages.home_page');
+    public function homePage()
+    {
+        $sliders = Slider::where('status', 1)->latest('id')->get();
+        return view('frontend.pages.home_page', compact('sliders'));
     }
 }

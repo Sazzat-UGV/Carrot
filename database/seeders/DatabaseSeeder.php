@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             WarehouseSeeder::class,
             PickupPointSeeder::class,
             BrandSeeder::class,
+            SliderSeeder::class,
         ]);
     }
 }

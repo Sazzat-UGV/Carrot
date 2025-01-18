@@ -71,6 +71,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.slider.index') || Route::is('admin.slider.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxs-slideshow"></i>
+                <div class="text-truncate">Sliders</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.slider.index')) active @endif">
+                    <a href="{{ route('admin.slider.index') }}" class="menu-link">
+                        <div class="text-truncate">Slider List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.slider.create')) active @endif">
+                    <a href="{{ route('admin.slider.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Slider</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item  @if (Route::is('admin.warehouse.index') || Route::is('admin.warehouse.create')) active open @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-buildings"></i>
