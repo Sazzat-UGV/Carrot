@@ -98,6 +98,7 @@ Route::prefix('/')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [FrontendDashboardController::class, 'dashboard'])->name('dashboard');
+    Route::post('update-profile',[FrontendDashboardController::class,'profile'])->name('update_profile');
 });
 
 require __DIR__ . '/auth.php';

@@ -18,6 +18,7 @@ class ProfileController extends Controller
 
     public function profile(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'nullable|numeric',
