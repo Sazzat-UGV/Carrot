@@ -1,4 +1,4 @@
-    <header>
+<header>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -68,7 +68,7 @@
                                     @endguest
                                 </li>
                             </ul>
-                            <a href="wishlist.html" class="cr-right-bar-item">
+                            <a href="{{ route('wishlist_list') }}" class="cr-right-bar-item">
                                 <i class="ri-heart-3-line"></i>
                                 <span>Wishlist</span>
                             </a>
@@ -178,7 +178,7 @@
                                     </ul>
                                 </li>
                             </ul>
-                            <a href="wishlist.html" class="cr-right-bar-item">
+                            <a href="{{ route('wishlist_list') }}" class="cr-right-bar-item">
                                 <i class="ri-heart-line"></i>
                             </a>
                             <a href="javascript:void(0)" class="cr-right-bar-item Shopping-toggle">
