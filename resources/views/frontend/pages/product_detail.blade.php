@@ -61,16 +61,25 @@
                     <div class="cr-size-and-weight">
                         <div class="cr-review-star">
                             <div class="cr-star">
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
-                                <i class="ri-star-fill"></i>
+                                @php
+                                    $averageRating =
+                                        $product->reviews_count > 0
+                                            ? round($product->reviews_sum_rating / $product->reviews_count, 1)
+                                            : 0;
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= floor($averageRating))
+                                        <i class="ri-star-fill"></i>
+                                    @elseif ($i == ceil($averageRating) && $averageRating - floor($averageRating) > 0)
+                                        <i class="ri-star-half-line"></i>
+                                    @else
+                                        <i class="ri-star-line"></i>
+                                    @endif
+                                @endfor
                             </div>
-                            <p>( 100 Review )</p>
+                            <p>({{ $product->reviews_count }} Review{{ $product->reviews_count > 1 ? 's' : '' }})</p>
                         </div>
+
                         <div class="list">
                             <ul>
                                 <li><label>Brand <span>:</span></label>{{ $product->brand->name }}</li>
@@ -144,88 +153,90 @@
                     <div class="cr-paking-delivery">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                                    data-bs-target="#description" type="button" role="tab" aria-controls="description"
-                                    aria-selected="true">Description</button>
+                                <button class="nav-link @if (request('stage') != 'review') active @endif"
+                                    id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button"
+                                    role="tab" aria-controls="description" aria-selected="true">Description</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review"
-                                type="button" role="tab" aria-controls="review"
-                                aria-selected="false">Review</button>
+                                <button class="nav-link @if (request('stage') == 'review') active @endif" id="review-tab"
+                                    data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab"
+                                    aria-controls="review" aria-selected="false">Review</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="description" role="tabpanel"
-                                aria-labelledby="description-tab">
+                            <div class="tab-pane fade @if (request('stage') != 'review') active show @endif"
+                                id="description" role="tabpanel" aria-labelledby="description-tab">
                                 <div class="cr-tab-content">
                                     <div class="cr-description">
-                                  {{ $product->description }}
+                                        {{ $product->description }}
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                            <div class="tab-pane fade @if (request('stage') == 'review') active show @endif" id="review"
+                                role="tabpanel" aria-labelledby="review-tab">
                                 <div class="cr-tab-content-from">
                                     <div class="post">
-                                        <div class="content">
-                                            <img src="{{ asset('assets/frontend') }}/img/review/1.jpg" alt="review">
-                                            <div class="details">
-                                                <span class="date">Jan 08, 2024</span>
-                                                <span class="name">Oreo Noman</span>
-                                            </div>
-                                            <div class="cr-t-review-rating">
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                            </div>
+                                        <div class="reviews-container">
+                                            @foreach ($reviews as $review)
+                                                <div class="content">
+                                                    <img src="{{ asset('uploads/user') }}/{{ $review->user->image }}"
+                                                        alt="image" class="border">
+                                                    <div class="details">
+                                                        <span
+                                                            class="date">{{ $review->created_at->format('M d, Y') }}</span>
+                                                        <span class="name">{{ $review->user->name }}</span>
+                                                    </div>
+                                                    <div class="cr-t-review-rating">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            @if ($i <= $review->rating)
+                                                                <i class="ri-star-s-fill"></i>
+                                                            @else
+                                                                <i class="ri-star-s-line"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
+                                                </div>
+                                                <p class="mb-1">{{ $review->comment }}</p>
+                                                <hr>
+                                            @endforeach
+                                            {{ $reviews->links('pagination::custom_pagination') }}
+                                           
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error in vero
-                                            sapiente doloribus debitis corporis, eaque dicta, repellat amet, illum
-                                            adipisci vel
-                                            perferendis dolor! quae vero in perferendis provident quis.</p>
-                                        <div class="content mt-30">
-                                            <img src="{{ asset('assets/frontend') }}/img/review/2.jpg" alt="review">
-                                            <div class="details">
-                                                <span class="date">Mar 22, 2024</span>
-                                                <span class="name">Lina Wilson</span>
-                                            </div>
-                                            <div class="cr-t-review-rating">
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-line"></i>
-                                            </div>
-                                        </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error in vero
-                                            sapiente doloribus debitis corporis, eaque dicta, repellat amet, illum
-                                            adipisci vel
-                                            perferendis dolor! quae vero in perferendis provident quis.</p>
                                     </div>
 
                                     <h4 class="heading">Add a Review</h4>
-                                    <form action="javascript:void(0)">
+                                    <form action="{{ route('create_review', ['stage' => 'review']) }}" id="ratingForm"
+                                        method="POST">
+                                        @csrf
                                         <div class="cr-ratting-star">
                                             <span>Your rating :</span>
-                                            <div class="cr-t-review-rating">
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-fill"></i>
-                                                <i class="ri-star-s-line"></i>
-                                                <i class="ri-star-s-line"></i>
-                                                <i class="ri-star-s-line"></i>
+                                            <div class="cr-t-review-rating" id="starRating">
+                                                <i class="ri-star-s-line" data-value="1"></i>
+                                                <i class="ri-star-s-line" data-value="2"></i>
+                                                <i class="ri-star-s-line" data-value="3"></i>
+                                                <i class="ri-star-s-line" data-value="4"></i>
+                                                <i class="ri-star-s-line" data-value="5"></i>
                                             </div>
                                         </div>
-                                        <div class="cr-ratting-input">
-                                            <input name="your-name" placeholder="Name" type="text">
-                                        </div>
-                                        <div class="cr-ratting-input">
-                                            <input name="your-email" placeholder="Email*" type="email" required="">
-                                        </div>
+                                        <input type="hidden" name="rating" id="ratingValue" value="1">
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <div class="cr-ratting-input form-submit">
-                                            <textarea name="your-commemt" placeholder="Enter Your Comment"></textarea>
-                                            <button class="cr-button" type="submit" value="Submit">Submit</button>
+                                            <textarea name="comment" placeholder="Enter Your Comment"
+                                                class="mb-0 pb-0 @error('comment')
+                                                    is-invalid
+                                                @enderror"></textarea>
+                                            @error('comment')
+                                                <span class="invalid-feedback"
+                                                    role="alert"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                            @php
+                                                $review = App\Models\Review::where('product_id', $product->id)
+                                                    ->where('user_id', Auth::user()->id)
+                                                    ->first();
+                                            @endphp
+                                            <button class="cr-button mt-3" type="submit" value="Submit"
+                                                @if ($review) disabled @endif>Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -279,14 +290,28 @@
                                     </div>
                                     <div class="cr-product-details">
                                         <div class="cr-brand">
-                                            <a href="shop-left-sidebar.html">{{ $rproduct->category->name }}</a>
+                                            <a href="#">{{ $rproduct->category->name }}</a>
+                                            @php
+                                                $averageRating =
+                                                    $rproduct->reviews_count > 0
+                                                        ? round(
+                                                            $rproduct->reviews_sum_rating / $rproduct->reviews_count,
+                                                            1,
+                                                        )
+                                                        : 0;
+                                            @endphp
+
                                             <div class="cr-star">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-line"></i>
-                                                <p>(4.5)</p>
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= floor($averageRating))
+                                                        <i class="ri-star-fill"></i>
+                                                    @elseif ($i == ceil($averageRating) && $averageRating - floor($averageRating) > 0)
+                                                        <i class="ri-star-half-line"></i>
+                                                    @else
+                                                        <i class="ri-star-line"></i>
+                                                    @endif
+                                                @endfor
+                                                <p>({{ $averageRating }})</p>
                                             </div>
                                         </div>
                                         <a href="{{ route('productDetail', $rproduct->slug) }}"
@@ -310,4 +335,25 @@
 @endsection
 
 @push('script')
+    <script>
+        const stars = document.querySelectorAll('#starRating i');
+        const ratingValue = document.getElementById('ratingValue');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                // Update the hidden input value
+                ratingValue.value = this.getAttribute('data-value');
+
+                // Reset the star styles
+                stars.forEach(s => s.classList.remove('ri-star-s-fill'));
+                stars.forEach(s => s.classList.add('ri-star-s-line'));
+
+                // Highlight the selected stars
+                for (let i = 0; i < this.getAttribute('data-value'); i++) {
+                    stars[i].classList.remove('ri-star-s-line');
+                    stars[i].classList.add('ri-star-s-fill');
+                }
+            });
+        });
+    </script>
 @endpush

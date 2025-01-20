@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\PickupPointController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\PageController;
@@ -50,6 +51,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('product', ProductController::class);
         Route::resource('slider', SliderController::class);
 
+        Route::get('review/show/{id}',[ReviewController::class,'index'])->name('review_index');
+        Route::delete('review/delete/{id}',[ReviewController::class,'delete'])->name('review_delete');
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('user/details/{id}', [UserController::class, 'show'])->name('user.show');
@@ -99,6 +102,8 @@ Route::prefix('/')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [FrontendDashboardController::class, 'dashboard'])->name('dashboard');
     Route::post('update-profile',[FrontendDashboardController::class,'profile'])->name('update_profile');
+    Route::post('review',[ReviewController::class,'store'])->name('create_review');
 });
+
 
 require __DIR__ . '/auth.php';

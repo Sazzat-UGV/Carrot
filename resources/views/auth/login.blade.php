@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('title')
-    Register
+    login
 @endsection
 @push('style')
 @endpush

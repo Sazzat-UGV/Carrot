@@ -28,4 +28,7 @@ class Product extends Model
     public function pickup_point(){
         return $this->belongsTo( PickupPoint::class,'pickup_point_id');
     }
+    public function reviews(){
+        return $this->hasMany(Review::class);
+    }
 }

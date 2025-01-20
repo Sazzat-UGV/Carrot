@@ -24,7 +24,7 @@ class ProductController extends Controller
         $categories = Category::latest()->get();
         $brands     = Brand::latest()->get();
         $warehouses = Warehouse::latest()->get();
-        $products   = Product::with('category:id,name', 'subcategory:id,name', 'brand:id,name')->latest('id');
+        $products   = Product::with('category:id,name', 'subcategory:id,name', 'brand:id,name')->withCount('reviews')->latest('id');
         if ($request->category) {
             $products = $products->where('category_id', $request->category);
         }

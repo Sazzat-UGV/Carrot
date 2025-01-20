@@ -178,9 +178,14 @@
                                                         href="{{ route('admin.product.edit', $product->id) }}"><i
                                                             class="bx bx-edit me-1"></i> Edit</a>
 
-                                                    <a class="dropdown-item" data-bs-toggle="modal"
-                                                        data-bs-target="#addNewAddress{{ $product->id }}"><i
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                            data-bs-target="#addNewAddress{{ $product->id }}"><i
                                                             class="bx bx-show-alt me-1"></i> View</a>
+                                                            @if ($product->reviews_count>0)
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.review_index',$product->id) }}"><i
+                                                                    class="bx bx-star me-1"></i> Reviews</a>
+                                                            @endif
 
                                                     <form action="{{ route('admin.product.destroy', $product->id) }}"
                                                         class="show_confirm" method="POST">
@@ -305,7 +310,7 @@
                                                                     {!! $product->description !!}
                                                                 </div>
                                                             </div>
-                                                          
+
                                                         </div>
                                                     </div>
                                                 </div>
