@@ -22,7 +22,7 @@ class HomeController extends Controller
     public function productDetail($slug)
     {
         $product          = Product::with('brand:id,name', 'warehouse:id,name', 'pickup_point:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('slug', $slug)->first();
-        $related_products = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('sub_category_id', $product->sub_category_id)->whereNot('id', $product->id)->inRandomOrder()->take(5)->get();
+        $related_products = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('sub_category_id', $product->sub_category_id)->whereNot('id', $product->id)->take(5)->get();
         $reviews          = Review::with('user:id,name,image')->where('product_id', $product->id)->latest('id')->paginate(10)->appends(['stage' => 'review']);
         return view('frontend.pages.product_detail', compact('product', 'related_products', 'reviews'));
     }

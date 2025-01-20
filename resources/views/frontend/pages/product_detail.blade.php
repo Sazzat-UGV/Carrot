@@ -137,8 +137,17 @@
                                 <button type="button" class="cr-button cr-shopping-bag">Add to cart</button>
                             </div>
                             <div class="cr-card-icon">
-                                <a href="javascript:void(0)" class="wishlist">
-                                    <i class="ri-heart-line"></i>
+                                <a href="{{ route('wishlist_store', $product->id) }}" class="">
+                                    @php
+                                        $wishlist = null;
+                                        if (Auth::check()) {
+                                            $wishlist = App\Models\Wishlist::where('user_id', Auth::user()->id)
+                                                ->where('product_id', $product->id)
+                                                ->first();
+                                        }
+                                    @endphp
+                                    <i class="ri-heart-line"
+                                        style="@if ($wishlist) background-color: #64b496; color: #fff; @endif"></i>
                                 </a>
                                 <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview" role="button">
                                     <i class="ri-eye-line"></i>
@@ -201,7 +210,7 @@
                                                 <hr>
                                             @endforeach
                                             {{ $reviews->links('pagination::custom_pagination') }}
-                                           
+
                                         </div>
                                     </div>
 
@@ -231,12 +240,16 @@
                                                     role="alert"><strong>{{ $message }}</strong></span>
                                             @enderror
                                             @php
-                                                $review = App\Models\Review::where('product_id', $product->id)
-                                                    ->where('user_id', Auth::user()->id)
-                                                    ->first();
+                                                $review = null;
+                                                if (Auth::check()) {
+                                                    $review = App\Models\Review::where('product_id', $product->id)
+                                                        ->where('user_id', Auth::user()->id)
+                                                        ->first();
+                                                }
                                             @endphp
                                             <button class="cr-button mt-3" type="submit" value="Submit"
                                                 @if ($review) disabled @endif>Submit</button>
+
                                         </div>
                                     </form>
                                 </div>
@@ -276,8 +289,21 @@
                                                 alt="image">
                                         </div>
                                         <div class="cr-side-view">
-                                            <a href="javascript:void(0)" class="wishlist">
-                                                <i class="ri-heart-line"></i>
+                                            @php
+                                                $wishlist = null;
+                                                if (Auth::check()) {
+                                                    $wishlist = App\Models\Wishlist::where('user_id', Auth::user()->id)
+                                                        ->where('product_id', $rproduct->id)
+                                                        ->first();
+                                                }
+                                            @endphp
+                                            <a href="{{ route('wishlist_store', $rproduct->id) }}" class="">
+                                                @if ($wishlist)
+                                                    <i class="ri-heart-fill"></i>
+                                                @else
+                                                    <i class="ri-heart-line"></i>
+                                                @endif
+
                                             </a>
                                             <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview"
                                                 role="button">
@@ -341,14 +367,11 @@
 
         stars.forEach(star => {
             star.addEventListener('click', function() {
-                // Update the hidden input value
                 ratingValue.value = this.getAttribute('data-value');
 
-                // Reset the star styles
                 stars.forEach(s => s.classList.remove('ri-star-s-fill'));
                 stars.forEach(s => s.classList.add('ri-star-s-line'));
 
-                // Highlight the selected stars
                 for (let i = 0; i < this.getAttribute('data-value'); i++) {
                     stars[i].classList.remove('ri-star-s-line');
                     stars[i].classList.add('ri-star-s-fill');
