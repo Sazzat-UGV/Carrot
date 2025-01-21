@@ -52,8 +52,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('product', ProductController::class);
         Route::resource('slider', SliderController::class);
 
-        Route::get('review/show/{id}',[ReviewController::class,'index'])->name('review_index');
-        Route::delete('review/delete/{id}',[ReviewController::class,'delete'])->name('review_delete');
+        Route::get('review/show/{id}', [ReviewController::class, 'index'])->name('review_index');
+        Route::delete('review/delete/{id}', [ReviewController::class, 'delete'])->name('review_delete');
         //user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('user/details/{id}', [UserController::class, 'show'])->name('user.show');
@@ -102,10 +102,10 @@ Route::prefix('/')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [FrontendDashboardController::class, 'dashboard'])->name('dashboard');
-    Route::post('update-profile',[FrontendDashboardController::class,'profile'])->name('update_profile');
-    Route::post('review',[ReviewController::class,'store'])->name('create_review');
-    Route::get('wishlist',[WishlistController::class,'index'])->name('wishlist_list');
+    Route::post('update-profile', [FrontendDashboardController::class, 'profile'])->name('update_profile');
+    Route::post('review', [ReviewController::class, 'store'])->name('create_review');
+    Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist_list');
+    Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
 });
-
 
 require __DIR__ . '/auth.php';
