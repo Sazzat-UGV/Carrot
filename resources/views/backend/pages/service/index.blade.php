@@ -1,82 +1,58 @@
 @extends('backend.layouts.app')
 @section('title')
-    User List
+    Service List
 @endsection
 @push('style')
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
         .wrap {
             white-space: normal !important;
             word-wrap: break-word;
         }
+
+        i {
+            font-size: 40px;
+        }
     </style>
 @endpush
 @section('content')
-    <div class="row mb-3">
+    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-header mb-1 ">User List</h5>
-                    <form action="{{ route('admin.user.index') }}" method="GET">
-                        <div class="row d-flex justify-content-between">
-                            <div class="col-auto mb-4">
-                                <div class="dropdown mt-4 mt-sm-0">
-                                    <a href="#"
-                                        class="btn bg-label-primary dropdown-toggle d-flex align-items-center justify-content-center"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span>Export</span>
-                                    </a>
-                                    <div class="dropdown-menu" style="">
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('admin.exportPDF', ['search' => request('search')]) }}"><i
-                                                    class="bx bxs-file-pdf font-size-16"></i> Export as PDF</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                                href="{{ route('admin.exportExcel', ['search' => request('search')]) }}"><i
-                                                    class="bx bxs-file-export font-size-16"></i> Export as Excel</a>
-                                        </li>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto mb-4 d-flex">
-                                <input class="form-control me-2" type="text" placeholder="Search" name="search"
-                                    value="{{ request('search') }}">
-                                <button type="submit" class="btn badge bg-label-primary waves-effect waves-light">
-                                    <i class="bx bx-search align-middle"></i>
-                                </button>
+                    <h5 class="card-header">Service List</h5>
+                    <div class="col-md-12 col-lg-12 col-sm-12 py-4">
+                        <div class="d-flex justify-content-end">
+
+                            <div class="text-sm-end">
+                                <a href="{{ route('admin.service.create') }}" class="btn btn-primary"><i
+                                        class="bx bx-plus"></i> New Service</a>
                             </div>
                         </div>
-                    </form>
-                    <div class="table-responsive text-nowrap">
-                        <table class="table">
+                    </div>
+                    <div class="col-12">
+                        <table id="example" class="table table-" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Photo</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
+                                    <th>Icon</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $index => $user)
+                                @foreach ($services as $index => $service)
                                     <tr>
                                         <th>{{ $index + 1 }}</th>
-                                        <td>
-                                            <img src="{{ asset('uploads/user') }}/{{ $user->image }}" alt="Image"
-                                                height="50" width="50" class="me-3">
-                                        </td>
-                                        <td class="wrap">{{ $user->name }}</td>
-                                        <td class="wrap">{{ $user->email }}</td>
-                                        <td class="wrap">{{ $user->phone }}</td>
-                                        <td class="wrap">{{ $user->address }}</td>
-                                        <td>
-                                            <label class="switch switch-success">
+                                        <td class="">{!! $service->icon !!}</td>
+                                        <td class="wrap">{{ $service->title }}</td>
+                                        <td class="wrap">{{ $service->description }}</td>
+                                        <td class=""><label class="switch switch-success">
                                                 <input class="switch-input toggle-class" type="checkbox"
-                                                    data-id="{{ $user->id }}" id="user-{{ $user->id }}"
-                                                    {{ $user->status ? 'checked' : '' }}>
+                                                    data-id="{{ $service->id }}" id="service-{{ $service->id }}"
+                                                    {{ $service->status ? 'checked' : '' }}>
                                                 <span class="switch-toggle-slider">
                                                     <span class="switch-on">
                                                         <i class="bx bx-check"></i>
@@ -85,8 +61,7 @@
                                                         <i class="bx bx-x"></i>
                                                     </span>
                                                 </span>
-                                            </label>
-                                        </td>
+                                            </label></td>
                                         <td>
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -94,9 +69,9 @@
                                                         class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu" style="">
                                                     <a class="dropdown-item"
-                                                        href="{{ route('admin.user.show', $user->id) }}"><i
-                                                            class="bx bx-show-alt me-1"></i> View</a>
-                                                    <form action="{{ route('admin.user.destroy', $user->id) }}"
+                                                        href="{{ route('admin.service.edit', $service->id) }}"><i
+                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                    <form action="{{ route('admin.service.destroy', $service->id) }}"
                                                         class="show_confirm" method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -112,23 +87,22 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-2">
-                        {{ $users->links() }}
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
 @push('script')
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script>
         $(document).ready(function() {
+            var table = new DataTable('#example');
 
             $('.toggle-class').change(function() {
                 var is_active = $(this).prop('checked') ? 1 : 0;
                 var item_id = $(this).data('id');
-                var url = '{{ route('admin.user.status', ':id') }}'.replace(':id', item_id);
+                var url = '{{ route('admin.service.status', ':id') }}'.replace(':id', item_id);
 
                 $.ajax({
                     type: "GET",
@@ -152,7 +126,7 @@
                 });
             });
 
-            $(document).on('click', '.show_confirm', function(event) {
+            $('#example').on('click', '.show_confirm', function(event) {
                 event.preventDefault();
                 var form = $(this).closest('form');
 

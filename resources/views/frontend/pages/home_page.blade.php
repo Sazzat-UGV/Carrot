@@ -157,7 +157,36 @@
             </div>
         </div>
     </section>
-    
+
+    <!-- Services -->
+    <section class="section-services padding-b-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cr-services-border aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000">
+                        <div class="cr-service-slider swiper-container">
+                            <div class="swiper-wrapper">
+                                @foreach ($services as $service)
+                                    <div class="swiper-slide">
+                                        <div class="cr-services">
+                                            <div class="cr-services-image">
+                                                {!! $service->icon !!}
+                                            </div>
+                                            <div class="cr-services-contain">
+                                                <h4>{{ $service->title }}</h4>
+                                                <p>{{ $service->description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
 
 @push('script')

@@ -4,15 +4,17 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Service;
 use App\Models\Slider;
 
 class HomeController extends Controller
 {
     public function homePage()
     {
-        $sliders = Slider::where('status', 1)->latest('id')->get();
-        $featureds=Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('featured',1)->latest('id')->limit(25)->get();
-        return view('frontend.pages.home_page', compact('sliders','featureds'));
+        $sliders   = Slider::where('status', 1)->latest('id')->get();
+        $featureds = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('featured', 1)->latest('id')->limit(25)->get();
+        $services  = Service::where('status', 1)->latest('id')->get();
+        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services'));
     }
 
     public function productDetails()

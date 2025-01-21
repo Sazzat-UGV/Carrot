@@ -161,6 +161,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.service.index') || Route::is('admin.service.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-list-plus"></i>
+                <div class="text-truncate">Services</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.service.index')) active @endif">
+                    <a href="{{ route('admin.service.index') }}" class="menu-link">
+                        <div class="text-truncate">Service List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.service.create')) active @endif">
+                    <a href="{{ route('admin.service.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Service</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>

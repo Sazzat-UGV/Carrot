@@ -12,6 +12,7 @@ use App\Http\Controllers\Backend\PickupPointController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\ReviewController;
+use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
 use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\PageController;
@@ -51,6 +52,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('pickup-point', PickupPointController::class);
         Route::resource('product', ProductController::class);
         Route::resource('slider', SliderController::class);
+        Route::resource('service', ServiceController::class);
 
         Route::get('review/show/{id}', [ReviewController::class, 'index'])->name('review_index');
         Route::delete('review/delete/{id}', [ReviewController::class, 'delete'])->name('review_delete');
@@ -92,6 +94,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('product/today-deal/{id}', [ProductController::class, 'todayDeal'])->name('product.todayDeal');
         Route::get('product/sub-category/{id}', [ProductController::class, 'subCategory'])->name('product.subCategory');
         Route::get('slider/status/{id}', [SliderController::class, 'changeStatus'])->name('slider.status');
+        Route::get('service/status/{id}', [ServiceController::class, 'changeStatus'])->name('service.status');
     });
 });
 

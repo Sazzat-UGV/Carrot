@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             BrandSeeder::class,
             SliderSeeder::class,
             ProductSeeder::class,
+            ServiceSeeder::class,
         ]);
     }
 }
