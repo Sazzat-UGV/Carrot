@@ -52,6 +52,7 @@ class ProductFactory extends Factory
             'purchase_price'  => $this->faker->numberBetween(10, 500),
             'selling_price'   => $this->faker->numberBetween(50, 1000),
             'discount_price'  => $this->faker->numberBetween(10, 100),
+            'product_view'  => $this->faker->numberBetween(1, 100),
             'color'           => json_encode(
                 collect($this->faker->randomElements(['Red', 'Blue', 'Green', 'Black', 'White'], 2))->map(function ($value) {
                     return ['value' => $value];
@@ -76,6 +77,7 @@ class ProductFactory extends Factory
             ),
             'featured'        => $this->faker->boolean(),
             'today_deal'      => $this->faker->boolean(),
+            'trending'      => $this->faker->boolean(),
             'status'          => $this->faker->boolean(),
         ];
     }

@@ -29,11 +29,13 @@ return new class extends Migration
             $table->json('color')->nullable();
             $table->json('size')->nullable();
             $table->unsignedBigInteger('stock_quantity')->nullable();
+            $table->unsignedBigInteger('product_view')->default(0);
             $table->longText('short_description')->nullable();
             $table->longText('description')->nullable();
             $table->string('thumbnail')->nullable();
             $table->json('images')->nullable();
             $table->boolean('featured')->nullable();
+            $table->boolean('trending')->nullable();
             $table->boolean('today_deal')->nullable();
             $table->boolean('status')->nullable();
             $table->timestamps();
