@@ -226,7 +226,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 mb-4">
-                                        <label class="form-label">Short Description<span class="text-danger">*</span></label>
+                                        <label class="form-label">Short Description<span
+                                                class="text-danger">*</span></label>
                                         <textarea name="short_description" id="" cols="30" rows="5"
                                             class="form-control @error('short_description')
                                     is-invalid
@@ -251,7 +252,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                   
+
                                 </div>
                             </div>
 
@@ -332,6 +333,29 @@
                                                 </span>
                                             </span>
                                             @error('today_deal')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </label>
+                                    </div>
+                                    <hr>
+                                    <div class="col-12 mb-5">
+                                        <label for="">Trending</label>
+                                        <br>
+                                        <label class="switch switch-success">
+                                            <input class="switch-input toggle-class" type="checkbox" name="trending"
+                                                value="1"
+                                                {{ old('trending', $product->trending) == 1 ? 'checked' : '' }}>
+                                            <span class="switch-toggle-slider">
+                                                <span class="switch-on">
+                                                    <i class="bx bx-check"></i>
+                                                </span>
+                                                <span class="switch-off">
+                                                    <i class="bx bx-x"></i>
+                                                </span>
+                                            </span>
+                                            @error('trending')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>

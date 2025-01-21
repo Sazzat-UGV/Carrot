@@ -102,6 +102,7 @@ class ProductController extends Controller
             'video'           => $request->embeded_video,
             'featured'        => $request->featured,
             'today_deal'      => $request->today_deal,
+            'trending'      => $request->trending,
             'status'          => $request->status,
         ]);
 
@@ -174,6 +175,7 @@ class ProductController extends Controller
             'description'     => $request->description,
             'video'           => $request->embeded_video,
             'featured'        => $request->featured,
+            'trending'        => $request->trending,
             'today_deal'      => $request->today_deal,
             'status'          => $request->status,
         ]);
@@ -268,6 +270,20 @@ class ProductController extends Controller
             $product->today_deal = 0;
         } else {
             $product->today_deal = 1;
+        }
+        $product->update();
+        return response()->json([
+            'type'    => 'success',
+            'message' => 'Today Deal Updated',
+        ]);
+    }
+    public function trending($id)
+    {
+        $product = Product::findOrFail($id);
+        if ($product->trending == 1) {
+            $product->trending = 0;
+        } else {
+            $product->trending = 1;
         }
         $product->update();
         return response()->json([

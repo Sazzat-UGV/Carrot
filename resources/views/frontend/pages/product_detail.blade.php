@@ -177,7 +177,7 @@
                                 id="description" role="tabpanel" aria-labelledby="description-tab">
                                 <div class="cr-tab-content">
                                     <div class="cr-description">
-                                        {{ $product->description }}
+                                        {!! $product->description !!}
                                     </div>
                                 </div>
                             </div>

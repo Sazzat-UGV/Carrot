@@ -11,11 +11,12 @@ class HomeController extends Controller
 {
     public function homePage()
     {
-        $sliders   = Slider::where('status', 1)->latest('id')->get();
-        $featureds = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('featured', 1)->latest('id')->limit(25)->get();
-        $most_populars = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('product_view','!=',0)->latest('product_view')->take(10)->get();
-        $services  = Service::where('status', 1)->latest('id')->get();
-        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services','most_populars'));
+        $sliders       = Slider::where('status', 1)->latest('id')->get();
+        $featureds     = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('featured', 1)->latest('id')->limit(25)->get();
+        $most_populars = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('product_view', '!=', 0)->latest('product_view')->take(10)->get();
+        $trendies      = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('trending', 1)->latest('id')->take(10)->get();
+        $services      = Service::where('status', 1)->latest('id')->get();
+        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies'));
     }
 
     public function productDetails()

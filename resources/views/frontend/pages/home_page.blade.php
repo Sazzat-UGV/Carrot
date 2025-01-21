@@ -296,6 +296,122 @@
             </div>
         </div>
     </section>
+
+    <!-- trendy products -->
+    <section class="section-popular margin-b-100">
+        <div class="container">
+            <div class="row" data-aos="fade-up" data-aos-duration="2000">
+                <div class="col-lg-12">
+                    <div class="title-2 mb-30">
+                        <div class="title-box">
+                            <div class="cr-banner">
+                                <h2>Trendy</h2>
+                            </div>
+                            <div class="cr-banner-sub-title">
+                                <p>Stay Ahead of the Trends with Our Most Popular and Stylish Picks.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xxl-7 col-xl-6 col-lg-6 col-md-12" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="cr-twocolumns-product">
+                        @foreach ($trendies as $trendy)
+                            <div class="slick-slide">
+                                <div class="cr-product-card">
+                                    <div class="cr-product-image">
+                                        <div class="cr-image-inner zoom-image-hover">
+                                            <img src="{{ asset('uploads/product') }}/{{ $trendy->thumbnail }}"
+                                                alt="image">
+                                        </div>
+                                        <div class="cr-side-view">
+                                            @php
+                                                $wishlist = null;
+                                                if (Auth::check()) {
+                                                    $wishlist = App\Models\Wishlist::where('user_id', Auth::user()->id)
+                                                        ->where('product_id', $trendy->id)
+                                                        ->first();
+                                                }
+                                            @endphp
+                                            <a href="{{ route('wishlist_store', $trendy->id) }}" class="">
+                                                @if ($wishlist)
+                                                    <i class="ri-heart-fill"></i>
+                                                @else
+                                                    <i class="ri-heart-line"></i>
+                                                @endif
+                                            </a>
+                                            <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview"
+                                                role="button">
+                                                <i class="ri-eye-line"></i>
+                                            </a>
+                                        </div>
+                                        <a class="cr-shopping-bag" href="javascript:void(0)">
+                                            <i class="ri-shopping-bag-line"></i>
+                                        </a>
+                                    </div>
+                                    <div class="cr-product-details">
+                                        <div class="cr-brand">
+                                            <a href="shop-left-sidebar.html">{{ $trendy->category->name }}</a>
+                                            @php
+                                                $averageRating =
+                                                    $trendy->reviews_count > 0
+                                                        ? round($trendy->reviews_sum_rating / $trendy->reviews_count, 1)
+                                                        : 0;
+                                            @endphp
+
+                                            <div class="cr-star">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= floor($averageRating))
+                                                        <i class="ri-star-fill"></i>
+                                                    @elseif ($i == ceil($averageRating) && $averageRating - floor($averageRating) > 0)
+                                                        <i class="ri-star-half-line"></i>
+                                                    @else
+                                                        <i class="ri-star-line"></i>
+                                                    @endif
+                                                @endfor
+                                                <p>({{ $averageRating }})</p>
+                                            </div>
+
+                                        </div>
+                                        <a href="{{ route('productDetail', $trendy->slug) }}"
+                                            class="title">{{ $trendy->name }}</a>
+                                        <p class="cr-price"><span
+                                                class="new-price">{{ $setting->currency }}{{ $trendy->selling_price }}</span>
+                                            @if ($trendy->discount_price)
+                                                <span
+                                                    class="old-price">{{ $setting->currency }}{{ $trendy->discount_price }}</span>
+                                            @endif
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-12" data-aos="fade-up" data-aos-duration="2000">
+                    <div class="cr-products-rightbar">
+                        <img src="{{ asset('assets/frontend') }}/img/product/products-rightview.jpg"
+                            alt="products-rightview">
+                        <div class="cr-products-rightbar-content">
+                            <h4>Organic & Healthy <br> Vegetables</h4>
+                            <div class="cr-off">
+                                <span>25% <code>OFF</code></span>
+                            </div>
+                            <div class="rightbar-buttons">
+                                <a href="shop-left-sidebar.html" class="cr-button">
+                                    shop now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
 @endsection
 
 @push('script')
