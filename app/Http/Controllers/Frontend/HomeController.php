@@ -32,5 +32,4 @@ class HomeController extends Controller
         $reviews          = Review::with('user:id,name,image')->where('product_id', $product->id)->latest('id')->paginate(10)->appends(['stage' => 'review']);
         return view('frontend.pages.product_detail', compact('product', 'related_products', 'reviews'));
     }
-
 }

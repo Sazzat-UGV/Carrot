@@ -149,7 +149,7 @@
                                     <i class="ri-heart-line"
                                         style="@if ($wishlist) background-color: #64b496; color: #fff; @endif"></i>
                                 </a>
-                                <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview" role="button">
+                                <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview"  role="button">
                                     <i class="ri-eye-line"></i>
                                 </a>
                             </div>
