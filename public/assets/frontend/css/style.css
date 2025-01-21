@@ -4467,7 +4467,7 @@ ul.navbar-nav .dropdown:hover .dropdown-menu {
   width: 80px;
   height: 80px;
   content: "";
-  background-image: url("../img/shape/7.png");
+  /* background-image: url("../img/shape/7.png"); */
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;

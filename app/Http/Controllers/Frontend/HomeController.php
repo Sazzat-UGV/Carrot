@@ -11,7 +11,8 @@ class HomeController extends Controller
     public function homePage()
     {
         $sliders = Slider::where('status', 1)->latest('id')->get();
-        return view('frontend.pages.home_page', compact('sliders'));
+        $featureds=Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('featured',1)->latest('id')->limit(25)->get();
+        return view('frontend.pages.home_page', compact('sliders','featureds'));
     }
 
     public function productDetails()
