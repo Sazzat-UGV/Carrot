@@ -87,6 +87,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         // status routes
         Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
         Route::get('category/status/{id}', [CategoryController::class, 'changeStatus'])->name('category.status');
+        Route::get('category/show-home/{id}', [CategoryController::class, 'showHome'])->name('category.showHome');
         Route::get('subcategory/status/{id}', [SubCategoryController::class, 'changeStatus'])->name('subcategory.status');
         Route::get('coupon/status/{id}', [CouponController::class, 'changeStatus'])->name('coupon.status');
         Route::get('product/status/{id}', [ProductController::class, 'changeStatus'])->name('product.status');

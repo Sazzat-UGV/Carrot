@@ -33,8 +33,10 @@ class CategoryController extends Controller
     {
         $request->validate([
             'category_name' => 'required|string|unique:categories,name|max:255',
+            'category_icon' => 'required|string|max:255',
         ]);
         Category::create([
+            'icon' => $request->category_icon,
             'name' => $request->category_name,
             'slug' => Str::slug($request->category_name),
         ]);
@@ -66,8 +68,10 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $request->validate([
             'category_name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'category_icon' => 'required|string|max:255',
         ]);
         $category->update([
+            'icon' => $request->category_icon,
             'name' => $request->category_name,
             'slug' => Str::slug($request->category_name),
         ]);
@@ -91,6 +95,20 @@ class CategoryController extends Controller
             $category->status = 0;
         } else {
             $category->status = 1;
+        }
+        $category->update();
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Status Updated',
+        ]);
+    }
+    public function showHome($id)
+    {
+        $category = Category::findOrFail($id);
+        if ($category->show_home == 1) {
+            $category->show_home = 0;
+        } else {
+            $category->show_home = 1;
         }
         $category->update();
         return response()->json([

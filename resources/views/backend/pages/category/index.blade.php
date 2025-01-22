@@ -8,6 +8,10 @@
             white-space: normal !important;
             word-wrap: break-word;
         }
+
+        i {
+            font-size: 40px;
+        }
     </style>
 @endpush
 @section('content')
@@ -30,9 +34,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Created At</th>
+                                    <th>Icon</th>
                                     <th>Category Name</th>
                                     <th>Category Slug</th>
+                                    <th>Show Home</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -41,9 +46,24 @@
                                 @foreach ($categories as $index => $category)
                                     <tr>
                                         <th>{{ $index + 1 }}</th>
-                                        <td>{{ $category->created_at->diffForHumans() }}</td>
+                                        <td class="wrap">{!! $category->icon !!}</td>
                                         <td class="wrap">{{ $category->name }}</td>
                                         <td class="wrap">{{ $category->slug }}</td>
+                                        <td>
+                                            <label class="switch switch-success">
+                                                <input class="switch-input showHome" type="checkbox"
+                                                    data-id="{{ $category->id }}" id="category-{{ $category->id }}"
+                                                    {{ $category->show_home ? 'checked' : '' }}>
+                                                <span class="switch-toggle-slider">
+                                                    <span class="switch-on">
+                                                        <i class="bx bx-check"></i>
+                                                    </span>
+                                                    <span class="switch-off">
+                                                        <i class="bx bx-x"></i>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </td>
                                         <td>
                                             <label class="switch switch-success">
                                                 <input class="switch-input toggle-class" type="checkbox"
@@ -108,6 +128,32 @@
                         Swal.fire(
                             'Status Updated!',
                             'The category status has been successfully updated.',
+                            'success'
+                        );
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        Swal.fire(
+                            'Error!',
+                            'Unable to update status. Please try again later.',
+                            'error'
+                        );
+                    }
+                });
+            });
+            $('#example').on('change', '.showHome', function() {
+                var is_active = $(this).prop('checked') ? 1 : 0;
+                var item_id = $(this).data('id');
+                var url = '{{ route('admin.category.showHome', ':id') }}'.replace(':id', item_id);
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "JSON",
+                    success: function(response) {
+                        Swal.fire(
+                            'Status Updated!',
+                            'The status has been successfully updated.',
                             'success'
                         );
                     },

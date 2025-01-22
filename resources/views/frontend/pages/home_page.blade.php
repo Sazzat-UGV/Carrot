@@ -57,6 +57,51 @@
         </div>
     </section>
 
+    <!-- Category -->
+    <section class="section-popular margin-b-100 aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000">
+        <div class="container">
+            <div class="row">
+                <div class="title-2 mb-30 d-none">
+                    <h2>Categories</h2>
+                </div>
+                <div class="category-slider owl-carousel owl-loaded owl-drag">
+                    <div class="owl-stage-outer">
+                        <div class="owl-stage"
+                            style="transform: translate3d(-1320px, 0px, 0px); transition: all; width: 4180px;">
+                            @php
+                                $counter = 1;
+                            @endphp
+                            @foreach ($categories as $category)
+                                <div class="owl-item" style="width: 196px; margin-right: 24px;">
+                                    <div class="category-block">
+                                        <div class="category-icon icon-{{ $counter }}">
+                                            {!! $category->icon !!}
+                                        </div>
+                                        <div class="category-title">
+                                            <h4><a href="shop-left-sidebar.html">{{ $category->name }}</a></h4>
+                                            <p>({{ $category->products_count }} Items)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                @php
+                                    $counter++;
+                                    if ($counter > 8) {
+                                        $counter = 1;
+                                    }
+                                @endphp
+                            @endforeach
+
+                        </div>
+                    </div>
+                    <div class="owl-nav disabled"><button type="button" role="presentation" class="owl-prev"><span
+                                aria-label="Previous">‹</span></button><button type="button" role="presentation"
+                            class="owl-next"><span aria-label="Next">›</span></button></div>
+                    <div class="owl-dots disabled"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- featured products -->
     <section class="section-popular-products padding-tb-100" data-aos="fade-up" data-aos-duration="2000"
         data-aos-delay="400">
@@ -106,7 +151,7 @@
                                                 href="#" data-id="{{ $featured->id }}" role="button">
                                                 <i class="ri-eye-line"></i>
                                             </a>
-                                        </div>  
+                                        </div>
                                         <a class="cr-shopping-bag" href="javascript:void(0)">
                                             <i class="ri-shopping-bag-line"></i>
                                         </a>

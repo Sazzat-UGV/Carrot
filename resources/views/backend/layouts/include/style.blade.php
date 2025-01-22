@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/fonts/fontawesome.css" />
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/fonts/flag-icons.css" />
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/css/demo.css" />
+<link rel="stylesheet" href="{{ asset('assets/frontend') }}/css/vendor/flaticons.css">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 <!-- Vendors CSS -->
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 <link rel="stylesheet" href="{{ asset('assets/backend') }}/vendor/libs/typeahead-js/typeahead.css" />

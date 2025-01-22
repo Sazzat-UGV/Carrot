@@ -3,6 +3,11 @@
     Edit Category
 @endsection
 @push('style')
+    <style>
+        i {
+            font-size: 50px;
+        }
+    </style>
 @endpush
 @section('content')
     <div class="row">
@@ -24,7 +29,24 @@
                         @csrf
                         @method('PUT')
                         <div class="row">
-                            <div class="col-12 mb-4">
+                            <div class="col-12 col-md- mb-4">
+                                {!! $category->icon !!}
+                                <strong>(Existing Icon)</strong>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4">
+                                <label class="form-label">Category Icon<span class="text-danger">*</span> <b class="text-warning"
+                                    style="font-size: 12px">(Remix Icon)</b></label>
+                                <input
+                                    class="form-control @error('category_icon')
+                                        is-invalid
+                                    @enderror"
+                                    type="text" placeholder="Enter category icon" name="category_icon"
+                                    value="{{ old('category_icon', $category->icon) }}">
+                                @error('category_icon')
+                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                            <div class="col-12 col-md-6 mb-4">
                                 <label class="form-label">Category Name<span class="text-danger">*</span></label>
                                 <input
                                     class="form-control @error('category_name')

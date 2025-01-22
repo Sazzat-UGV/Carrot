@@ -3,7 +3,6 @@
     Edit Service
 @endsection
 @push('style')
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
         i {
             font-size: 50px;
