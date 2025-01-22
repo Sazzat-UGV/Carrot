@@ -110,6 +110,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('review', [ReviewController::class, 'store'])->name('create_review');
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist_list');
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
+
+    Route::get('product/quick_view/{slug}',[HomeController::class,'quickView'])->name('product.quickView');
 });
 
 require __DIR__ . '/auth.php';

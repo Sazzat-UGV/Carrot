@@ -32,4 +32,16 @@ class HomeController extends Controller
         $reviews          = Review::with('user:id,name,image')->where('product_id', $product->id)->latest('id')->paginate(10)->appends(['stage' => 'review']);
         return view('frontend.pages.product_detail', compact('product', 'related_products', 'reviews'));
     }
+
+
+    public function quickView($slug){
+        $product = Product::with('reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('slug', $slug)->first();
+        $product->size=json_decode($product->size, true);
+        $product->color=json_decode($product->color, true);
+        return response()->json([
+            'status'=>true,
+            'message'=>'Data retrieve successfully',
+            'data'=>$product
+        ]);
+    }
 }

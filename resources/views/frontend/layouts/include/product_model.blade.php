@@ -1,6 +1,3 @@
-<a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview" role="button">
-    <i class="ri-eye-line"></i>
-</a>
 <div class="modal fade quickview-modal" id="quickview" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered cr-modal-dialog">
         <div class="modal-content">
@@ -9,50 +6,40 @@
                 <div class="row">
                     <div class="col-md-5 col-sm-12 col-xs-12">
                         <div class="zoom-image-hover modal-border-image">
-                            <img src="{{ asset('assets/frontend') }}/img/product/20.jpg" alt="product-tab-2"
-                                class="product-image">
+                            <img src="#" alt="product-tab-2" class="product-image" id="modal_image">
                         </div>
                     </div>
                     <div class="col-md-7 col-sm-12 col-xs-12">
                         <div class="cr-size-and-weight-contain">
-                            <h2 class="heading">Best colorful tops for women seasonal fashion trends</h2>
-                            <p>Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. Lorem Ipsum has been the industry's standard dummy text
-                                ever
-                                since the 1900s,</p>
+                            <h2 class="heading" id="modal_product_name"></h2>
+                            <p id="modal_product_description"></p>
                         </div>
                         <div class="cr-size-and-weight">
                             <div class="cr-review-star">
-                                <div class="cr-star">
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
-                                    <i class="ri-star-fill"></i>
+                                <div class="cr-star" id="modal_product_rating">
+
                                 </div>
-                                <p>( 75 Review )</p>
+                                <p id="modal_reviewCount"></p>
                             </div>
                             <div class="cr-product-price">
-                                <span class="new-price">$120.25</span>
-                                <span class="old-price">$123.25</span>
+                                <span class="new-price" id="modal_product_selling_price"></span>
+                                <span class="old-price" id="modal_product_discount_price"></span>
                             </div>
                             <div class="cr-size-weight">
                                 <h5><span>Size :</span></h5>
                                 <div class="cr-kg">
-                                    <ul>
-                                        <li class="active-color">S</li>
-                                        <li>M</li>
-                                        <li>L</li>
-                                        <li>XL</li>
-                                        <li>XL</li>
-                                        <li>XL</li>
-                                    </ul>
+                                    <ul id="sizeOptions"></ul>
+                                </div>
+                            </div>
+                            <div class="cr-size-weight">
+                                <h5><span>Color :</span></h5>
+                                <div class="cr-kg color">
+                                    <ul id="colorOptions"></ul>
                                 </div>
                             </div>
                             <div class="cr-add-card">
                                 <div class="cr-qty-main">
-                                    <input type="text" placeholder="." value="1" minlength="1" maxlength="20"
-                                        class="quantity">
+                                    <input type="text" placeholder="1" value="1" class="quantity">
                                     <button type="button" id="add_model" class="plus">+</button>
                                     <button type="button" id="sub_model" class="minus">-</button>
                                 </div>
