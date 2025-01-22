@@ -33,15 +33,15 @@ class HomeController extends Controller
         return view('frontend.pages.product_detail', compact('product', 'related_products', 'reviews'));
     }
 
-
-    public function quickView($slug){
-        $product = Product::with('reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('slug', $slug)->first();
-        $product->size=json_decode($product->size, true);
-        $product->color=json_decode($product->color, true);
+    public function quickView($id)
+    {
+        $product        = Product::with('reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('id', $id)->first();
+        $product->size  = json_decode($product->size, true);
+        $product->color = json_decode($product->color, true);
         return response()->json([
-            'status'=>true,
-            'message'=>'Data retrieve successfully',
-            'data'=>$product
+            'status'  => true,
+            'message' => 'Data retrieve successfully',
+            'data'    => $product,
         ]);
     }
 }

@@ -149,11 +149,6 @@
                                     <i class="ri-heart-line"
                                         style="@if ($wishlist) background-color: #64b496; color: #fff; @endif"></i>
                                 </a>
-                                <a class="model-oraganic-product" data-bs-toggle="modal" href="#" id="quickView"
-                                    data-slug="{{ $product->slug }}" role="button">
-                                    <i class="ri-eye-line"></i>
-                                </a>
-
                             </div>
                         </div>
                     </div>
@@ -307,8 +302,8 @@
                                                 @endif
 
                                             </a>
-                                            <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview"
-                                                role="button">
+                                            <a class="model-oraganic-product quickViewModal" data-bs-toggle="modal"
+                                                href="#" data-id="{{ $rproduct->id }}" role="button">
                                                 <i class="ri-eye-line"></i>
                                             </a>
                                         </div>
@@ -378,89 +373,6 @@
                     stars[i].classList.remove('ri-star-s-line');
                     stars[i].classList.add('ri-star-s-fill');
                 }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#quickView').on('click', function() {
-                let slug = $(this).data('slug');
-                let url = "{{ route('product.quickView', ':slug') }}";
-                url = url.replace(':slug', slug);
-
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "JSON",
-                    success: function(res) {
-                        const product = res.data;
-                        let imageUrl = "{{ asset('uploads/product') }}" + '/' + product
-                            .thumbnail;
-                        var currency = "{{ $setting->currency }}";
-                        let sizeOptions = '';
-                        let colorOptions = '';
-                        let averageRating =
-                            product.reviews_count > 0 ?
-                            Math.round((product.reviews_sum_rating / product.reviews_count) *
-                                10) / 10 :
-                            0;
-
-                        $('#modal_image').attr('src',
-                            imageUrl);
-                        $('#modal_product_name').text(
-                            product.name);
-                        $('#modal_product_description').text(product
-                            .short_description);
-                        let ratingStars = '';
-
-                        for (let i = 1; i <= 5; i++) {
-                            if (i <= Math.floor(averageRating)) {
-                                ratingStars += '<i class="ri-star-fill"></i>';
-                            } else if (i === Math.ceil(averageRating) && averageRating - Math
-                                .floor(averageRating) > 0) {
-                                ratingStars += '<i class="ri-star-half-line"></i>';
-                            } else {
-                                ratingStars += '<i class="ri-star-line"></i>';
-                            }
-                        }
-                        $('#modal_product_rating').html(ratingStars);
-
-
-                        $('#modal_reviewCount').text(`(${product.reviews_count} Review)`);
-                        $('#modal_product_selling_price').text(currency +
-                            product.selling_price);
-                        if (product.discount_price) {
-                            $('#modal_product_discount_price').text(
-                                currency +
-                                product.discount_price);
-                        }
-                        if (product.size && Array.isArray(product.size)) {
-                            product.size.forEach(function(size) {
-                                sizeOptions += '<li>' + size.value +
-                                    '</li>';
-                            });
-                        } else {
-                            sizeOptions = '<li>No sizes available</li>';
-                        }
-                        $('#sizeOptions').html(sizeOptions);
-                        if (product.color && Array.isArray(product.color)) {
-                            product.color.forEach(function(color) {
-                                colorOptions += '<li>' + color.value +
-                                    '</li>';
-                            });
-                        } else {
-                            colorOptions = '<li>No colors available</li>';
-                        }
-                        $('#colorOptions').html(colorOptions);
-
-
-                        $('#quickview').modal('show');
-                    },
-                    error: function(err) {
-                        alert('Error loading product details.');
-                    }
-                });
             });
         });
     </script>

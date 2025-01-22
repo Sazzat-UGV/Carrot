@@ -102,11 +102,11 @@
                                                     <i class="ri-heart-line"></i>
                                                 @endif
                                             </a>
-                                            <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview"
-                                                role="button">
+                                            <a class="model-oraganic-product quickViewModal" data-bs-toggle="modal"
+                                                href="#" data-id="{{ $featured->id }}" role="button">
                                                 <i class="ri-eye-line"></i>
                                             </a>
-                                        </div>
+                                        </div>  
                                         <a class="cr-shopping-bag" href="javascript:void(0)">
                                             <i class="ri-shopping-bag-line"></i>
                                         </a>
@@ -238,8 +238,9 @@
                                                             <i class="ri-heart-line"></i>
                                                         @endif
                                                     </a>
-                                                    <a class="model-oraganic-product" data-bs-toggle="modal"
-                                                        href="#quickview" role="button">
+                                                    <a class="model-oraganic-product quickViewModal"
+                                                        data-bs-toggle="modal" href="#"
+                                                        data-id="{{ $popular->id }}" role="button">
                                                         <i class="ri-eye-line"></i>
                                                     </a>
                                                 </div>
@@ -342,8 +343,8 @@
                                                     <i class="ri-heart-line"></i>
                                                 @endif
                                             </a>
-                                            <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview"
-                                                role="button">
+                                            <a class="model-oraganic-product quickViewModal" data-bs-toggle="modal"
+                                                href="#" data-id="{{ $trendy->id }}" role="button">
                                                 <i class="ri-eye-line"></i>
                                             </a>
                                         </div>
@@ -411,7 +412,6 @@
             </div>
         </div>
     </section>
-    
 @endsection
 
 @push('script')

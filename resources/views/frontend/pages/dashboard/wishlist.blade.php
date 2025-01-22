@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="row mb-minus-24" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
-                @foreach ($products as $product)
+                @forelse ($products as $product)
                     <div class="col-lg-3 col-6 cr-product-box mb-24">
                         <div class="cr-product-card">
                             <div class="cr-product-image">
@@ -75,7 +75,9 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                    @empty
+                  <h1 style="color: #777777; text-align: center;">Nothing in wishlist.</h1>
+                @endforelse
                 {{ $products->links('pagination::custom_pagination') }}
             </div>
         </div>

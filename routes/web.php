@@ -111,7 +111,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist_list');
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
 
-    Route::get('product/quick_view/{slug}',[HomeController::class,'quickView'])->name('product.quickView');
 });
+Route::get('product/quick_view/{id}', [HomeController::class, 'quickView'])->name('product.quickView');
 
 require __DIR__ . '/auth.php';

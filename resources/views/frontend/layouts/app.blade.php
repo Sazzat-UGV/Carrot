@@ -82,7 +82,7 @@
     @include('frontend.layouts.include.tab_to_top')
 
     <!-- Model -->
-    @include('frontend.layouts.include.product_model')
+    @include('frontend.layouts.include.product_modal')
 
     <!-- Cart -->
     @include('frontend.layouts.include.my_cart')

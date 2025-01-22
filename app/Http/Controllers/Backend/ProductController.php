@@ -1,24 +1,22 @@
 <?php
 namespace App\Http\Controllers\Backend;
 
-use Image;
-use App\Models\Brand;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\Warehouse;
-use App\Models\PickupPoint;
-use App\Models\SubCategory;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\PickupPoint;
+use App\Models\Product;
+use App\Models\SubCategory;
+use App\Models\Warehouse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+use Image;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $categories = Category::latest()->get();
@@ -76,34 +74,35 @@ class ProductController extends Controller
             'purchase_price'    => 'nullable|numeric',
             'selling_price'     => 'required|numeric',
             'discount_price'    => 'nullable|numeric',
+            'short_description' => 'required|string|max: 500',
             'description'       => 'required|string',
             'thumbnail'         => 'required|image|mimes:png,jpg,jpeg|max:10240',
             'multiple_images'   => 'sometimes|array',
             'multiple_images.*' => 'image|mimes:png,jpg,jpeg|max:10240',
         ]);
         $product = Product::create([
-            'name'            => $request->product_name,
-            'slug'=>Str::slug($request->product_name),
-            'code'            => $request->product_code,
-            'user_id'         => Auth::user()->id,
-            'category_id'     => $request->category,
-            'sub_category_id' => $request->subcategory,
-            'brand_id'        => $request->brand,
-            'warehouse_id'    => $request->warehouse,
-            'pickup_point_id' => $request->pickup_point,
-            'tags'            => $request->tags,
-            'purchase_price'  => $request->purchase_price,
-            'selling_price'   => $request->selling_price,
-            'discount_price'  => $request->discount_price,
-            'color'           => $request->color,
-            'size'            => $request->size,
-            'stock_quantity'  => $request->stock,
-            'description'     => $request->description,
-            'video'           => $request->embeded_video,
-            'featured'        => $request->featured,
-            'today_deal'      => $request->today_deal,
-            'trending'      => $request->trending,
-            'status'          => $request->status,
+            'name'              => $request->product_name,
+            'slug'              => Str::slug($request->product_name),
+            'code'              => $request->product_code,
+            'user_id'           => Auth::user()->id,
+            'category_id'       => $request->category,
+            'sub_category_id'   => $request->subcategory,
+            'brand_id'          => $request->brand,
+            'warehouse_id'      => $request->warehouse,
+            'pickup_point_id'   => $request->pickup_point,
+            'tags'              => $request->tags,
+            'purchase_price'    => $request->purchase_price,
+            'selling_price'     => $request->selling_price,
+            'discount_price'    => $request->discount_price,
+            'color'             => $request->color,
+            'size'              => $request->size,
+            'stock_quantity'    => $request->stock,
+            'description'       => $request->description,
+            'short_description' => $request->short_description,
+            'featured'          => $request->featured,
+            'today_deal'        => $request->today_deal,
+            'trending'          => $request->trending,
+            'status'            => $request->status,
         ]);
 
         $this->image_upload($request, $product);
@@ -139,9 +138,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
         $product = Product::findOrFail($id);
         $request->validate([
-            'product_name'      => 'required|string|max:255|unique:products,name,'.$product->id,
+            'product_name'      => 'required|string|max:255|unique:products,name,' . $product->id,
             'product_code'      => 'required|string|max:255',
             'category'          => 'required|numeric',
             'brand'             => 'required|numeric',
@@ -151,33 +151,34 @@ class ProductController extends Controller
             'selling_price'     => 'required|numeric',
             'discount_price'    => 'nullable|numeric',
             'description'       => 'required|string',
+            'short_description' => 'required|string|max: 500',
             'thumbnail'         => 'sometimes|image|mimes:png,jpg,jpeg|max:10240',
             'multiple_images'   => 'sometimes|array',
             'multiple_images.*' => 'image|mimes:png,jpg,jpeg|max:10240',
         ]);
         $product->update([
-            'name'            => $request->product_name,
-               'slug'=>Str::slug($request->product_name),
-            'code'            => $request->product_code,
-            'user_id'         => Auth::user()->id,
-            'category_id'     => $request->category,
-            'sub_category_id' => $request->subcategory ?? $product->sub_category_id,
-            'brand_id'        => $request->brand,
-            'warehouse_id'    => $request->warehouse,
-            'pickup_point_id' => $request->pickup_point,
-            'tags'            => $request->tags,
-            'purchase_price'  => $request->purchase_price,
-            'selling_price'   => $request->selling_price,
-            'discount_price'  => $request->discount_price,
-            'color'           => $request->color,
-            'size'            => $request->size,
-            'stock_quantity'  => $request->stock,
-            'description'     => $request->description,
-            'video'           => $request->embeded_video,
-            'featured'        => $request->featured,
-            'trending'        => $request->trending,
-            'today_deal'      => $request->today_deal,
-            'status'          => $request->status,
+            'name'              => $request->product_name,
+            'slug'              => Str::slug($request->product_name),
+            'code'              => $request->product_code,
+            'user_id'           => Auth::user()->id,
+            'category_id'       => $request->category,
+            'sub_category_id'   => $request->subcategory ?? $product->sub_category_id,
+            'brand_id'          => $request->brand,
+            'warehouse_id'      => $request->warehouse,
+            'pickup_point_id'   => $request->pickup_point,
+            'tags'              => $request->tags,
+            'purchase_price'    => $request->purchase_price,
+            'selling_price'     => $request->selling_price,
+            'discount_price'    => $request->discount_price,
+            'color'             => $request->color,
+            'size'              => $request->size,
+            'stock_quantity'    => $request->stock,
+            'description'       => $request->description,
+            'short_description' => $request->short_description,
+            'featured'          => $request->featured,
+            'trending'          => $request->trending,
+            'today_deal'        => $request->today_deal,
+            'status'            => $request->status,
         ]);
 
         if ($request->hasFile('thumbnail')) {
