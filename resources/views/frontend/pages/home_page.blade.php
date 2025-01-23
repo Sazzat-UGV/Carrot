@@ -343,6 +343,27 @@
         </div>
     </section>
 
+    <!-- brand -->
+    <section class="section-insta padding-b-100 aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000">
+        <div class="container">
+            <h2 class="d-none">@Instagram</h2>
+            <div class="cr-insta swiper-container swiper-container-initialized swiper-container-horizontal">
+                <div class="swiper-wrapper" id="swiper-wrapper-56a2abb1103e83b5a" aria-live="polite"
+                    style="transform: translate3d(-1500px, 0px, 0px); transition: all;">
+                    @foreach ($brands as $brand)
+                        <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="0" role="group"
+                            aria-label="1 / 24" style="width: 163.5px; margin-right: 24px;">
+                            <a href="#" class="cr-insta-image">
+                                <img src="{{ asset('uploads/brand') }}/{{ $brand->photo }}" alt="insta">
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+            </div>
+        </div>
+    </section>
+
     <!-- trendy products -->
     <section class="section-popular margin-b-100">
         <div class="container">

@@ -113,4 +113,19 @@ class BrandController extends Controller
             'photo' => $new_photo_name,
         ]);
     }
+
+    public function showHome($id)
+    {
+        $brand = Brand::findOrFail($id);
+        if ($brand->show_home == 1) {
+            $brand->show_home = 0;
+        } else {
+            $brand->show_home = 1;
+        }
+        $brand->update();
+        return response()->json([
+            'type' => 'success',
+            'message' => 'Status Updated',
+        ]);
+    }
 }

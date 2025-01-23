@@ -14,16 +14,40 @@ class BrandSeeder extends Seeder
     {
         $brands = [
             [
-                "name"  => "ApexTech",
-                "photo" => "brand-1.png",
+                "name"  => "Bata",
+                "photo" => "Bata.png",
             ],
             [
-                "name"  => "UrbanCraft",
-                "photo" => "brand-2.png",
+                "name"  => "CGP Turkey",
+                "photo" => "CGP Turkey.png",
             ],
             [
-                "name"  => "NovaTrend",
-                "photo" => "brand-3.png",
+                "name"  => "Copa Kombi",
+                "photo" => "Copa Kombi.png",
+            ],
+            [
+                "name"  => "Lotto",
+                "photo" => "Lotto.png",
+            ],
+            [
+                "name"  => "Netflix Tudum",
+                "photo" => "Netflix Tudum.png",
+            ],
+            [
+                "name"  => "Sprite New 2022",
+                "photo" => "Sprite New 2022.png",
+            ],
+            [
+                "name"  => "Suzuki",
+                "photo" => "Suzuki.png",
+            ],
+            [
+                "name"  => "Tivo",
+                "photo" => "Tivo.png",
+            ],
+            [
+                "name"  => "TVS",
+                "photo" => "TVS.png",
             ],
         ];
 

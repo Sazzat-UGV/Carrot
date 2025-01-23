@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->string('photo')->nullable();
+            $table->boolean('show_home')->default(1);
             $table->timestamps();
         });
     }

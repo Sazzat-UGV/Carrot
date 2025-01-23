@@ -33,6 +33,7 @@
                                     <th>Created At</th>
                                     <th>Photo</th>
                                     <th>Name</th>
+                                    <th>Show Home</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -44,6 +45,21 @@
                                         <td><img src="{{ asset('uploads/brand') }}/{{ $brand->photo }}" alt=""
                                                 style="max-width: 100px;"></td>
                                         <td class="wrap">{{ $brand->name }}</td>
+                                        <td>
+                                            <label class="switch switch-success">
+                                                <input class="switch-input showHome" type="checkbox"
+                                                    data-id="{{ $brand->id }}" id="brand-{{ $brand->id }}"
+                                                    {{ $brand->show_home ? 'checked' : '' }}>
+                                                <span class="switch-toggle-slider">
+                                                    <span class="switch-on">
+                                                        <i class="bx bx-check"></i>
+                                                    </span>
+                                                    <span class="switch-off">
+                                                        <i class="bx bx-x"></i>
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </td>
                                         <td>
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -95,6 +111,33 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         form.submit();
+                    }
+                });
+            });
+
+            $('#example').on('change', '.showHome', function() {
+                var is_active = $(this).prop('checked') ? 1 : 0;
+                var item_id = $(this).data('id');
+                var url = '{{ route('admin.brand.showHome', ':id') }}'.replace(':id', item_id);
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "JSON",
+                    success: function(response) {
+                        Swal.fire(
+                            'Status Updated!',
+                            'The status has been successfully updated.',
+                            'success'
+                        );
+                    },
+                    error: function(err) {
+                        console.error(err);
+                        Swal.fire(
+                            'Error!',
+                            'Unable to update status. Please try again later.',
+                            'error'
+                        );
                     }
                 });
             });

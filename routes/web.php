@@ -89,6 +89,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('category/status/{id}', [CategoryController::class, 'changeStatus'])->name('category.status');
         Route::get('category/show-home/{id}', [CategoryController::class, 'showHome'])->name('category.showHome');
         Route::get('subcategory/status/{id}', [SubCategoryController::class, 'changeStatus'])->name('subcategory.status');
+        Route::get('brand/show-home/{id}', [BrandController::class, 'showHome'])->name('brand.showHome');
         Route::get('coupon/status/{id}', [CouponController::class, 'changeStatus'])->name('coupon.status');
         Route::get('product/status/{id}', [ProductController::class, 'changeStatus'])->name('product.status');
         Route::get('product/featured/{id}', [ProductController::class, 'featured'])->name('product.featured');
@@ -113,6 +114,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
 
 });
+
 Route::get('product/quick_view/{id}', [HomeController::class, 'quickView'])->name('product.quickView');
 
 require __DIR__ . '/auth.php';

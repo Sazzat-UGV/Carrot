@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
@@ -18,7 +19,8 @@ class HomeController extends Controller
         $trendies      = Product::with('category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('trending', 1)->latest('id')->take(10)->get();
         $services      = Service::where('status', 1)->latest('id')->get();
         $categories    = Category::withCount('products')->where('show_home', 1)->get();
-        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories'));
+        $brands        = Brand::where('show_home', 1)->latest('id')->get();
+        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories', 'brands'));
     }
 
     public function productDetails()
