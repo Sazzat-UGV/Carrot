@@ -96,19 +96,18 @@
                             sizeOptions += '<li>' + size.value +
                                 '</li>';
                         });
-                    } else {
-                        sizeOptions = '<li>No sizes available</li>';
+                        $('#sizeText').text('Size :');
+                        $('#sizeOptions').html(sizeOptions);
+
                     }
-                    $('#sizeOptions').html(sizeOptions);
                     if (product.color && Array.isArray(product.color)) {
                         product.color.forEach(function(color) {
                             colorOptions += '<li>' + color.value +
                                 '</li>';
-                        });
-                    } else {
-                        colorOptions = '<li>No colors available</li>';
+                            });
+                            $('#colorText').text('Color :');
+                        $('#colorOptions').html(colorOptions);
                     }
-                    $('#colorOptions').html(colorOptions);
 
 
                     $('#quickview').modal('show');

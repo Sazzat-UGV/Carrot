@@ -103,27 +103,30 @@
                                 <span class="old-price">{{ $setting->currency }}{{ $product->discount_price }}</span>
                             @endif
                         </div>
-                        <div class="cr-size-weight">
-                            <h5><span>Size</span> :</h5>
-                            <div class="cr-kg">
-                                <ul id="size-list">
-                                    @foreach (json_decode($product->size) as $size)
-                                        <li class="{{ $loop->first ? '' : '' }}">{{ $size->value }}</li>
-                                    @endforeach
-                                </ul>
+                        @if ($product->size)
+                            <div class="cr-size-weight">
+                                <h5><span>Size</span> :</h5>
+                                <div class="cr-kg">
+                                    <ul id="size-list">
+                                        @foreach (json_decode($product->size) as $size)
+                                            <li class="{{ $loop->first ? '' : '' }}">{{ $size->value }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="cr-size-weight">
-                            <h5><span>Color</span> :</h5>
-                            <div class="cr-kg">
-                                <ul id="color-list">
-                                    @foreach (json_decode($product->color) as $color)
-                                        <li class="{{ $loop->first ? '' : '' }}">{{ $color->value }}</li>
-                                    @endforeach
-                                </ul>
+                        @endif
+                        @if ($product->color)
+                            <div class="cr-size-weight">
+                                <h5><span>Color</span> :</h5>
+                                <div class="cr-kg">
+                                    <ul id="color-list">
+                                        @foreach (json_decode($product->color) as $color)
+                                            <li class="{{ $loop->first ? '' : '' }}">{{ $color->value }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
+                        @endif
 
 
                         <div class="cr-add-card">
@@ -179,8 +182,8 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade @if (request('stage') == 'review') active show @endif" id="review"
-                                role="tabpanel" aria-labelledby="review-tab">
+                            <div class="tab-pane fade @if (request('stage') == 'review') active show @endif"
+                                id="review" role="tabpanel" aria-labelledby="review-tab">
                                 <div class="cr-tab-content-from">
                                     <div class="post">
                                         <div class="reviews-container">

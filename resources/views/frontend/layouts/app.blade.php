@@ -61,6 +61,20 @@
         .custom-logout-btn:hover {
             color: #64B496 !important;
         }
+
+        .icon-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .counter {
+            bottom: -8px;
+            right: -10px;
+            font-weight: 800;
+            font-size: 11px;
+            border-radius: 50%;
+            padding: 2px 6px;
+        }
     </style>
 
 </head>

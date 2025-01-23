@@ -26,13 +26,13 @@
                                 <span class="old-price" id="modal_product_discount_price"></span>
                             </div>
                             <div class="cr-size-weight">
-                                <h5><span>Size :</span></h5>
+                                <h5><span id="sizeText"></span></h5>
                                 <div class="cr-kg">
                                     <ul id="sizeOptions"></ul>
                                 </div>
                             </div>
                             <div class="cr-size-weight">
-                                <h5><span>Color :</span></h5>
+                                <h5><span id="colorText"></span></h5>
                                 <div class="cr-kg color">
                                     <ul id="colorOptions"></ul>
                                 </div>

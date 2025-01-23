@@ -269,12 +269,14 @@
                                                                 <input class="form-control" type="text"
                                                                     value="{{ $product->pickup_point->name }}" disabled>
                                                             </div>
+                                                            @if ($product->tags)
                                                             <div class="col-12 mb-4">
                                                                 <label class="form-label">Tags</label>
                                                                 <input class="form-control" type="text"
                                                                     value="{{ implode(', ', array_column(json_decode($product->tags, true), 'value')) }}"
                                                                     disabled>
                                                             </div>
+                                                            @endif
 
                                                             <div class="col-12 col-md-4 mb-4">
                                                                 <label class="form-label">Purchase Price</label>
@@ -301,18 +303,22 @@
                                                                 <input class="form-control" type="text"
                                                                     value="{{ $product->stock_quantity }}" disabled>
                                                             </div>
-                                                            <div class="col-12 col-md-6 mb-4">
+                                                            @if ($product->color)
+                                                            <div class="{{ $product->size?'col-12 col-md-6':'col-12' }} mb-4">
                                                                 <label class="form-label">Color</label>
                                                                 <input class="form-control" type="text"
                                                                     value="{{ implode(', ', array_column(json_decode($product->color, true), 'value')) }}"
                                                                     disabled>
                                                             </div>
-                                                            <div class="col-12 col-md-6 mb-4">
+                                                            @endif
+                                                            @if ($product->size)
+                                                            <div class="{{ $product->color?'col-12 col-md-6':'col-12' }} mb-4">
                                                                 <label class="form-label">Size</label>
                                                                 <input class="form-control" type="text"
                                                                     value="{{ implode(', ', array_column(json_decode($product->size, true), 'value')) }}"
                                                                     disabled>
                                                             </div>
+                                                            @endif
                                                             <div class="col-12 mb-4">
                                                                 <label class="form-label">Short Description</label>
                                                                 <textarea cols="30" rows="5" disabled
