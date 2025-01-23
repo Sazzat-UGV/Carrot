@@ -135,7 +135,7 @@
                                                     <div class="col-md-6 mb-3">
                                                         <ul class="cat-list">
                                                             <li><a
-                                                                    href="shop-left-sidebar.html">{{ $subcategory->name }}</a>
+                                                                    href="{{ route('allProducts', ['type' => 'subcategory', 'slug' => $subcategory->slug]) }}">{{ $subcategory->name }}</a>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -207,25 +207,15 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="javascript:void(0)">
-                                    Products
+                                    Categories
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="product-left-sidebar.html">product
-                                            Left
-                                            sidebar </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="product-right-sidebar.html">product
-                                            Right
-                                            sidebar </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="product-full-width.html">Product
-                                            Full
-                                            Width
-                                        </a>
-                                    </li>
+                                    @foreach ($categories as $category)
+                                        <li>
+                                            <a class="dropdown-item"
+                                                href="{{ route('allProducts', ['type' => 'category', 'slug' => $category->slug]) }}">{{ $category->name }}</a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -342,10 +332,10 @@
                 </li>
                 <li class="dropdown drop-list">
                     <span class="menu-toggle"></span>
-                    <a href="javascript:void(0)" class="dropdown-list">Category</a>
+                    <a href="javascript:void(0)" class="dropdown-list">Categories</a>
                     <ul class="sub-menu">
                         @foreach ($categories as $category)
-                            <li><a href="{{ $category->id }}">{{ $category->name }}</a></li>
+                            <li><a href="{{ route('allProducts', ['type' => 'category', 'slug' => $category->slug]) }}">{{ $category->name }}</a></li>
                         @endforeach
                     </ul>
                 </li>

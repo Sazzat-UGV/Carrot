@@ -104,6 +104,9 @@ Route::prefix('admin')->as('admin.')->group(function () {
 Route::prefix('/')->group(function () {
     Route::get('', [HomeController::class, 'homePage'])->name('homePage');
     Route::get('product/details/{slug}', [HomeController::class, 'productDetail'])->name('productDetail');
+    Route::get('product/quick_view/{id}', [HomeController::class, 'quickView'])->name('product.quickView');
+    Route::get('products/{type}/{slug}', [HomeController::class, 'allProducts'])->name('allProducts');
+
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -115,6 +118,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::get('product/quick_view/{id}', [HomeController::class, 'quickView'])->name('product.quickView');
 
 require __DIR__ . '/auth.php';
