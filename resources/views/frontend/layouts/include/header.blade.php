@@ -335,19 +335,13 @@
                     <a href="javascript:void(0)" class="dropdown-list">Categories</a>
                     <ul class="sub-menu">
                         @foreach ($categories as $category)
-                            <li><a href="{{ route('allProducts', ['type' => 'category', 'slug' => $category->slug]) }}">{{ $category->name }}</a></li>
+                            <li><a
+                                    href="{{ route('allProducts', ['type' => 'category', 'slug' => $category->slug]) }}">{{ $category->name }}</a>
+                            </li>
                         @endforeach
                     </ul>
                 </li>
-                <li class="dropdown drop-list">
-                    <span class="menu-toggle"></span>
-                    <a href="javascript:void(0)" class="dropdown-list">product</a>
-                    <ul class="sub-menu">
-                        <li><a href="product-left-sidebar.html">product Left sidebar</a></li>
-                        <li><a href="product-right-sidebar.html">product Right sidebar</a></li>
-                        <li><a href="product-full-width.html">Product Full Width </a></li>
-                    </ul>
-                </li>
+
                 <li class="dropdown drop-list">
                     <span class="menu-toggle"></span>
                     <a href="javascript:void(0)" class="dropdown-list">Pages</a>

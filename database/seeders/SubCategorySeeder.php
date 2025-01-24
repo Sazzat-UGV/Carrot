@@ -6,7 +6,6 @@ use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SubCategorySeeder extends Seeder
 {
@@ -16,97 +15,137 @@ class SubCategorySeeder extends Seeder
     public function run(): void
     {
         $subcategories = [
-            [
-                'category' => 'Electronics',
-                'subcategories' => [
-                    ['name' => 'Mobile Phones'],
-                    ['name' => 'Laptops'],
-                    ['name' => 'Cameras'],
-                ],
+            'Electronics' => [
+                'Mobile Phones',
+                'Laptops',
+                'Cameras',
+                'Tablets',
+                'Smart Watches',
+                'Headphones',
+                'Gaming Consoles',
+                'Drones',
+                'Wearable Tech',
+                'Home Audio Systems'
             ],
-            [
-                'category' => 'Fashion',
-                'subcategories' => [
-                    ['name' => 'Men'],
-                    ['name' => 'Women'],
-                    ['name' => 'Kids'],
-                ],
+            'Fashion' => [
+                'Men',
+                'Women',
+                'Kids',
+                'Footwear',
+                'Accessories',
+                'Jewelry',
+                'Sunglasses',
+                'Handbags',
+                'Ethnic Wear',
+                'Activewear'
             ],
-            [
-                'category' => 'Home & Kitchen',
-                'subcategories' => [
-                    ['name' => 'Furniture'],
-                    ['name' => 'Kitchenware'],
-                    ['name' => 'Home Décor'],
-                ],
+            'Home & Kitchen' => [
+                'Furniture',
+                'Kitchenware',
+                'Home Décor',
+                'Bedding',
+                'Lighting',
+                'Cookware',
+                'Storage Solutions',
+                'Cleaning Supplies',
+                'Wall Art',
+                'Bathroom Accessories'
             ],
-            [
-                'category' => 'Sports & Outdoors',
-                'subcategories' => [
-                    ['name' => 'Fitness'],
-                    ['name' => 'Outdoor Sports'],
-                    ['name' => 'Team Sports'],
-                ],
+            'Sports & Outdoors' => [
+                'Fitness',
+                'Outdoor Sports',
+                'Team Sports',
+                'Camping Gear',
+                'Cycling',
+                'Running',
+                'Water Sports',
+                'Hiking Equipment',
+                'Tennis & Racket Sports',
+                'Sportswear'
             ],
-            [
-                'category' => 'Health & Beauty',
-                'subcategories' => [
-                    ['name' => 'Skincare'],
-                    ['name' => 'Haircare'],
-                    ['name' => 'Wellness'],
-                ],
+            'Health & Beauty' => [
+                'Skincare',
+                'Haircare',
+                'Wellness',
+                'Makeup',
+                'Fragrances',
+                'Bath & Body',
+                'Vitamins & Supplements',
+                'Oral Care',
+                'Essential Oils',
+                'Health Monitoring Devices'
             ],
-            [
-                'category' => 'Books & Stationery',
-                'subcategories' => [
-                    ['name' => 'Books'],
-                    ['name' => 'Stationery'],
-                    ['name' => 'Office Supplies'],
-                ],
+            'Books & Stationery' => [
+                'Books',
+                'Stationery',
+                'Office Supplies',
+                'Art Supplies',
+                'Notebooks & Diaries',
+                'Craft Materials',
+                'Technical Manuals',
+                'Planners',
+                'Educational Materials',
+                'File & Folder Organizers'
             ],
-            [
-                'category' => 'Toys & Games',
-                'subcategories' => [
-                    ['name' => 'Toys'],
-                    ['name' => 'Games'],
-                    ['name' => 'Outdoor Toys'],
-                ],
+            'Toys & Games' => [
+                'Toys',
+                'Games',
+                'Outdoor Toys',
+                'Board Games',
+                'Puzzles',
+                'Dolls & Dollhouses',
+                'Action Figures',
+                'Learning Toys',
+                'Building Sets',
+                'Ride-On Toys'
             ],
-            [
-                'category' => 'Automotive',
-                'subcategories' => [
-                    ['name' => 'Car Accessories'],
-                    ['name' => 'Motorcycles'],
-                    ['name' => 'Tools & Equipment'],
-                ],
+            'Automotive' => [
+                'Car Accessories',
+                'Motorcycles',
+                'Tools & Equipment',
+                'Car Electronics',
+                'Tires & Wheels',
+                'Car Care Products',
+                'Electric Scooters',
+                'Motorcycle Helmets',
+                'Safety Accessories',
+                'Vehicle Parts'
             ],
-            [
-                'category' => 'Groceries & Essentials',
-                'subcategories' => [
-                    ['name' => 'Fresh Produce'],
-                    ['name' => 'Beverages'],
-                    ['name' => 'Snacks'],
-                ],
+            'Groceries & Essentials' => [
+                'Fresh Produce',
+                'Beverages',
+                'Snacks',
+                'Cooking Essentials',
+                'Frozen Foods',
+                'Canned Goods',
+                'Organic Products',
+                'Baking Supplies',
+                'Dairy Products',
+                'Packaged Meals'
             ],
-            [
-                'category' => 'Jewelry & Accessories',
-                'subcategories' => [
-                    ['name' => 'Rings'],
-                    ['name' => 'Necklaces'],
-                    ['name' => 'Bracelets'],
-                ],
+            'Jewelry & Accessories' => [
+                'Rings',
+                'Necklaces',
+                'Bracelets',
+                'Earrings',
+                'Watches',
+                'Brooches',
+                'Anklets',
+                'Hair Accessories',
+                'Chokers',
+                'Cufflinks'
             ],
         ];
 
-        foreach ($subcategories as $subcategoryData) {
-            $category = Category::where('name', $subcategoryData['category'])->first();
+        foreach ($subcategories as $categoryName => $subcategoriesList) {
+            $category = Category::where('name', $categoryName)->first();
 
             if ($category) {
-                foreach ($subcategoryData['subcategories'] as $subcategory) {
+                foreach ($subcategoriesList as $subcategory) {
                     SubCategory::create([
                         'category_id' => $category->id,
-                        'name' => $subcategory['name'],
-                        'slug' => Str::slug($subcategory['name']),
+                        'name' => $subcategory,
+                        'slug' => Str::slug($subcategory),
                     ]);
                 }
             }

@@ -316,7 +316,8 @@
                                     </div>
                                     <div class="cr-product-details">
                                         <div class="cr-brand">
-                                            <a href="#">{{ $rproduct->category->name }}</a>
+                                            <a
+                                                href="{{ route('allProducts', ['type' => 'category', 'slug' => $rproduct->category->slug]) }}">{{ $rproduct->category->name }}</a>
                                             @php
                                                 $averageRating =
                                                     $rproduct->reviews_count > 0

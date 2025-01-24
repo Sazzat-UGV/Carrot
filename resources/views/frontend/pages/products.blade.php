@@ -11,176 +11,174 @@
     @include('frontend.layouts.include.breadcrumb', ['page_name' => 'Shop'])
     <section class="section-shop padding-tb-100">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-12 md-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
-                    <div class="cr-shop-sideview">
-                        <div class="cr-shop-categories">
-                            <h4 class="cr-shop-sub-title">Category</h4>
-                            <div class="cr-checkbox">
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="drinks">
-                                    <label for="drinks">Juice & Drinks</label>
-                                    <span>[20]</span>
-                                </div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="drinks1">
-                                    <label for="drinks1">Dairy & Milk</label>
-                                    <span>[54]</span>
-                                </div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="drinks2">
-                                    <label for="drinks2">Snack & Spice</label>
-                                    <span>[64]</span>
+            <form action="{{ route('allProducts', ['type' => 'filter', 'slug' => 'data']) }}">
+                <div class="row" style="display: flex;">
+                    <div class="col-lg-3 col-12 md-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
+                        <div class="cr-shop-sideview">
+                            <div class="cr-shop-categories">
+                                <h4 class="cr-shop-sub-title">Category</h4>
+                                <div class="cr-checkbox">
+                                    @foreach ($categories as $category)
+                                        <div class="checkbox-group">
+                                            <input type="checkbox" id="category-{{ $category->id }}" name="category_id[]"
+                                                value="{{ $category->id }}"
+                                                @if (is_array(request('category_id')) && in_array($category->id, request('category_id'))) checked @endif>
+                                            <label for="category-{{ $category->id }}">
+                                                {{ $category->name }}
+                                            </label>
+                                            <span>[{{ $category->products_count }}]</span>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
-                        </div>
-                        <div class="cr-shop-price">
-                            <h4 class="cr-shop-sub-title">Price</h4>
-                            <div class="price-range-slider">
-                                <div id="slider-range" class="range-bar"></div>
-                                <p class="range-value">
-                                    <label>Price :</label>
-                                    <input type="text" id="amount" placeholder="'" readonly>
-                                </p>
-                                <button type="button" class="cr-button">Filter</button>
-                            </div>
-                        </div>
-                        <div class="cr-shop-color">
-                            <h4 class="cr-shop-sub-title">Colors</h4>
-                            <div class="cr-checkbox">
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="blue">
-                                    <label for="blue">Blue</label>
-                                    <span class="blue"></span>
+                            @if ($colors)
+                                <div class="cr-shop-color">
+                                    <h4 class="cr-shop-sub-title">Colors</h4>
+                                    <div class="cr-checkbox">
+                                        @foreach ($colors as $color)
+                                            <div class="checkbox-group">
+                                                <input type="checkbox" id="{{ $color }}" name="color[]"
+                                                    value="{{ $color }}"
+                                                    @if (is_array(request('color')) && in_array($color, request('color'))) checked @endif>
+                                                <label for="{{ $color }}">{{ $color }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="yellow">
-                                    <label for="yellow">Yellow</label>
-                                    <span class="yellow"></span>
+                            @endif
+                            @if ($sizes)
+                                <div class="cr-shop-weight">
+                                    <h4 class="cr-shop-sub-title">Sizes</h4>
+                                    <div class="cr-checkbox">
+                                        @foreach ($sizes as $size)
+                                            <div class="checkbox-group">
+                                                <input type="checkbox" id="{{ $size }}" name="size[]"
+                                                    value="{{ $size }}"
+                                                    @if (is_array(request('size')) && in_array($size, request('size'))) checked @endif>
+                                                <label for="{{ $size }}">{{ $size }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="red">
-                                    <label for="red">Red</label>
-                                    <span class="red"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cr-shop-weight">
-                            <h4 class="cr-shop-sub-title">Weight</h4>
-                            <div class="cr-checkbox">
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="2kg">
-                                    <label for="2kg">2kg Pack</label>
-                                </div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="20kg">
-                                    <label for="20kg">20kg Pack</label>
-                                </div>
-                                <div class="checkbox-group">
-                                    <input type="checkbox" id="30kg">
-                                    <label for="30kg">30kg pack</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cr-shop-tags">
-                            <h4 class="cr-shop-sub-title">Tages</h4>
-                            <div class="cr-shop-tags-inner">
-                                <ul class="cr-tags">
-                                    <li><a href="javascript:void(0)">Vegetables</a></li>
-                                    <li><a href="javascript:void(0)">juice</a></li>
-                                    <li><a href="javascript:void(0)">Food</a></li>
-                                    <li><a href="javascript:void(0)">Dry Fruits</a></li>
-                                    <li><a href="javascript:void(0)">Vegetables</a></li>
-                                    <li><a href="javascript:void(0)">juice</a></li>
-                                </ul>
+                            @endif
+                            <div class="cr-shop-tags">
+                                <button type="submit" class="cr-button">Filter</button>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-9 col-12 md-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="600">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="cr-shop-bredekamp">
-                                <div class="cr-toggle">
-                                    <a href="javascript:void(0)" class="gridCol active-grid">
-                                        <i class="ri-grid-line"></i>
-                                    </a>
-                                    <a href="javascript:void(0)" class="gridRow">
-                                        <i class="ri-list-check-2"></i>
-                                    </a>
-                                </div>
-                                <div class="center-content">
-                                    <span>We found 29 items for you!</span>
-                                </div>
-                                <div class="cr-select">
-                                    <label>Sort By :</label>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Featured</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                        <option value="4">Four</option>
-                                        <option value="5">Five</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row col-100 mb-minus-24">
-                        @foreach ($products as $product)
-                            <div class="col-xxl-3 col-xl-4 col-6 cr-product-box mb-24">
-                                <div class="cr-product-card">
-                                    <div class="cr-product-image">
-                                        <div class="cr-image-inner zoom-image-hover">
-                                            <img src="{{ asset('assets/frontend') }}/img/product/2.jpg" alt="product-1">
-                                        </div>
-                                        <div class="cr-side-view">
-                                            <a href="javascript:void(0)" class="wishlist">
-                                                <i class="ri-heart-line"></i>
-                                            </a>
-                                            <a class="model-oraganic-product" data-bs-toggle="modal" href="#quickview"
-                                                role="button">
-                                                <i class="ri-eye-line"></i>
-                                            </a>
-                                        </div>
-                                        <a class="cr-shopping-bag" href="javascript:void(0)">
-                                            <i class="ri-shopping-bag-line"></i>
+
+                    <div class="col-lg-9 col-12 md-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="600">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="cr-shop-bredekamp">
+                                    <div class="cr-toggle">
+                                        <a href="javascript:void(0)" class="gridCol active-grid">
+                                            <i class="ri-grid-line"></i>
                                         </a>
                                     </div>
-                                    <div class="cr-product-details">
-                                        <div class="cr-brand">
-                                            <a href="shop-left-sidebar.html">Fruits</a>
-                                            <div class="cr-star">
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-fill"></i>
-                                                <i class="ri-star-line"></i>
-                                                <p>(4.5)</p>
-                                            </div>
-                                        </div>
-                                        <a href="product-left-sidebar.html" class="title">Fresh organic apple 1kg simla
-                                            marming</a>
-                                        <p class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                                            eiusmod tempor incididunt
-                                            ut labore lacus vel facilisis.</p>
-                                        <ul class="list">
-                                            <li><label>Brand :</label>ESTA BETTERU CO</li>
-                                            <li><label>Diet Type :</label>Vegetarian</li>
-                                            <li><label>Speciality :</label>Gluten Free, Sugar Free</li>
-                                        </ul>
-                                        <p class="cr-price"><span class="new-price">$120.25</span> <span
-                                                class="old-price">$123.25</span></p>
+                                    <div class="center-content">
+                                        <span>We found {{ $totalProducts }} items for you!</span>
+                                    </div>
+                                    <div class="cr-select">
+                                        <label>Sort By :</label>
+                                        <select class="form-select" aria-label="Default select example" name="sort_by">
+                                            <option value="name_asc" @if (request('sort_by') == 'name_asc') selected @endif>Name:
+                                                A to Z</option>
+                                            <option value="name_desc" @if (request('sort_by') == 'name_desc') selected @endif>
+                                                Name: Z to A</option>
+                                            <option value="price_asc" @if (request('sort_by') == 'price_asc') selected @endif>
+                                                Price: Low to High</option>
+                                            <option value="price_desc" @if (request('sort_by') == 'price_desc') selected @endif>
+                                                Price: High to Low</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
+                        <div class="row col-100 mb-minus-24">
+                            @foreach ($products as $product)
+                                <div class="col-xxl-3 col-xl-4 col-6 cr-product-box mb-24">
+                                    <div class="cr-product-card">
+                                        <div class="cr-product-image">
+                                            <div class="cr-image-inner zoom-image-hover">
+                                                <img src="{{ asset('uploads/product') }}/{{ $product->thumbnail }}"
+                                                    alt="image">
+                                            </div>
+                                            <div class="cr-side-view">
+                                                @php
+                                                    $wishlist = null;
+                                                    if (Auth::check()) {
+                                                        $wishlist = App\Models\Wishlist::where(
+                                                            'user_id',
+                                                            Auth::user()->id,
+                                                        )
+                                                            ->where('product_id', $product->id)
+                                                            ->first();
+                                                    }
+                                                @endphp
+                                                <a href="{{ route('wishlist_store', $product->id) }}" class="">
+                                                    @if ($wishlist)
+                                                        <i class="ri-heart-fill"></i>
+                                                    @else
+                                                        <i class="ri-heart-line"></i>
+                                                    @endif
+                                                </a>
+                                                <a class="model-oraganic-product quickViewModal" data-bs-toggle="modal"
+                                                    href="#" data-id="{{ $product->id }}" role="button">
+                                                    <i class="ri-eye-line"></i>
+                                                </a>
+                                            </div>
+                                            <a class="cr-shopping-bag" href="javascript:void(0)">
+                                                <i class="ri-shopping-bag-line"></i>
+                                            </a>
+                                        </div>
+                                        <div class="cr-product-details">
+                                            <div class="cr-brand">
+                                                <a
+                                                    href="{{ route('allProducts', ['type' => 'category', 'slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
+                                                @php
+                                                    $averageRating =
+                                                        $product->reviews_count > 0
+                                                            ? round(
+                                                                $product->reviews_sum_rating / $product->reviews_count,
+                                                                1,
+                                                            )
+                                                            : 0;
+                                                @endphp
+                                                <div class="cr-star">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= floor($averageRating))
+                                                            <i class="ri-star-fill"></i>
+                                                        @elseif ($i == ceil($averageRating) && $averageRating - floor($averageRating) > 0)
+                                                            <i class="ri-star-half-line"></i>
+                                                        @else
+                                                            <i class="ri-star-line"></i>
+                                                        @endif
+                                                    @endfor
+                                                    <p>({{ $averageRating }})</p>
+                                                </div>
+                                            </div>
+                                            <a href="{{ route('productDetail', $product->slug) }}"
+                                                class="title">{{ $product->name }}</a>
+                                            <p class="cr-price"><span
+                                                    class="new-price">{{ $setting->currency }}{{ $product->selling_price }}</span>
+                                                @if ($product->discount_price)
+                                                    <span
+                                                        class="old-price">{{ $setting->currency }}{{ $product->discount_price }}</span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{ $products->appends(request()->query())->links('pagination::custom_pagination') }}
                     </div>
-                    {{ $products->links('pagination::custom_pagination') }}
                 </div>
-            </div>
+            </form>
         </div>
     </section>
+
 @endsection
 
 @push('script')
