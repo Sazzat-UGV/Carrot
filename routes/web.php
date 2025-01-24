@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\WishlistController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
@@ -118,5 +119,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-
+Route::post('card', function (Request $request) {
+    return $request;
+})->name('card');
 require __DIR__ . '/auth.php';

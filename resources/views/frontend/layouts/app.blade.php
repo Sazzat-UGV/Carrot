@@ -75,6 +75,45 @@
             border-radius: 50%;
             padding: 2px 6px;
         }
+
+        .cr-size-weight {
+            margin-bottom: 15px;
+        }
+
+        .size-dropdown,
+        .color-dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        #size-select,
+        #color-select {
+            width: 100%;
+            padding: 1px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            color: #7A7A7A;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            transition: border-color 0.3s ease;
+            font-size: 14px;
+        }
+
+        #size-select option,
+        #color-select option {
+            padding: 6px 10px;
+            font-size: 14px;
+            font-weight: normal;
+            background: white
+        }
+
+        #size-select:focus,
+        #color-select:focus {
+            border-color: #64b496;
+            outline: none;
+        }
     </style>
 
 </head>

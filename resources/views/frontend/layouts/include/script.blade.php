@@ -86,30 +86,37 @@
                     $('#modal_reviewCount').text(`(${product.reviews_count} Review)`);
                     $('#modal_product_selling_price').text(currency +
                         product.selling_price);
+                    $('.modal_product_selling_price').val(
+                        product.selling_price);
+                    $('.product_id').val(
+                        product.id);
                     if (product.discount_price) {
                         $('#modal_product_discount_price').text(
                             currency +
                             product.discount_price);
                     }
                     if (product.size && Array.isArray(product.size)) {
+                        let sizeOptions = '<select name="size" id="size-select">';
                         product.size.forEach(function(size) {
-                            sizeOptions += '<li>' + size.value +
-                                '</li>';
+                            sizeOptions += '<option value="' + size.value + '">' +
+                                size.value + '</option>';
                         });
+                        sizeOptions += '</select>';
                         $('#sizeText').text('Size :');
                         $('#sizeOptions').html(sizeOptions);
-
                     }
+
                     if (product.color && Array.isArray(product.color)) {
+                        let colorOptions = '<select name="color" id="color-select">';
                         product.color.forEach(function(color) {
-                            colorOptions += '<li>' + color.value +
-                                '</li>';
-                            });
-                            $('#colorText').text('Color :');
+                            colorOptions += '<option value="' + color.value +
+                                '" style="background-color: ' + color.value +
+                                ';">' + color.value + '</option>';
+                        });
+                        colorOptions += '</select>';
+                        $('#colorText').text('Color :');
                         $('#colorOptions').html(colorOptions);
                     }
-
-
                     $('#quickview').modal('show');
                 },
                 error: function(err) {

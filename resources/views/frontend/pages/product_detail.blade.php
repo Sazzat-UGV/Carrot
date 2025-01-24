@@ -103,162 +103,178 @@
                                 <span class="old-price">{{ $setting->currency }}{{ $product->discount_price }}</span>
                             @endif
                         </div>
-                        @if ($product->size)
-                            <div class="cr-size-weight">
-                                <h5><span>Size</span> :</h5>
-                                <div class="cr-kg">
-                                    <ul id="size-list">
-                                        @foreach (json_decode($product->size) as $size)
-                                            <li class="{{ $loop->first ? '' : '' }}">{{ $size->value }}</li>
-                                        @endforeach
-                                    </ul>
+                        <form action="{{ route('card') }}" method="POST">
+                            @csrf
+                            <input type="hidden" value="{{ $product->id }}" name="product_id">
+                            <input type="hidden" value="{{ $product->selling_price }}" name="price">
+                            @if ($product->size)
+                                <div class="cr-size-weight">
+                                    <h5><span>Size</span> :</h5>
+                                    <div class="cr-kg">
+                                        <div class="size-dropdown">
+                                            <select name="size" id="size-select">
+                                                @foreach (json_decode($product->size) as $size)
+                                                    <option value="{{ $size->value }}" class="size-option"
+                                                        {{ $loop->first ? 'selected' : '' }}>
+                                                        {{ $size->value }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
-                        @if ($product->color)
-                            <div class="cr-size-weight">
-                                <h5><span>Color</span> :</h5>
-                                <div class="cr-kg">
-                                    <ul id="color-list">
-                                        @foreach (json_decode($product->color) as $color)
-                                            <li class="{{ $loop->first ? '' : '' }}">{{ $color->value }}</li>
-                                        @endforeach
-                                    </ul>
+                            @endif
+
+                            @if ($product->color)
+                                <div class="cr-size-weight">
+                                    <h5><span>Color</span> :</h5>
+                                    <div class="cr-kg">
+                                        <div class="color-dropdown">
+                                            <select name="color" id="color-select">
+                                                @foreach (json_decode($product->color) as $color)
+                                                    <option value="{{ $color->value }}" class="color-option">
+                                                        {{ $color->value }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
 
 
-                        <div class="cr-add-card">
-                            <div class="cr-qty-main">
-                                <input type="text" placeholder="." value="1" minlength="1" maxlength="20"
-                                    class="quantity">
-                                <button type="button" class="plus">+</button>
-                                <button type="button" class="minus">-</button>
-                            </div>
-                            <div class="cr-add-button">
-                                <button type="button" class="cr-button cr-shopping-bag">Add to cart</button>
-                            </div>
-                            <div class="cr-card-icon">
-                                <a href="{{ route('wishlist_store', $product->id) }}" class="">
-                                    @php
-                                        $wishlist = null;
-                                        if (Auth::check()) {
-                                            $wishlist = App\Models\Wishlist::where('user_id', Auth::user()->id)
-                                                ->where('product_id', $product->id)
-                                                ->first();
-                                        }
-                                    @endphp
-                                    <i class="ri-heart-line"
-                                        style="@if ($wishlist) background-color: #64b496; color: #fff; @endif"></i>
-                                </a>
-                            </div>
+                            <div class="cr-add-card">
+                                <div class="cr-qty-main">
+                                    <input type="text" placeholder="." value="1" minlength="1" maxlength="20"
+                                        name="qty" class="quantity">
+                                    <button type="button" class="plus">+</button>
+                                    <button type="button" class="minus">-</button>
+                                </div>
+                                <div class="cr-add-button">
+                                    <button type="submit" class="cr-button cr-shopping-bag">Add to cart</button>
+                                </div>
+
+                        </form>
+                        <div class="cr-card-icon">
+                            <a href="{{ route('wishlist_store', $product->id) }}" class="">
+                                @php
+                                    $wishlist = null;
+                                    if (Auth::check()) {
+                                        $wishlist = App\Models\Wishlist::where('user_id', Auth::user()->id)
+                                            ->where('product_id', $product->id)
+                                            ->first();
+                                    }
+                                @endphp
+                                <i class="ri-heart-line"
+                                    style="@if ($wishlist) background-color: #64b496; color: #fff; @endif"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="600">
-                <div class="col-12">
-                    <div class="cr-paking-delivery">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link @if (request('stage') != 'review') active @endif"
-                                    id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button"
-                                    role="tab" aria-controls="description" aria-selected="true">Description</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link @if (request('stage') == 'review') active @endif" id="review-tab"
-                                    data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab"
-                                    aria-controls="review" aria-selected="false">Review</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade @if (request('stage') != 'review') active show @endif"
-                                id="description" role="tabpanel" aria-labelledby="description-tab">
-                                <div class="cr-tab-content">
-                                    <div class="cr-description">
-                                        {!! $product->description !!}
-                                    </div>
+        </div>
+        <div class="row" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="600">
+            <div class="col-12">
+                <div class="cr-paking-delivery">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @if (request('stage') != 'review') active @endif" id="description-tab"
+                                data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab"
+                                aria-controls="description" aria-selected="true">Description</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link @if (request('stage') == 'review') active @endif" id="review-tab"
+                                data-bs-toggle="tab" data-bs-target="#review" type="button" role="tab"
+                                aria-controls="review" aria-selected="false">Review</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade @if (request('stage') != 'review') active show @endif" id="description"
+                            role="tabpanel" aria-labelledby="description-tab">
+                            <div class="cr-tab-content">
+                                <div class="cr-description">
+                                    {!! $product->description !!}
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="tab-pane fade @if (request('stage') == 'review') active show @endif"
-                                id="review" role="tabpanel" aria-labelledby="review-tab">
-                                <div class="cr-tab-content-from">
-                                    <div class="post">
-                                        <div class="reviews-container">
-                                            @foreach ($reviews as $review)
-                                                <div class="content">
-                                                    <img src="{{ asset('uploads/user') }}/{{ $review->user->image }}"
-                                                        alt="image" class="border">
-                                                    <div class="details">
-                                                        <span
-                                                            class="date">{{ $review->created_at->format('M d, Y') }}</span>
-                                                        <span class="name">{{ $review->user->name }}</span>
-                                                    </div>
-                                                    <div class="cr-t-review-rating">
-                                                        @for ($i = 1; $i <= 5; $i++)
-                                                            @if ($i <= $review->rating)
-                                                                <i class="ri-star-s-fill"></i>
-                                                            @else
-                                                                <i class="ri-star-s-line"></i>
-                                                            @endif
-                                                        @endfor
-                                                    </div>
+                        <div class="tab-pane fade @if (request('stage') == 'review') active show @endif" id="review"
+                            role="tabpanel" aria-labelledby="review-tab">
+                            <div class="cr-tab-content-from">
+                                <div class="post">
+                                    <div class="reviews-container">
+                                        @foreach ($reviews as $review)
+                                            <div class="content">
+                                                <img src="{{ asset('uploads/user') }}/{{ $review->user->image }}"
+                                                    alt="image" class="border">
+                                                <div class="details">
+                                                    <span
+                                                        class="date">{{ $review->created_at->format('M d, Y') }}</span>
+                                                    <span class="name">{{ $review->user->name }}</span>
                                                 </div>
-                                                <p class="mb-1">{{ $review->comment }}</p>
-                                                <hr>
-                                            @endforeach
-                                            {{ $reviews->links('pagination::custom_pagination') }}
+                                                <div class="cr-t-review-rating">
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <= $review->rating)
+                                                            <i class="ri-star-s-fill"></i>
+                                                        @else
+                                                            <i class="ri-star-s-line"></i>
+                                                        @endif
+                                                    @endfor
+                                                </div>
+                                            </div>
+                                            <p class="mb-1">{{ $review->comment }}</p>
+                                            <hr>
+                                        @endforeach
+                                        {{ $reviews->links('pagination::custom_pagination') }}
 
+                                    </div>
+                                </div>
+
+                                <h4 class="heading">Add a Review</h4>
+                                <form action="{{ route('create_review', ['stage' => 'review']) }}" id="ratingForm"
+                                    method="POST">
+                                    @csrf
+                                    <div class="cr-ratting-star">
+                                        <span>Your rating :</span>
+                                        <div class="cr-t-review-rating" id="starRating">
+                                            <i class="ri-star-s-line" data-value="1"></i>
+                                            <i class="ri-star-s-line" data-value="2"></i>
+                                            <i class="ri-star-s-line" data-value="3"></i>
+                                            <i class="ri-star-s-line" data-value="4"></i>
+                                            <i class="ri-star-s-line" data-value="5"></i>
                                         </div>
                                     </div>
-
-                                    <h4 class="heading">Add a Review</h4>
-                                    <form action="{{ route('create_review', ['stage' => 'review']) }}" id="ratingForm"
-                                        method="POST">
-                                        @csrf
-                                        <div class="cr-ratting-star">
-                                            <span>Your rating :</span>
-                                            <div class="cr-t-review-rating" id="starRating">
-                                                <i class="ri-star-s-line" data-value="1"></i>
-                                                <i class="ri-star-s-line" data-value="2"></i>
-                                                <i class="ri-star-s-line" data-value="3"></i>
-                                                <i class="ri-star-s-line" data-value="4"></i>
-                                                <i class="ri-star-s-line" data-value="5"></i>
-                                            </div>
-                                        </div>
-                                        <input type="hidden" name="rating" id="ratingValue" value="1">
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                        <div class="cr-ratting-input form-submit">
-                                            <textarea name="comment" placeholder="Enter Your Comment"
-                                                class="mb-0 pb-0 @error('comment')
+                                    <input type="hidden" name="rating" id="ratingValue" value="1">
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <div class="cr-ratting-input form-submit">
+                                        <textarea name="comment" placeholder="Enter Your Comment"
+                                            class="mb-0 pb-0 @error('comment')
                                                     is-invalid
                                                 @enderror"></textarea>
-                                            @error('comment')
-                                                <span class="invalid-feedback"
-                                                    role="alert"><strong>{{ $message }}</strong></span>
-                                            @enderror
-                                            @php
-                                                $review = null;
-                                                if (Auth::check()) {
-                                                    $review = App\Models\Review::where('product_id', $product->id)
-                                                        ->where('user_id', Auth::user()->id)
-                                                        ->first();
-                                                }
-                                            @endphp
-                                            <button class="cr-button mt-3" type="submit" value="Submit"
-                                                @if ($review) disabled @endif>Submit</button>
+                                        @error('comment')
+                                            <span class="invalid-feedback"
+                                                role="alert"><strong>{{ $message }}</strong></span>
+                                        @enderror
+                                        @php
+                                            $review = null;
+                                            if (Auth::check()) {
+                                                $review = App\Models\Review::where('product_id', $product->id)
+                                                    ->where('user_id', Auth::user()->id)
+                                                    ->first();
+                                            }
+                                        @endphp
+                                        <button class="cr-button mt-3" type="submit" value="Submit"
+                                            @if ($review) disabled @endif>Submit</button>
 
-                                        </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
