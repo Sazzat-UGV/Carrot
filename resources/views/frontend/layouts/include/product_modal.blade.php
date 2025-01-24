@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered cr-modal-dialog">
         <div class="modal-content">
             <button type="button" class="cr-close-model btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <form action="{{ route('card') }}" method="POST">
+            <form action="" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
