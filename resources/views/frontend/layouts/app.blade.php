@@ -69,7 +69,7 @@
 
         .counter {
             bottom: -8px;
-            right: -10px;
+            left: 14px;
             font-weight: 800;
             font-size: 11px;
             border-radius: 50%;
@@ -126,7 +126,6 @@
         <span class="loader"></span>
     </div>
 
-    <!-- Header -->
     @include('frontend.layouts.include.header')
     @yield('content')
 
@@ -134,11 +133,8 @@
 
     @include('frontend.layouts.include.tab_to_top')
 
-    <!-- Model -->
     @include('frontend.layouts.include.product_modal')
 
-    <!-- Cart -->
-    @include('frontend.layouts.include.my_cart')
     @include('frontend.layouts.include.script')
 </body>
 

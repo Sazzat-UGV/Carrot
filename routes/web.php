@@ -1,31 +1,30 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Backend\FaqController;
-use App\Http\Controllers\Backend\UserController;
-use App\Http\Controllers\Backend\BrandController;
-use App\Http\Controllers\Frontend\CartController;
-use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CouponController;
-use App\Http\Controllers\Backend\ReviewController;
-use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Export\UserExportController;
+use App\Http\Controllers\Backend\FaqController;
+use App\Http\Controllers\Backend\PickupPointController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\ServiceController;
-use App\Http\Controllers\Backend\CategoryController;
-use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Backend\WarehouseController;
-use App\Http\Controllers\Frontend\WishlistController;
-use App\Http\Controllers\Backend\PickupPointController;
-use App\Http\Controllers\Backend\SubCategoryController;
-use App\Http\Controllers\Backend\Setting\PageController;
-use App\Http\Controllers\Backend\Export\UserExportController;
-use App\Http\Controllers\Backend\Auth\AuthenticationController;
-use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\EmailConfigurationController;
+use App\Http\Controllers\Backend\Setting\GeneralSettingController;
+use App\Http\Controllers\Backend\Setting\PageController;
+use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\WarehouseController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\WishlistController;
+use Illuminate\Support\Facades\Route;
 
 Route::redirect('admin', 'admin/login');
 
@@ -109,7 +108,10 @@ Route::prefix('/')->group(function () {
     Route::get('product/quick_view/{id}', [HomeController::class, 'quickView'])->name('product.quickView');
     Route::get('products/{type}/{slug}', [HomeController::class, 'allProducts'])->name('allProducts');
 
-    Route::post('add-to-cart', [CartController::class, 'addToCard'])->name('add_to_cart');
+    // cart routes
+    Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');
+    Route::get('my-cart', [CartController::class, 'myCart'])->name('my_cart');
+    Route::get('remove-single-item/{rowId}', [CartController::class, 'removeSingleItem'])->name('remove_single_item');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -118,7 +120,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('review', [ReviewController::class, 'store'])->name('create_review');
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist_list');
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
-
 });
 
 require __DIR__ . '/auth.php';

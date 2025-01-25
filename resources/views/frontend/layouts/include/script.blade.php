@@ -38,6 +38,7 @@
         });
     });
 </script>
+<!-- quick view modal-->
 <script>
     $(document).ready(function() {
         $('.quickViewModal').on('click', function() {
@@ -125,5 +126,28 @@
             });
         });
     });
+</script>
+<!-- add to card -->
+<script>
+    $(document).ready(function() {
+        $('.add_to_cart').on('submit', function(event) {
+            event.preventDefault();
+            flasher.error("Oops! Something went wrong!");
+            var url = $(this).attr('action');
+            var request = $(this).serialize();
+            flasher.info("Welcome back");
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: request,
+                success: function(res) {
+                    $('.add_to_cart')[0].reset();
+                },
+                error: function(error) {
+                    console.log('Error:', error);
+                }
+            });
+        })
+    })
 </script>
 @stack('script')

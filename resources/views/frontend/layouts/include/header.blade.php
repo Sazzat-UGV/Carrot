@@ -79,9 +79,15 @@
                             </div>
                             <span class="ms-2">Wishlist</span>
                         </a>
-                        <a href="javascript:void(0)" class="cr-right-bar-item Shopping-toggle">
-                            <i class="ri-shopping-cart-line"></i>
-                            <span>Cart</span>
+                        <a href="{{ route('my_cart') }}" class="cr-right-bar-item ">
+                            <div class="icon-container position-relative">
+                                <i class="ri-shopping-cart-line"></i>
+                                <p class="counter position-absolute text-danger text-bold">@if (Cart::count())
+                                    {{ Cart::count() }}
+                                @endif
+                                </p>
+                            </div>
+                            <span class="ms-2">Cart</span>
                         </a>
                     </div>
                 </div>
@@ -193,8 +199,14 @@
                                 @endif
                             </div>
                         </a>
-                        <a href="javascript:void(0)" class="cr-right-bar-item Shopping-toggle">
-                            <i class="ri-shopping-cart-line"></i>
+                        <a href="{{ route('my_cart') }}" class="cr-right-bar-item ">
+                            <div class="icon-container position-relative">
+                                <i class="ri-shopping-cart-line"></i>
+                                <p class="counter position-absolute text-danger text-bold">@if (Cart::count())
+                                    {{ Cart::count() }}
+                                @endif
+                                </p>
+                            </div>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">

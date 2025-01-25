@@ -2,8 +2,10 @@
     <div class="modal-dialog modal-dialog-centered cr-modal-dialog">
         <div class="modal-content">
             <button type="button" class="cr-close-model btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <form action="" method="POST">
+            <form action="{{ route('add_to_cart') }}" method="POST" class="add_to_cart">
                 @csrf
+                <input type="hidden" name="price" value="" class="modal_product_selling_price">
+                <input type="hidden" name="product_id" value="" class="product_id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-5 col-sm-12 col-xs-12">
@@ -39,8 +41,7 @@
                                         <ul id="colorOptions"></ul>
                                     </div>
                                 </div>
-                                <input type="hidden" name="price" value="" class="modal_product_selling_price">
-                                <input type="hidden" name="product_id" value="" class="product_id">
+
                                 <div class="cr-add-card">
                                     <div class="cr-qty-main">
                                         <input type="text" placeholder="1" value="1" class="quantity"

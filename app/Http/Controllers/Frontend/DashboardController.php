@@ -15,7 +15,7 @@ class DashboardController extends Controller
         if (Auth::user()->role == 'Admin') {
             return redirect()->route('admin.dashboard');
         }
-        return view('frontend.pages.dashboard.dashboard');
+        return view('frontend.pages.profile.dashboard');
     }
 
     public function profile(Request $request)

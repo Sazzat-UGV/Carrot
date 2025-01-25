@@ -78,7 +78,9 @@
                                             {!! $category->icon !!}
                                         </div>
                                         <div class="category-title">
-                                            <h4><a href="{{ route('allProducts', ['type' => 'category', 'slug' => $category->slug]) }}">{{ $category->name }}</a></h4>
+                                            <h4><a
+                                                    href="{{ route('allProducts', ['type' => 'category', 'slug' => $category->slug]) }}">{{ $category->name }}</a>
+                                            </h4>
                                             <p>({{ $category->products_count }} Items)</p>
                                         </div>
                                     </div>
@@ -158,7 +160,8 @@
                                     </div>
                                     <div class="cr-product-details">
                                         <div class="cr-brand">
-                                            <a href="{{ route('allProducts', ['type' => 'category', 'slug' => $featured->category->slug]) }}">{{ $featured->category->name }}</a>
+                                            <a
+                                                href="{{ route('allProducts', ['type' => 'category', 'slug' => $featured->category->slug]) }}">{{ $featured->category->name }}</a>
                                             @php
                                                 $averageRating =
                                                     $featured->reviews_count > 0
@@ -295,7 +298,8 @@
                                             </div>
                                             <div class="cr-product-details">
                                                 <div class="cr-brand">
-                                                    <a href="{{ route('allProducts', ['type' => 'category', 'slug' => $popular->category->slug]) }}">{{ $popular->category->name }}</a>
+                                                    <a
+                                                        href="{{ route('allProducts', ['type' => 'category', 'slug' => $popular->category->slug]) }}">{{ $popular->category->name }}</a>
                                                     @php
                                                         $averageRating =
                                                             $popular->reviews_count > 0
@@ -353,7 +357,8 @@
                     @foreach ($brands as $brand)
                         <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="0" role="group"
                             aria-label="1 / 24" style="width: 163.5px; margin-right: 24px;">
-                            <a href="{{ route('allProducts',['type'=>'brand','slug'=>$brand->slug]) }}" class="cr-insta-image">
+                            <a href="{{ route('allProducts', ['type' => 'brand', 'slug' => $brand->slug]) }}"
+                                class="cr-insta-image">
                                 <img src="{{ asset('uploads/brand') }}/{{ $brand->photo }}" alt="insta">
                             </a>
                         </div>
@@ -420,7 +425,8 @@
                                     </div>
                                     <div class="cr-product-details">
                                         <div class="cr-brand">
-                                            <a href="{{ route('allProducts', ['type' => 'category', 'slug' => $trendy->category->slug]) }}">{{ $trendy->category->name }}</a>
+                                            <a
+                                                href="{{ route('allProducts', ['type' => 'category', 'slug' => $trendy->category->slug]) }}">{{ $trendy->category->name }}</a>
                                             @php
                                                 $averageRating =
                                                     $trendy->reviews_count > 0

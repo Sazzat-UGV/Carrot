@@ -103,7 +103,7 @@
                                 <span class="old-price">{{ $setting->currency }}{{ $product->discount_price }}</span>
                             @endif
                         </div>
-                        <form action="{{ route('add_to_cart') }}" method="POST" id="add_to_card">
+                        <form action="{{ route('add_to_cart') }}" method="POST" class="add_to_cart">
                             @csrf
                             <input type="hidden" value="{{ $product->id }}" name="product_id">
                             <input type="hidden" value="{{ $product->selling_price }}" name="price">
@@ -395,28 +395,5 @@
                 }
             });
         });
-    </script>
-    <script>
-        $(document).ready(function(){
-            $('#add_to_card').on('submit',function(event){
-                event.preventDefault();
-                var url=$(this).attr('action');
-                var request=$(this).serialize();
-                $.ajax({
-            url: url,
-            type: 'POST',
-            data: request,
-            success: function (res) {
-
-                $('#add_to_card')[0].reset();
-                console.log('Response:', res);
-            },
-            error: function (error) {
-                console.log('Error:', error);
-                alert('An error occurred. Please try again.');
-            }
-        });
-            })
-        })
     </script>
 @endpush

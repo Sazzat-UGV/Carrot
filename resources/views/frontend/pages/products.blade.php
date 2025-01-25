@@ -3,10 +3,8 @@
 @section('title')
     Shop
 @endsection
-
 @push('style')
 @endpush
-
 @section('content')
     @include('frontend.layouts.include.breadcrumb', ['page_name' => 'Shop'])
     <section class="section-shop padding-tb-100">

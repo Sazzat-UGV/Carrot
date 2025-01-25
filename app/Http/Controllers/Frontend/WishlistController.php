@@ -14,7 +14,7 @@ class WishlistController extends Controller
         $products = Product::with('wishlists', 'category:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->whereHas('wishlists', function ($q) {
             $q->where('user_id', Auth::user()->id);
         })->paginate(8);
-        return view('frontend.pages.dashboard.wishlist', compact('products'));
+        return view('frontend.pages.profile.wishlist', compact('products'));
     }
 
     public function store(Request $request, $id)

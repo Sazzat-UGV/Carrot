@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
@@ -35,7 +34,7 @@ class BrandController extends Controller
     {
         $request->validate([
             'brand_name' => 'required|string|max:255',
-            'photo' => 'required|image|mimes:png,jpg,jpeg',
+            'photo'      => 'required|image|mimes:png,jpg,jpeg',
         ]);
 
         $brand = Brand::create([
@@ -70,7 +69,7 @@ class BrandController extends Controller
     {
         $request->validate([
             'brand_name' => 'required|string|max:255',
-            'photo' => 'sometimes|image|mimes:png,jpg,jpeg',
+            'photo'      => 'sometimes|image|mimes:png,jpg,jpeg',
         ]);
         $brand = Brand::findOrFail($id);
         $brand->update([
@@ -88,9 +87,9 @@ class BrandController extends Controller
      */
     public function destroy(string $id)
     {
-        $brand = Brand::findOrFail($id);
+        $brand          = Brand::findOrFail($id);
         $old_photo_path = base_path('public/uploads/brand/' . $brand->photo);
-        if ($brand->photo && File::exists($old_photo_path) && !is_dir($old_photo_path)) {
+        if ($brand->photo && File::exists($old_photo_path) && ! is_dir($old_photo_path)) {
             File::delete($old_photo_path);
         }
         $brand->delete();
@@ -99,9 +98,9 @@ class BrandController extends Controller
 
     public function image_upload($uploaded_photo, $brand)
     {
-        $brand = Brand::findOrFail($brand->id);
+        $brand          = Brand::findOrFail($brand->id);
         $old_photo_path = base_path('public/uploads/brand/' . $brand->photo);
-        if ($brand->photo && File::exists($old_photo_path) && !is_dir($old_photo_path)) {
+        if ($brand->photo && File::exists($old_photo_path) && ! is_dir($old_photo_path)) {
             File::delete($old_photo_path);
         }
         $photo_location = 'public/uploads/brand/';
@@ -124,7 +123,7 @@ class BrandController extends Controller
         }
         $brand->update();
         return response()->json([
-            'type' => 'success',
+            'type'    => 'success',
             'message' => 'Status Updated',
         ]);
     }
