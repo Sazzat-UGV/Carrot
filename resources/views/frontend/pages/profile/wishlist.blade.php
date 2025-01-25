@@ -11,15 +11,6 @@
     @include('frontend.layouts.include.breadcrumb', ['page_name' => 'Wishlist'])
     <section class="section-wishlist padding-tb-100">
         <div class="container">
-            <div class="row d-none">
-                <div class="col-lg-12">
-                    <div class="mb-30" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
-                        <div class="cr-banner">
-                            <h2>Wishlist</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row mb-minus-24" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="400">
                 @forelse ($products as $product)
                     <div class="col-lg-3 col-6 cr-product-box mb-24">

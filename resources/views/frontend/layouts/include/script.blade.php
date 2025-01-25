@@ -132,7 +132,6 @@
     $(document).ready(function() {
         $('.add_to_cart').on('submit', function(event) {
             event.preventDefault();
-            flasher.error("Oops! Something went wrong!");
             var url = $(this).attr('action');
             var request = $(this).serialize();
             flasher.info("Welcome back");

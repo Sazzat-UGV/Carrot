@@ -24,7 +24,7 @@ class CartController extends Controller
                 ]]);
         return response()->json([
             'status'  => true,
-            'message' => 'Product Added Successfully',
+            'message' => 'Product added to cart',
             'data'    => $cart,
         ]);
     }
@@ -40,5 +40,32 @@ class CartController extends Controller
     {
         Cart::remove($rowId);
         return back()->with('success', 'Product removed from cart.');
+    }
+
+    public function deleteCart()
+    {
+        Cart::destroy();
+        return back()->with('success', 'Cart deleted successfully.');
+    }
+
+    public function updateItemColor($color, $rowId)
+    {
+        $existing_data = Cart::get($rowId);
+        $cart          = Cart::update($rowId,
+            ['id'     => $existing_data->id,
+                'name'    => $existing_data->name,
+                'qty'     => $existing_data->qty,
+                'price'   => $existing_data->price,
+                'weight'  => 1,
+                'options' => [
+                    'size'      => $existing_data->options->size,
+                    'color'     => $color,
+                    'thumbnail' => $existing_data->options->thumbnail,
+                ]]);
+        return response()->json([
+            'status'  => true,
+            'message' => 'Color updated Successfully',
+            'data'    => $cart,
+        ]);
     }
 }
