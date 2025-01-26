@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\BrandController;
+use App\Http\Controllers\Backend\CampaignController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -54,6 +55,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('product', ProductController::class);
         Route::resource('slider', SliderController::class);
         Route::resource('service', ServiceController::class);
+        Route::resource('campaign', CampaignController::class);
 
         Route::get('review/show/{id}', [ReviewController::class, 'index'])->name('review_index');
         Route::delete('review/delete/{id}', [ReviewController::class, 'delete'])->name('review_delete');
