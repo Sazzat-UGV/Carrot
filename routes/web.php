@@ -114,6 +114,9 @@ Route::prefix('/')->group(function () {
     Route::get('delete-cart', [CartController::class, 'deleteCart'])->name('delete_cart');
     Route::get('remove-single-item/{rowId}', [CartController::class, 'removeSingleItem'])->name('remove_single_item');
     Route::get('update-item-color/{color}/{rowId}', [CartController::class, 'updateItemColor'])->name('update_item_color');
+    Route::get('update-item-size/{size}/{rowId}', [CartController::class, 'updateItemSize'])->name('update_item_size');
+    Route::get('update-item-qty/{qty}/{rowId}', [CartController::class, 'updateItemQty'])->name('update_item_qty');
+
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

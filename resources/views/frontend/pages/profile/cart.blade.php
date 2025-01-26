@@ -1,12 +1,9 @@
 @extends('frontend.layouts.app')
-
 @section('title')
     Cart
 @endsection
-
 @push('style')
 @endpush
-
 @section('content')
     @include('frontend.layouts.include.breadcrumb', ['page_name' => 'Cart'])
     <section class="section-cart padding-tb-100">
@@ -50,7 +47,7 @@
                                                             <td class="cr-cart-price">
                                                                 <div class="cr-kg">
                                                                     <div class="size-dropdown">
-                                                                        <select name="size" id="size-select"
+                                                                        <select name="color" id="size-select"
                                                                             data-rowId="{{ $item->rowId }}"
                                                                             class="colorSelect">
                                                                             @foreach (json_decode($product->color) as $color)
@@ -74,7 +71,8 @@
                                                                 <div class="cr-kg">
                                                                     <div class="size-dropdown">
                                                                         <select name="size" id="size-select"
-                                                                            data-rowId="{{ $item->rowId }}">
+                                                                            data-rowId="{{ $item->rowId }}"
+                                                                            class="sizeSelect">
                                                                             @foreach (json_decode($product->size) as $size)
                                                                                 <option value="{{ $size->value }}"
                                                                                     class="size-option"
@@ -93,13 +91,16 @@
                                                         @endif
                                                         <td class="cr-cart-qty">
                                                             <div class="cart-qty-plus-minus">
-                                                                <button type="button" class="plus">+</button>
-                                                                <input type="text" placeholder="."
-                                                                    value="{{ $item->qty }}" minlength="1"
-                                                                    maxlength="20" class="quantity">
-                                                                <button type="button" class="minus">-</button>
+                                                                <button type="button" class="plus qty"
+                                                                    data-rowId="{{ $item->rowId }}">+</button>
+                                                                <input type="text" placeholder="" name="qty_name"
+                                                                    value="{{ $item->qty }}" class="quantity qty_value"
+                                                                    data-rowId="{{ $item->rowId }}">
+                                                                <button type="button" class="minus qty"
+                                                                    data-rowId="{{ $item->rowId }}">-</button>
                                                             </div>
                                                         </td>
+
                                                         <td class="cr-cart-price">
                                                             <span
                                                                 class="amount">{{ $setting->currency }}{{ $item->price }}*{{ $item->qty }}</span>
@@ -126,7 +127,7 @@
                                                 </div>
                                                 <div class="d-flex flex-wrap gap-3 justify-content-between">
                                                     <a href="{{ route('delete_cart') }}"
-                                                        class="cr-button btn-secondary text-center">
+                                                        class="cr-button btn-secondary text-center item_delete">
                                                         Delete Cart
                                                     </a>
                                                     <a href="#" class="cr-button text-center">
@@ -147,6 +148,7 @@
             @endif
         </div>
     </section>
+
 @endsection
 
 @push('script')
@@ -173,14 +175,65 @@
             $('.colorSelect').on('change', function(event) {
                 var color = $(this).val();
                 var rowId = $(this).data('rowid');
-                var productId = $(this).data('productid');
                 var url = `{{ route('update_item_color', ['color' => ':color', 'rowId' => ':rowId']) }}`;
                 url = url.replace(':color', color).replace(':rowId', rowId);
                 $.ajax({
                     url: url,
                     type: 'GET',
                     success: function(res) {
-                        console.log(res);
+                        console.log(res.message);
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+
+            $('.sizeSelect').on('change', function(event) {
+                var size = $(this).val();
+                var rowId = $(this).data('rowid');
+                var url = `{{ route('update_item_size', ['size' => ':size', 'rowId' => ':rowId']) }}`;
+                url = url.replace(':size', size).replace(':rowId', rowId);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(res) {
+                        console.log(res.message);
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+
+            var updatedQty;
+            var rowId;
+            $('.plus').on('click', function() {
+                var inputField = $(this).siblings('.qty_value');
+                var currentQty = inputField.val();
+                updatedQty = inputField.val();
+                rowId = $(this).data('rowid');
+            });
+
+            $('.minus').on('click', function() {
+                var inputField = $(this).siblings('.qty_value');
+                var currentQty = inputField.val();
+                updatedQty = inputField.val();
+                rowId = $(this).data('rowid');
+            });
+
+            $('.qty').on('blur', function(event) {
+                var qty = updatedQty || $(this).val();
+                var url = `{{ route('update_item_qty', ['qty' => ':qty', 'rowId' => ':rowId']) }}`;
+                url = url.replace(':qty', qty).replace(':rowId', rowId);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(res) {
+                        console.log(res.message);
+                        window.location.reload();
                     },
                     error: function(error) {
                         console.log('Error:', error);

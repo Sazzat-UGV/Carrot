@@ -68,4 +68,44 @@ class CartController extends Controller
             'data'    => $cart,
         ]);
     }
+    public function updateItemSize($size, $rowId)
+    {
+        $existing_data = Cart::get($rowId);
+        $cart          = Cart::update($rowId,
+            ['id'     => $existing_data->id,
+                'name'    => $existing_data->name,
+                'qty'     => $existing_data->qty,
+                'price'   => $existing_data->price,
+                'weight'  => 1,
+                'options' => [
+                    'size'      => $size,
+                    'color'     => $existing_data->options->color,
+                    'thumbnail' => $existing_data->options->thumbnail,
+                ]]);
+        return response()->json([
+            'status'  => true,
+            'message' => 'Size updated Successfully',
+            'data'    => $cart,
+        ]);
+    }
+    public function updateItemQty($qty, $rowId)
+    {
+        $existing_data = Cart::get($rowId);
+        $cart          = Cart::update($rowId,
+            ['id'     => $existing_data->id,
+                'name'    => $existing_data->name,
+                'qty'     => $qty,
+                'price'   => $existing_data->price,
+                'weight'  => 1,
+                'options' => [
+                    'size'      => $existing_data->options->size,
+                    'color'     => $existing_data->options->color,
+                    'thumbnail' => $existing_data->options->thumbnail,
+                ]]);
+        return response()->json([
+            'status'  => true,
+            'message' => 'Quantity updated Successfully',
+            'data'    => $cart,
+        ]);
+    }
 }
