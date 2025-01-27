@@ -38,12 +38,12 @@
                             <span class="cr-heading-res"></span>
                         </h4>
                         <ul class="cr-footer-links cr-footer-dropdown">
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="track-order.html">Delivery Information</a></li>
-                            <li><a href="policy.html">Privacy Policy</a></li>
-                            <li><a href="terms.html">Terms & Conditions</a></li>
-                            <li><a href="contact-us.html">contact Us</a></li>
-                            <li><a href="faq.html">Support Center</a></li>
+                            <li><a href="about.html">About Us****</a></li>
+                            <li><a href="track-order.html">Delivery Information****</a></li>
+                            <li><a href="{{ route('privacyPolicy') }}">Privacy Policy</a></li>
+                            <li><a href="{{ route('TermsCondition') }}">Terms & Conditions</a></li>
+                            <li><a href="contact-us.html">Contact Us**</a></li>
+                            <li><a href="faq.html">Support Center**</a></li>
                         </ul>
                     </div>
                 </div>
@@ -54,12 +54,17 @@
                             <span class="cr-heading-res"></span>
                         </h4>
                         <ul class="cr-footer-links cr-footer-dropdown">
-                            <li><a href="shop-left-sidebar.html">Fashion & Clothes</a></li>
-                            <li><a href="shop-left-sidebar.html">Dairy & Bakery</a></li>
-                            <li><a href="shop-left-sidebar.html">Fruits & Vegetable</a></li>
-                            <li><a href="shop-left-sidebar.html">Snack & Spice</a></li>
-                            <li><a href="shop-left-sidebar.html">Juice & Drinks</a></li>
-                            <li><a href="shop-left-sidebar.html">Fast Food</a></li>
+                            @php
+                                $footer_category = App\Models\Category::where('status', 1)
+                                    ->latest('id')
+                                    ->take(6)
+                                    ->get();
+                            @endphp
+                            @foreach ($footer_category as $fcategory)
+                                <li><a
+                                        href="{{ route('allProducts', ['type' => 'category', 'slug' => $fcategory->slug]) }}">{{ $fcategory->name }}</a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

@@ -110,6 +110,8 @@ Route::prefix('/')->group(function () {
     Route::get('product/details/{slug}', [HomeController::class, 'productDetail'])->name('productDetail');
     Route::get('product/quick_view/{id}', [HomeController::class, 'quickView'])->name('product.quickView');
     Route::get('products/{type}/{slug}', [HomeController::class, 'allProducts'])->name('allProducts');
+    Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacyPolicy');
+    Route::get('terms-condition', [HomeController::class, 'TermsCondition'])->name('TermsCondition');
 
     // cart routes
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');

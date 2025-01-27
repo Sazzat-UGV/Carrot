@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Service;
@@ -16,14 +17,14 @@ class HomeController extends Controller
     public function homePage()
     {
         $sliders       = Slider::where('status', 1)->latest('id')->get();
-        $featureds     = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('featured', 1)->latest('id')->limit(25)->get();
-        $most_populars = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('product_view', '!=', 0)->latest('product_view')->take(10)->get();
-        $trendies      = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('trending', 1)->latest('id')->take(10)->get();
+        $featureds     = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('status', 1)->where('featured', 1)->latest('id')->limit(25)->get();
+        $most_populars = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('status', 1)->where('product_view', '!=', 0)->latest('product_view')->take(10)->get();
+        $trendies      = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('status', 1)->where('trending', 1)->latest('id')->take(10)->get();
         $services      = Service::where('status', 1)->latest('id')->get();
         $categories    = Category::withCount('products')->where('show_home', 1)->get();
         $brands        = Brand::where('show_home', 1)->latest('id')->get();
-        $today_deals=Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('today_deal', 1)->latest('id')->take(10)->get();
-        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories', 'brands','today_deals'));
+        $today_deals   = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('status', 1)->where('today_deal', 1)->latest('id')->take(10)->get();
+        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories', 'brands', 'today_deals'));
     }
 
     public function productDetails()
@@ -126,5 +127,16 @@ class HomeController extends Controller
             ->values();
 
         return view('frontend.pages.products', compact('products', 'categories', 'sizes', 'colors', 'totalProducts'));
+    }
+
+    public function privacyPolicy()
+    {
+        $page = Page::where('id', 1)->first();
+        return view('frontend.pages.privacy_policy', compact('page'));
+    }
+    public function TermsCondition()
+    {
+        $page = Page::where('id', 1)->first();
+        return view('frontend.pages.terms_condition', compact('page'));
     }
 }
