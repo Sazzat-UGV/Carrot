@@ -104,6 +104,106 @@
         </div>
     </section>
 
+    <!-- today deal products -->
+    <section class="section-popular-products padding-tb-100" data-aos="fade-up" data-aos-duration="2000"
+        data-aos-delay="400">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="title-2 mb-30">
+                        <div class="title-box text-center py-6">
+                            <div class="cr-banner">
+                                <h2 class="text-3xl font-bold text-gray-800">Today's Deals</h2>
+                            </div>
+                            <div class="cr-banner-sub-title mt-2">
+                                <p class="text-lg text-gray-600">Discover Unbeatable Prices on Your Favorite Products.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cr-popular-product">
+                        @foreach ($today_deals as $deal)
+                            <div class="slick-slide">
+                                <div class="cr-product-card">
+                                    <div class="cr-product-image">
+                                        <div class="cr-image-inner zoom-image-hover">
+                                            <img src="{{ asset('uploads/product') }}/{{ $deal->thumbnail }}"
+                                                alt="image">
+                                        </div>
+                                        <div class="cr-side-view">
+                                            @php
+                                                $wishlist = null;
+                                                if (Auth::check()) {
+                                                    $wishlist = App\Models\Wishlist::where('user_id', Auth::user()->id)
+                                                        ->where('product_id', $deal->id)
+                                                        ->first();
+                                                }
+                                            @endphp
+                                            <a href="{{ route('wishlist_store', $deal->id) }}" class="">
+                                                @if ($wishlist)
+                                                    <i class="ri-heart-fill"></i>
+                                                @else
+                                                    <i class="ri-heart-line"></i>
+                                                @endif
+                                            </a>
+                                            <a class="model-oraganic-product quickViewModal" data-bs-toggle="modal"
+                                                href="#" data-id="{{ $deal->id }}" role="button">
+                                                <i class="ri-eye-line"></i>
+                                            </a>
+                                        </div>
+                                        <a class="cr-shopping-bag" href="javascript:void(0)">
+                                            <i class="ri-shopping-bag-line"></i>
+                                        </a>
+                                    </div>
+                                    <div class="cr-product-details">
+                                        <div class="cr-brand">
+                                            <a
+                                                href="{{ route('allProducts', ['type' => 'category', 'slug' => $deal->category->slug]) }}">{{ $deal->category->name }}</a>
+                                            @php
+                                                $averageRating =
+                                                    $deal->reviews_count > 0
+                                                        ? round($deal->reviews_sum_rating / $deal->reviews_count, 1)
+                                                        : 0;
+                                            @endphp
+
+                                            <div class="cr-star">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    @if ($i <= floor($averageRating))
+                                                        <i class="ri-star-fill"></i>
+                                                    @elseif ($i == ceil($averageRating) && $averageRating - floor($averageRating) > 0)
+                                                        <i class="ri-star-half-line"></i>
+                                                    @else
+                                                        <i class="ri-star-line"></i>
+                                                    @endif
+                                                @endfor
+                                                <p>({{ $averageRating }})</p>
+                                            </div>
+
+                                        </div>
+                                        <a href="{{ route('productDetail', $deal->slug) }}"
+                                            class="title">{{ $deal->name }}</a>
+                                        <p class="cr-price"><span
+                                                class="new-price">{{ $setting->currency }}{{ $deal->selling_price }}</span>
+                                            @if ($deal->discount_price)
+                                                <span
+                                                    class="old-price">{{ $setting->currency }}{{ $deal->discount_price }}</span>
+                                            @endif
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- featured products -->
     <section class="section-popular-products padding-tb-100" data-aos="fade-up" data-aos-duration="2000"
         data-aos-delay="400">

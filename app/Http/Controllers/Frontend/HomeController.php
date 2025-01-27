@@ -22,7 +22,8 @@ class HomeController extends Controller
         $services      = Service::where('status', 1)->latest('id')->get();
         $categories    = Category::withCount('products')->where('show_home', 1)->get();
         $brands        = Brand::where('show_home', 1)->latest('id')->get();
-        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories', 'brands'));
+        $today_deals=Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('today_deal', 1)->latest('id')->take(10)->get();
+        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories', 'brands','today_deals'));
     }
 
     public function productDetails()
