@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Newsletter;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Review;
@@ -138,5 +139,20 @@ class HomeController extends Controller
     {
         $page = Page::where('id', 1)->first();
         return view('frontend.pages.terms_condition', compact('page'));
+    }
+
+    public function newsLetter(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+        $news_letter = Newsletter::where('email', $request->email)->first();
+        if ($news_letter) {
+            return back()->with('error', 'You already subscribe with this email.');
+        }
+        Newsletter::create([
+            'email' => $request->email, 0,
+        ]);
+        return back()->with('success', 'You have successfully subscribed to the newsletter.');
     }
 }

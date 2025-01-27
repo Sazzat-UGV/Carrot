@@ -76,13 +76,28 @@
                         </h4>
                         <div class="cr-footer-links cr-footer-dropdown">
                             <p class="news">Subscribe to get in touch.</p>
-                            <form class="cr-search-footer">
-                                <input class="search-input" type="text" placeholder="Search here...">
-                                <a href="javascript:void(0)" class="search-btn">
+                            <form class="cr-search-footer" id="newsletter" action="{{ route('news_letter') }}"
+                                method="POST">
+                                @csrf
+                                <input class="search-input" type="email" placeholder="Enter your email..."
+                                    name="email" id="email" required>
+                                <a href="javascript:void(0)" class="search-btn" id="submit-newsletter">
                                     <i class="ri-send-plane-fill"></i>
                                 </a>
                             </form>
                         </div>
+
+                        <script>
+                            document.getElementById('submit-newsletter').addEventListener('click', function() {
+
+                                const form = document.getElementById('newsletter');
+                                const emailInput = document.getElementById('email').value;
+                                if (emailInput) {
+                                    form.submit();
+                                }
+                            });
+                        </script>
+
                         <div class="cr-social-media">
                             @if ($setting->facebook_url)
                                 <span><a href="{{ $setting->facebook_url }}"><i

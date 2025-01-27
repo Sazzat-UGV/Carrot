@@ -179,6 +179,24 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.campaign.index') || Route::is('admin.campaign.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-list-check"></i>
+                <div class="text-truncate">Campaigns</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.campaign.index')) active @endif">
+                    <a href="{{ route('admin.campaign.index') }}" class="menu-link">
+                        <div class="text-truncate">Campaign List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.campaign.create')) active @endif">
+                    <a href="{{ route('admin.campaign.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Campaign</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
@@ -203,24 +221,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item  @if (Route::is('admin.campaign.index') || Route::is('admin.campaign.create')) active open @endif">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-list-check"></i>
-                <div class="text-truncate">Campaigns</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item  @if (Route::is('admin.campaign.index')) active @endif">
-                    <a href="{{ route('admin.campaign.index') }}" class="menu-link">
-                        <div class="text-truncate">Campaign List</div>
-                    </a>
-                </li>
-                <li class="menu-item  @if (Route::is('admin.campaign.create')) active @endif">
-                    <a href="{{ route('admin.campaign.create') }}" class="menu-link">
-                        <div class="text-truncate">Add New Campaign</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+
         <li class="menu-item @if (Route::is('admin.general_setting_page') ||
                 Route::is('admin.email_configuration_page') ||
                 Route::is('admin.privacyPolicyPage') ||
@@ -252,7 +253,12 @@
                 </li>
             </ul>
         </li>
-
+        <li class="menu-item @if (Route::is('admin.newsLetter')) active @endif">
+            <a href="{{ route('admin.newsLetter') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-envelope"></i>
+                <div class="text-truncate">News letter</div>
+            </a>
+        </li>
         <li class="menu-item @if (Route::is('admin.backup.index')) active @endif">
             <a href="{{ route('admin.backup.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-data"></i>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\Export\UserExportController;
 use App\Http\Controllers\Backend\FaqController;
+use App\Http\Controllers\Backend\NewsletterController;
 use App\Http\Controllers\Backend\PickupPointController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProfileController;
@@ -87,6 +88,11 @@ Route::prefix('admin')->as('admin.')->group(function () {
         // backup download route
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');
 
+        // news letter route
+        Route::get('news-letter',[NewsletterController::class,'index'])->name('newsLetter');
+        Route::get('news-letter-form',[NewsletterController::class,'formGet'])->name('newsLetterformGet');
+        Route::post('news-letter-form',[NewsletterController::class,'formPost'])->name('newsLetterformPost');
+
         // status routes
         Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
         Route::get('category/status/{id}', [CategoryController::class, 'changeStatus'])->name('category.status');
@@ -112,6 +118,7 @@ Route::prefix('/')->group(function () {
     Route::get('products/{type}/{slug}', [HomeController::class, 'allProducts'])->name('allProducts');
     Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacyPolicy');
     Route::get('terms-condition', [HomeController::class, 'TermsCondition'])->name('TermsCondition');
+    Route::post('newsletter',[HomeController::class,'newsLetter'])->name('news_letter');
 
     // cart routes
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');
