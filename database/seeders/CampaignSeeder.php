@@ -18,6 +18,8 @@ class CampaignSeeder extends Seeder
                 'end_date'   => date('Y-m-d', strtotime('+1 month')),
                 'image'      => '1.jpg',
                 'discount'   => 30,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'title'      => 'Valentine Special Offer',
@@ -25,6 +27,8 @@ class CampaignSeeder extends Seeder
                 'end_date'   => date('Y-m-d', strtotime('+1 month')),
                 'image'      => '2.jpg',
                 'discount'   => 20,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'title'      => 'Winter Clearance Sale',
@@ -32,6 +36,8 @@ class CampaignSeeder extends Seeder
                 'end_date'   => date('Y-m-d', strtotime('+1 month')),
                 'image'      => '3.jpg',
                 'discount'   => 40,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'title'      => 'Tech Gadgets Fiesta',
@@ -39,6 +45,8 @@ class CampaignSeeder extends Seeder
                 'end_date'   => date('Y-m-d', strtotime('+1 month')),
                 'image'      => '4.jpg',
                 'discount'   => 15,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'title'      => 'Fashion Frenzy',
@@ -46,6 +54,8 @@ class CampaignSeeder extends Seeder
                 'end_date'   => date('Y-m-d', strtotime('+1 month')),
                 'image'      => '5.jpg',
                 'discount'   => 50,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
         ];
 

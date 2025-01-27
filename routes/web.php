@@ -101,6 +101,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('product/sub-category/{id}', [ProductController::class, 'subCategory'])->name('product.subCategory');
         Route::get('slider/status/{id}', [SliderController::class, 'changeStatus'])->name('slider.status');
         Route::get('service/status/{id}', [ServiceController::class, 'changeStatus'])->name('service.status');
+        Route::get('campaign/status/{id}', [CampaignController::class, 'changeStatus'])->name('campaign.status');
     });
 });
 
