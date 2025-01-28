@@ -130,7 +130,7 @@
                                                         class="cr-button btn-secondary text-center item_delete">
                                                         Delete Cart
                                                     </a>
-                                                    <a href="#" class="cr-button text-center">
+                                                    <a href="{{ route('checkout_page') }}" class="cr-button text-center">
                                                         Check Out ({{ $setting->currency }}{{ Cart::total() }})
                                                     </a>
                                                 </div>

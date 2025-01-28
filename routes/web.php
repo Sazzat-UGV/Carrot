@@ -23,6 +23,7 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\WishlistController;
@@ -128,7 +129,6 @@ Route::prefix('/')->group(function () {
     Route::get('update-item-color/{color}/{rowId}', [CartController::class, 'updateItemColor'])->name('update_item_color');
     Route::get('update-item-size/{size}/{rowId}', [CartController::class, 'updateItemSize'])->name('update_item_size');
     Route::get('update-item-qty/{qty}/{rowId}', [CartController::class, 'updateItemQty'])->name('update_item_qty');
-
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -137,6 +137,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('review', [ReviewController::class, 'store'])->name('create_review');
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist_list');
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
+
+
+    // checkout routes
+    Route::get('checkout',[CheckoutController::class,'checkoutPage'])->name('checkout_page');
 });
 
 require __DIR__ . '/auth.php';
