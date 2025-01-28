@@ -12,83 +12,78 @@
     <section class="cr-checkout-section padding-tb-100">
         <div class="container">
             <div class="row">
-                <!-- Sidebar Area Start -->
                 <div class="cr-checkout-rightside col-lg-4 col-md-12">
                     <div class="cr-sidebar-wrap">
-                        <!-- Sidebar Summary Block -->
                         <div class="cr-sidebar-block">
                             <div class="cr-sb-title">
                                 <h3 class="cr-sidebar-title">Summary</h3>
                             </div>
                             <div class="cr-sb-block-content">
+                                <div class="cr-checkout-pro">
+                                    @foreach ($cart_items as $item)
+                                        <div class="col-sm-12 mb-6">
+                                            <div class="cr-product-inner" style="position: relative">
+                                                <div class="cr-pro-image-outer">
+                                                    <div class="cr-pro-image">
+                                                        <a href="javascript::void(0)" class="image">
+                                                            <img class="main-image"
+                                                                src="{{ asset('uploads/product') }}/{{ $item->options->thumbnail }}"
+                                                                alt="image">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="cr-pro-content cr-product-details">
+                                                    <h5 class="cr-pro-title"><a
+                                                            href="javascript::void(0)">{{ $item->name }}</a></h5>
+                                                    <div class="cr-pro-rating d-flex list-inline gap-2 m-2">
+                                                        @if ($item->options->color)
+                                                            <li class="border border-1 px-2 py-0 rounded-1 m-0"
+                                                                style="color: #7A7A7A; font-size: 11px;">
+                                                                {{ $item->options->color }}</li>
+                                                        @endif
+                                                        @if ($item->options->size)
+                                                            <li class="border border-1 px-2 py-0 rounded-1 m-0"
+                                                                style="color: #7A7A7A; font-size: 11px;">
+                                                                {{ $item->options->size }}</li>
+                                                        @endif
+                                                    </div>
+                                                    <p class="cr-price"><span
+                                                            class="new-price">{{ $setting->currency }}{{ $item->price }}</span>
+                                                    </p>
+                                                </div>
+                                                <p class="align-items-center text-black"
+                                                    style="font-weight: 500; position: absolute; bottom:2px; right: 0px;">
+                                                    {{ $setting->currency }}{{ $item->price }}*{{ $item->qty }}={{ $setting->currency }}{{ $item->price * $item->qty }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                                <hr>
                                 <div class="cr-checkout-summary">
                                     <div>
                                         <span class="text-left">Sub-Total</span>
-                                        <span class="text-right">$80.00</span>
+                                        <span class="text-right">$00.00</span>
                                     </div>
                                     <div>
                                         <span class="text-left">Delivery Charges</span>
-                                        <span class="text-right">$80.00</span>
+                                        <span class="text-right">$00.00</span>
                                     </div>
                                     <div class="cr-checkout-summary-total">
                                         <span class="text-left">Total Amount</span>
-                                        <span class="text-right">$80.00</span>
+                                        <span class="text-right">$00.00</span>
                                     </div>
                                 </div>
-                                <div class="cr-checkout-pro">
-                                    <div class="col-sm-12 mb-6">
-                                        <div class="cr-product-inner">
-                                            <div class="cr-pro-image-outer">
-                                                <div class="cr-pro-image">
-                                                    <a href="product-left-sidebar.html" class="image">
-                                                        <img class="main-image" src="{{ asset('assets/frontend') }}/img/product/10.jpg" alt="Product">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="cr-pro-content cr-product-details">
-                                                <h5 class="cr-pro-title"><a href="product-left-sidebar.html">Dates Value
-                                                        Pack Pouch</a></h5>
-                                                <div class="cr-pro-rating">
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-line"></i>
-                                                </div>
-                                                <p class="cr-price"><span class="new-price">$120.25</span> <span class="old-price">$123.25</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 mb-0">
-                                        <div class="cr-product-inner">
-                                            <div class="cr-pro-image-outer">
-                                                <div class="cr-pro-image">
-                                                    <a href="product-left-sidebar.html" class="image">
-                                                        <img class="main-image" src="{{ asset('assets/frontend') }}/img/product/12.jpg" alt="Product">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="cr-pro-content cr-product-details">
-                                                <h5 class="cr-pro-title"><a href="product-left-sidebar.html">Smoked
-                                                        Honey Spiced Nuts</a></h5>
-                                                <div class="cr-pro-rating">
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-fill"></i>
-                                                    <i class="ri-star-line"></i>
-                                                </div>
-                                                <p class="cr-price"><span class="new-price">$120.25</span> <span class="old-price">$123.25</span></p>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
                     </div>
-                    <div class="cr-sidebar-wrap cr-checkout-del-wrap">
+
+
+
+                    {{-- <div class="cr-sidebar-wrap cr-checkout-del-wrap">
                         <!-- Sidebar Summary Block -->
                         <div class="cr-sidebar-block">
                             <div class="cr-sb-title">
@@ -120,9 +115,13 @@
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
-                    </div>
+                    </div> --}}
+
+
+
+
+
                     <div class="cr-sidebar-wrap cr-checkout-pay-wrap">
-                        <!-- Sidebar Payment Block -->
                         <div class="cr-sidebar-block">
                             <div class="cr-sb-title">
                                 <h3 class="cr-sidebar-title">Payment Method</h3>
@@ -141,23 +140,21 @@
                                         <span class="cr-pay-option">
                                             <span>
                                                 <input type="radio" id="pay2" name="radio-group">
-                                                <label for="pay2">UPI</label>
+                                                <label for="pay2">SSLCOMMERZ</label>
                                             </span>
                                         </span>
                                         <span class="cr-pay-option">
                                             <span>
                                                 <input type="radio" id="pay3" name="radio-group">
-                                                <label for="pay3">Bank Transfer</label>
+                                                <label for="pay3">PayPal</label>
                                             </span>
                                         </span>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <!-- Sidebar Payment Block -->
                     </div>
                     <div class="cr-sidebar-wrap cr-check-pay-img-wrap">
-                        <!-- Sidebar Payment Block -->
                         <div class="cr-sidebar-block">
                             <div class="cr-sb-title">
                                 <h3 class="cr-sidebar-title">Payment Method</h3>
@@ -170,11 +167,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Sidebar Payment Block -->
                     </div>
                 </div>
-                <div class="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">
-                    <!-- checkout content Start -->
+                <div class="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">    
                     <div class="cr-checkout-content">
                         <div class="cr-checkout-inner">
                             <div class="cr-checkout-wrap mb-30">
@@ -185,7 +180,8 @@
                                         <form action="#">
                                             <span class="cr-new-option">
                                                 <span>
-                                                    <input type="radio" id="account1" name="radio-group" checked="">
+                                                    <input type="radio" id="account1" name="radio-group"
+                                                        checked="">
                                                     <label for="account1">Register Account</label>
                                                 </span>
                                                 <span>
@@ -209,11 +205,13 @@
                                         <form action="#" method="post">
                                             <span class="cr-check-login-wrap">
                                                 <label>Email Address</label>
-                                                <input type="text" name="name" placeholder="Enter your email address" required="">
+                                                <input type="text" name="name"
+                                                    placeholder="Enter your email address" required="">
                                             </span>
                                             <span class="cr-check-login-wrap">
                                                 <label>Password</label>
-                                                <input type="password" name="password" placeholder="Enter your password" required="">
+                                                <input type="password" name="password" placeholder="Enter your password"
+                                                    required="">
                                             </span>
 
                                             <span class="cr-check-login-wrap cr-check-login-btn">
@@ -244,11 +242,13 @@
                                             <form action="#" method="post">
                                                 <span class="cr-bill-wrap cr-bill-half">
                                                     <label>First Name*</label>
-                                                    <input type="text" name="firstname" placeholder="Enter your first name" required="">
+                                                    <input type="text" name="firstname"
+                                                        placeholder="Enter your first name" required="">
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half">
                                                     <label>Last Name*</label>
-                                                    <input type="text" name="lastname" placeholder="Enter your last name" required="">
+                                                    <input type="text" name="lastname"
+                                                        placeholder="Enter your last name" required="">
                                                 </span>
                                                 <span class="cr-bill-wrap">
                                                     <label>Address</label>
@@ -257,7 +257,8 @@
                                                 <span class="cr-bill-wrap cr-bill-half">
                                                     <label>City *</label>
                                                     <span class="cr-bl-select-inner">
-                                                        <select name="cr_select_city" id="cr-select-city" class="cr-bill-select">
+                                                        <select name="cr_select_city" id="cr-select-city"
+                                                            class="cr-bill-select">
                                                             <option selected="" disabled="">City</option>
                                                             <option value="1">City 1</option>
                                                             <option value="2">City 2</option>
@@ -274,7 +275,8 @@
                                                 <span class="cr-bill-wrap cr-bill-half">
                                                     <label>Country *</label>
                                                     <span class="cr-bl-select-inner">
-                                                        <select name="cr_select_country" id="cr-select-country" class="cr-bill-select">
+                                                        <select name="cr_select_country" id="cr-select-country"
+                                                            class="cr-bill-select">
                                                             <option selected="" disabled="">Country</option>
                                                             <option value="1">Country 1</option>
                                                             <option value="2">Country 2</option>
@@ -287,7 +289,8 @@
                                                 <span class="cr-bill-wrap cr-bill-half">
                                                     <label>Region State</label>
                                                     <span class="cr-bl-select-inner">
-                                                        <select name="cr_select_state" id="cr-select-state" class="cr-bill-select">
+                                                        <select name="cr_select_state" id="cr-select-state"
+                                                            class="cr-bill-select">
                                                             <option selected="" disabled="">Region/State</option>
                                                             <option value="1">Region/State 1</option>
                                                             <option value="2">Region/State 2</option>

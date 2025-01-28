@@ -8,7 +8,7 @@ class CheckoutController extends Controller
 {
     public function checkoutPage()
     {
-        $cart_content = Cart::content();
-        return view('frontend.pages.checkout', compact('cart_content'));
+        $cart_items = Cart::content();
+        return view('frontend.pages.checkout', compact('cart_items'));
     }
 }
