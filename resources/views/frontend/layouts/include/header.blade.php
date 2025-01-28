@@ -82,9 +82,10 @@
                         <a href="{{ route('my_cart') }}" class="cr-right-bar-item ">
                             <div class="icon-container position-relative">
                                 <i class="ri-shopping-cart-line"></i>
-                                <p class="counter position-absolute text-danger text-bold">@if (Cart::count())
-                                    {{ Cart::count() }}
-                                @endif
+                                <p class="counter position-absolute text-danger text-bold">
+                                    @if (Cart::count())
+                                        {{ Cart::count() }}
+                                    @endif
                                 </p>
                             </div>
                             <span class="ms-2">Cart</span>
@@ -202,9 +203,10 @@
                         <a href="{{ route('my_cart') }}" class="cr-right-bar-item ">
                             <div class="icon-container position-relative">
                                 <i class="ri-shopping-cart-line"></i>
-                                <p class="counter position-absolute text-danger text-bold">@if (Cart::count())
-                                    {{ Cart::count() }}
-                                @endif
+                                <p class="counter position-absolute text-danger text-bold">
+                                    @if (Cart::count())
+                                        {{ Cart::count() }}
+                                    @endif
                                 </p>
                             </div>
                         </a>
@@ -230,92 +232,25 @@
                                     @endforeach
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="javascript:void(0)">
-                                    Pages
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Campaign
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="about.html">About Us</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="contact-us.html">Contact Us</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="cart.html">Cart</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="checkout.html">Checkout</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="track-order.html">Track Order</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="wishlist.html">Wishlist</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="faq.html">Faq</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="login.html">Login</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="register.html">Register</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="policy.html">Policy</a>
-                                    </li>
-                                </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="javascript:void(0)">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    FAQ
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
                                     Blog
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="blog-left-sidebar.html">Left
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-right-sidebar.html">Right
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-full-width.html">Full
-                                            Width</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-detail-left-sidebar.html">Detail
-                                            Left
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-detail-right-sidebar.html">Detail
-                                            Right
-                                            Sidebar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="blog-detail-full-width.html">Detail
-                                            Full
-                                            Width</a>
-                                    </li>
-                                </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="javascript:void(0)">
-                                    Elements
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Contact
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="elements-products.html">Products</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="elements-typography.html">Typography</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="elements-buttons.html">Buttons</a>
-                                    </li>
-                                </ul>
                             </li>
                         </ul>
                     </div>
@@ -355,41 +290,24 @@
                 </li>
 
                 <li class="dropdown drop-list">
-                    <span class="menu-toggle"></span>
-                    <a href="javascript:void(0)" class="dropdown-list">Pages</a>
-                    <ul class="sub-menu">
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact-us.html">Contact Us</a></li>
-                        <li><a href="cart.html">Cart</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="track-order.html">Track Order</a></li>
-                        <li><a href="wishlist.html">Wishlist</a></li>
-                        <li><a href="faq.html">Faq</a></li>
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="register.html">Register</a></li>
-                        <li><a href="policy.html">Policy</a></li>
-                    </ul>
+                    <a class="" href="#">
+                        Campaign
+                    </a>
                 </li>
                 <li class="dropdown drop-list">
-                    <span class="menu-toggle"></span>
-                    <a href="javascript:void(0)" class="dropdown-list">Blog</a>
-                    <ul class="sub-menu">
-                        <li><a href="blog-left-sidebar.html">Left Sidebar</a></li>
-                        <li><a href="blog-right-sidebar.html">Right Sidebar</a></li>
-                        <li><a href="blog-full-width.html">Full Width</a></li>
-                        <li><a href="blog-detail-left-sidebar.html">Detail Left Sidebar</a></li>
-                        <li><a href="blog-detail-right-sidebar.html">Detail Right Sidebar</a></li>
-                        <li><a href="blog-detail-full-width.html">Detail Full Width</a></li>
-                    </ul>
+                    <a class="" href="#">
+                        FAQ
+                    </a>
                 </li>
                 <li class="dropdown drop-list">
-                    <span class="menu-toggle"></span>
-                    <a href="javascript:void(0)">Element</a>
-                    <ul class="sub-menu">
-                        <li><a href="elements-products.html">Products</a></li>
-                        <li><a href="elements-typography.html">Typography</a></li>
-                        <li><a href="elements-buttons.html">Buttons</a></li>
-                    </ul>
+                    <a class="" href="#">
+                        Blog
+                    </a>
+                </li>
+                <li class="dropdown drop-list">
+                    <a class="" href="#">
+                        Contact
+                    </a>
                 </li>
             </ul>
         </div>

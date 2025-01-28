@@ -5,6 +5,18 @@
 @endsection
 
 @push('style')
+    <style>
+        input.cr-form-control,
+        input.form-control {
+            margin-bottom: 0 !important;
+        }
+
+        .invalid-feedback {
+            font-size: 13px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -63,63 +75,46 @@
                                 <hr>
                                 <div class="cr-checkout-summary">
                                     <div>
-                                        <span class="text-left">Sub-Total</span>
-                                        <span class="text-right">$00.00</span>
+                                        <span class="text-left">Subtotal</span>
+                                        <span class="text-right">{{ $setting->currency }}{{ Cart::subtotal() }}</span>
+                                    </div>
+                                    @if (Session::has('coupon'))
+                                    <div>
+                                        <div style="display: flex; align-items: center; justify-content: center;">
+                                            <span class="text-left" style="margin-right: 8px;">Coupon <b>({{ Session::get('coupon')['name'] }})</b></span>
+                                            <a href="{{ route('remove_coupon') }}" style="text-decoration: none; align-items: center; margin-top: 3px;">
+                                                <i class="ri-close-fill text-danger" style="font-size: 24px;"></i>
+                                            </a>
+                                        </div>
+
+                                        <span class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['discount'] }}</span>
+                                    </div>
+                                    @endif
+                                    <div>
+                                        <span class="text-left">Tax</span>
+                                        <span class="text-right">%</span>
                                     </div>
                                     <div>
                                         <span class="text-left">Delivery Charges</span>
-                                        <span class="text-right">$00.00</span>
+                                        <span class="text-right">{{ $setting->currency }}</span>
                                     </div>
+                                    @if (Session::has('coupon'))
                                     <div class="cr-checkout-summary-total">
                                         <span class="text-left">Total Amount</span>
-                                        <span class="text-right">$00.00</span>
+                                        <span class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['after_discount'] }}</span>
                                     </div>
+                                    @else
+                                    <div class="cr-checkout-summary-total">
+                                        <span class="text-left">Total Amount</span>
+                                        <span class="text-right">{{ $setting->currency }}{{Cart::total()}}</span>
+                                    </div>
+                                    @endif
                                 </div>
 
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
                     </div>
-
-
-
-                    {{-- <div class="cr-sidebar-wrap cr-checkout-del-wrap">
-                        <!-- Sidebar Summary Block -->
-                        <div class="cr-sidebar-block">
-                            <div class="cr-sb-title">
-                                <h3 class="cr-sidebar-title">Delivery Method</h3>
-                            </div>
-                            <div class="cr-sb-block-content">
-                                <div class="cr-checkout-del">
-                                    <div class="cr-del-desc">Please select the preferred shipping method to use on this
-                                        order.</div>
-                                    <form action="#">
-                                        <span class="cr-del-option">
-                                            <span>
-                                                <span class="cr-del-opt-head">Free Shipping</span>
-                                                <input type="radio" id="del1" name="radio-group" checked="">
-                                                <label for="del1">Rate - $0 .00</label>
-                                            </span>
-                                            <span>
-                                                <span class="cr-del-opt-head">Flat Rate</span>
-                                                <input type="radio" id="del2" name="radio-group">
-                                                <label for="del2">Rate - $5.00</label>
-                                            </span>
-                                        </span>
-                                        <span class="cr-del-commemt">
-                                            <span class="cr-del-opt-head">Add Comments About Your Order</span>
-                                            <textarea name="your-commemt" placeholder="Comments"></textarea>
-                                        </span>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Sidebar Summary Block -->
-                    </div> --}}
-
-
-
-
 
                     <div class="cr-sidebar-wrap cr-checkout-pay-wrap">
                         <div class="cr-sidebar-block">
@@ -169,136 +164,48 @@
                         </div>
                     </div>
                 </div>
-                <div class="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">    
+                <div class="cr-checkout-leftside col-lg-8 col-md-12 m-t-991">
                     <div class="cr-checkout-content">
                         <div class="cr-checkout-inner">
-                            <div class="cr-checkout-wrap mb-30">
-                                <div class="cr-checkout-block cr-check-new">
-                                    <h3 class="cr-checkout-title">New Customer</h3>
-                                    <div class="cr-check-block-content">
-                                        <div class="cr-check-subtitle">Checkout Options</div>
-                                        <form action="#">
-                                            <span class="cr-new-option">
-                                                <span>
-                                                    <input type="radio" id="account1" name="radio-group"
-                                                        checked="">
-                                                    <label for="account1">Register Account</label>
-                                                </span>
-                                                <span>
-                                                    <input type="radio" id="account2" name="radio-group">
-                                                    <label for="account2">Guest Account</label>
-                                                </span>
-                                            </span>
-                                        </form>
-                                        <div class="cr-new-desc">By creating an account you will be able to shop faster,
-                                            be up to date on an order's status, and keep track of the orders you have
-                                            previously made.
-                                        </div>
-                                        <span>
-                                            <button class="cr-button mt-30" type="submit">Continue</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="cr-checkout-block cr-check-login">
-                                    <h3 class="cr-checkout-title">Returning Customer</h3>
-                                    <div class="cr-check-login-form">
-                                        <form action="#" method="post">
-                                            <span class="cr-check-login-wrap">
-                                                <label>Email Address</label>
-                                                <input type="text" name="name"
-                                                    placeholder="Enter your email address" required="">
-                                            </span>
-                                            <span class="cr-check-login-wrap">
-                                                <label>Password</label>
-                                                <input type="password" name="password" placeholder="Enter your password"
-                                                    required="">
-                                            </span>
 
-                                            <span class="cr-check-login-wrap cr-check-login-btn">
-                                                <button class="cr-button mr-15" type="submit">Login</button>
-                                                <a class="cr-check-login-fp" href="#">Forgot Password?</a>
-                                            </span>
-                                        </form>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="cr-checkout-wrap">
+                            <div class="cr-checkout-wrap  mb-30">
                                 <div class="cr-checkout-block cr-check-bill">
                                     <h3 class="cr-checkout-title">Billing Details</h3>
                                     <div class="cr-bl-block-content">
-                                        <div class="cr-check-subtitle">Checkout Options</div>
-                                        <span class="cr-bill-option">
-                                            <span>
-                                                <input type="radio" id="bill1" name="radio-group">
-                                                <label for="bill1">I want to use an existing address</label>
-                                            </span>
-                                            <span>
-                                                <input type="radio" id="bill2" name="radio-group" checked="">
-                                                <label for="bill2">I want to use new address</label>
-                                            </span>
-                                        </span>
+
                                         <div class="cr-check-bill-form mb-minus-24">
                                             <form action="#" method="post">
                                                 <span class="cr-bill-wrap cr-bill-half">
-                                                    <label>First Name*</label>
-                                                    <input type="text" name="firstname"
-                                                        placeholder="Enter your first name" required="">
+                                                    <label>Name<span class="text-danger">*</span></label>
+                                                    <input type="text" name="name" placeholder="Enter name"
+                                                        required="">
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half">
-                                                    <label>Last Name*</label>
-                                                    <input type="text" name="lastname"
-                                                        placeholder="Enter your last name" required="">
+                                                    <label>Phone<span class="text-danger">*</span></label>
+                                                    <input type="text" name="phone" placeholder="Enter phone"
+                                                        required="">
                                                 </span>
                                                 <span class="cr-bill-wrap">
-                                                    <label>Address</label>
-                                                    <input type="text" name="address" placeholder="Address Line 1">
+                                                    <label>Address<span class="text-danger">*</span></label>
+                                                    <input type="text" name="address" placeholder="Enter address">
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half">
-                                                    <label>City *</label>
-                                                    <span class="cr-bl-select-inner">
-                                                        <select name="cr_select_city" id="cr-select-city"
-                                                            class="cr-bill-select">
-                                                            <option selected="" disabled="">City</option>
-                                                            <option value="1">City 1</option>
-                                                            <option value="2">City 2</option>
-                                                            <option value="3">City 3</option>
-                                                            <option value="4">City 4</option>
-                                                            <option value="5">City 5</option>
-                                                        </select>
-                                                    </span>
+                                                    <label>City<span class="text-danger">*</span></label>
+                                                    <input type="text" name="address" placeholder="Enter city">
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half">
-                                                    <label>Post Code</label>
-                                                    <input type="text" name="postalcode" placeholder="Post Code">
+                                                    <label>Post Code<span class="text-danger">*</span></label>
+                                                    <input type="text" name="postalcode"
+                                                        placeholder="Enter post code">
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half">
-                                                    <label>Country *</label>
-                                                    <span class="cr-bl-select-inner">
-                                                        <select name="cr_select_country" id="cr-select-country"
-                                                            class="cr-bill-select">
-                                                            <option selected="" disabled="">Country</option>
-                                                            <option value="1">Country 1</option>
-                                                            <option value="2">Country 2</option>
-                                                            <option value="3">Country 3</option>
-                                                            <option value="4">Country 4</option>
-                                                            <option value="5">Country 5</option>
-                                                        </select>
-                                                    </span>
+                                                    <label>Country<span class="text-danger">*</span></label>
+                                                    <input type="text" name="address" placeholder="Enter country">
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half">
                                                     <label>Region State</label>
-                                                    <span class="cr-bl-select-inner">
-                                                        <select name="cr_select_state" id="cr-select-state"
-                                                            class="cr-bill-select">
-                                                            <option selected="" disabled="">Region/State</option>
-                                                            <option value="1">Region/State 1</option>
-                                                            <option value="2">Region/State 2</option>
-                                                            <option value="3">Region/State 3</option>
-                                                            <option value="4">Region/State 4</option>
-                                                            <option value="5">Region/State 5</option>
-                                                        </select>
-                                                    </span>
+                                                    <input type="text" name="address"
+                                                        placeholder="Enter region state">
                                                 </span>
                                             </form>
                                         </div>
@@ -306,6 +213,33 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (!Session::has('coupon'))
+                                <div class="cr-checkout-wrap">
+                                    <div class="cr-checkout-block cr-check-new">
+                                        <h3 class="cr-checkout-title">Coupon Apply</h3>
+                                        <div class="cr-check-block-content">
+                                            <div class="cr-check-bill-form mb-minus-24">
+                                                <form action="{{ route('apply_coupon') }}" method="post">
+                                                    @csrf
+                                                    <span class="cr-bill-wrap">
+                                                        <input type="text" name="coupon_code"
+                                                            class="form-control @error('coupon_code')
+                                                        is-invalid
+                                                    @enderror"
+                                                            placeholder="Enter coupon code">
+                                                        @error('coupon_code')
+                                                            <span class="invalid-feedback"
+                                                                role="alert"><strong>{{ $message }}</strong></span>
+                                                        @enderror
+                                                        <button type="submit" class="cr-button mt-4">Apply
+                                                            Coupon</button>
+                                                    </span>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                             <span class="cr-check-order-btn">
                                 <a class="cr-button mt-30" href="#">Place Order</a>
                             </span>
