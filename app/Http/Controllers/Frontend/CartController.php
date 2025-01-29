@@ -31,7 +31,7 @@ class CartController extends Controller
 
     public function myCart()
     {
-        Cart::setGlobalTax(0);
+        Cart::setGlobalTax(5);
         $cart_content = Cart::content();
         return view('frontend.pages.profile.cart', compact('cart_content'));
     }

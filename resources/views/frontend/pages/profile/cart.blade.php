@@ -131,7 +131,7 @@
                                                         Delete Cart
                                                     </a>
                                                     <a href="{{ route('checkout_page') }}" class="cr-button text-center">
-                                                        Check Out ({{ $setting->currency }}{{ Cart::total() }})
+                                                        Check Out ({{ $setting->currency }}{{ Cart::subtotal() }})
                                                     </a>
                                                 </div>
                                             </div>

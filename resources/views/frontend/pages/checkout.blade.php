@@ -94,18 +94,21 @@
                                         </div>
                                     @endif
                                     <div>
-                                        <span class="text-left">Tax</span>
-                                        <span class="text-right">%</span>
+                                        <span class="text-left">Tax <b>(5%)</b></span>
+                                        <span class="text-right">{{ $setting->currency }}{{ Cart::tax() }}</span>
                                     </div>
+                            @php
+    $delivery_charge = 0;
+@endphp
                                     <div>
                                         <span class="text-left">Delivery Charges</span>
-                                        <span class="text-right">{{ $setting->currency }}</span>
+                                        <span class="text-right">{{ $setting->currency }}{{ $delivery_charge }}</span>
                                     </div>
                                     @if (Session::has('coupon'))
                                         <div class="cr-checkout-summary-total">
                                             <span class="text-left">Total Amount</span>
                                             <span
-                                                class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['after_discount'] }}</span>
+                                                class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['after_discount']+Cart::tax()+$delivery_charge }}</span>
                                         </div>
                                     @else
                                         <div class="cr-checkout-summary-total">
@@ -185,7 +188,7 @@
                                                 @csrf
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Name<span class="text-danger">*</span></label>
-                                                    <input type="text" name="name" placeholder="Enter name"
+                                                    <input type="text" name="name" placeholder="Enter name" value="{{ Auth::user()->name }}"
                                                         class="form-control @error('name')
                                                         is-invalid
                                                     @enderror">
