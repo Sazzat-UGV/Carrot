@@ -49,4 +49,18 @@ class CheckoutController extends Controller
         Session::forget('coupon');
         return back()->with('success', 'Coupon removed successfully.');
     }
+
+    public function placeOrder(Request $request)
+    {
+        return $request;
+        $request->validate([
+            'name'         => 'required|string|max:255',
+            'phone'        => 'required|string|max:15',
+            'address'      => 'required|string|max:255',
+            'city'         => 'required|string|max:255',
+            'postalcode'   => 'required|numeric',
+            'country'      => 'required|string|max:255',
+            'region_state' => 'nullable|string|max:255',
+        ]);
+    }
 }

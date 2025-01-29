@@ -79,16 +79,19 @@
                                         <span class="text-right">{{ $setting->currency }}{{ Cart::subtotal() }}</span>
                                     </div>
                                     @if (Session::has('coupon'))
-                                    <div>
-                                        <div style="display: flex; align-items: center; justify-content: center;">
-                                            <span class="text-left" style="margin-right: 8px;">Coupon <b>({{ Session::get('coupon')['name'] }})</b></span>
-                                            <a href="{{ route('remove_coupon') }}" style="text-decoration: none; align-items: center; margin-top: 3px;">
-                                                <i class="ri-close-fill text-danger" style="font-size: 24px;"></i>
-                                            </a>
-                                        </div>
+                                        <div>
+                                            <div style="display: flex; align-items: center; justify-content: center;">
+                                                <span class="text-left" style="margin-right: 8px;">Coupon
+                                                    <b>({{ Session::get('coupon')['name'] }})</b></span>
+                                                <a href="{{ route('remove_coupon') }}"
+                                                    style="text-decoration: none; align-items: center; margin-top: 3px;">
+                                                    <i class="ri-close-fill text-danger" style="font-size: 24px;"></i>
+                                                </a>
+                                            </div>
 
-                                        <span class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['discount'] }}</span>
-                                    </div>
+                                            <span
+                                                class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['discount'] }}</span>
+                                        </div>
                                     @endif
                                     <div>
                                         <span class="text-left">Tax</span>
@@ -99,15 +102,16 @@
                                         <span class="text-right">{{ $setting->currency }}</span>
                                     </div>
                                     @if (Session::has('coupon'))
-                                    <div class="cr-checkout-summary-total">
-                                        <span class="text-left">Total Amount</span>
-                                        <span class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['after_discount'] }}</span>
-                                    </div>
+                                        <div class="cr-checkout-summary-total">
+                                            <span class="text-left">Total Amount</span>
+                                            <span
+                                                class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['after_discount'] }}</span>
+                                        </div>
                                     @else
-                                    <div class="cr-checkout-summary-total">
-                                        <span class="text-left">Total Amount</span>
-                                        <span class="text-right">{{ $setting->currency }}{{Cart::total()}}</span>
-                                    </div>
+                                        <div class="cr-checkout-summary-total">
+                                            <span class="text-left">Total Amount</span>
+                                            <span class="text-right">{{ $setting->currency }}{{ Cart::total() }}</span>
+                                        </div>
                                     @endif
                                 </div>
 
@@ -115,7 +119,6 @@
                         </div>
                         <!-- Sidebar Summary Block -->
                     </div>
-
                     <div class="cr-sidebar-wrap cr-checkout-pay-wrap">
                         <div class="cr-sidebar-block">
                             <div class="cr-sb-title">
@@ -125,30 +128,34 @@
                                 <div class="cr-checkout-pay">
                                     <div class="cr-pay-desc">Please select the preferred payment method to use on this
                                         order.</div>
-                                    <form action="#" class="payment-options">
-                                        <span class="cr-pay-option">
-                                            <span>
-                                                <input type="radio" id="pay1" name="radio-group" checked="">
-                                                <label for="pay1">Cash On Delivery</label>
-                                            </span>
+
+                                    <span class="cr-pay-option">
+                                        <span>
+                                            <input type="radio" id="pay1" name="payment_method"
+                                                value="Cash On Delivery" checked>
+                                            <label for="pay1">Cash On Delivery</label>
                                         </span>
-                                        <span class="cr-pay-option">
-                                            <span>
-                                                <input type="radio" id="pay2" name="radio-group">
-                                                <label for="pay2">SSLCOMMERZ</label>
-                                            </span>
+                                    </span>
+                                    <span class="cr-pay-option">
+                                        <span>
+                                            <input type="radio" id="pay2" name="payment_method" value="SSLCOMMERZ">
+                                            <label for="pay2">SSLCOMMERZ</label>
                                         </span>
-                                        <span class="cr-pay-option">
-                                            <span>
-                                                <input type="radio" id="pay3" name="radio-group">
-                                                <label for="pay3">PayPal</label>
-                                            </span>
+                                    </span>
+                                    <span class="cr-pay-option">
+                                        <span>
+                                            <input type="radio" id="pay3" name="payment_method" value="PayPal">
+                                            <label for="pay3">PayPal</label>
                                         </span>
-                                    </form>
+                                    </span>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+
                     <div class="cr-sidebar-wrap cr-check-pay-img-wrap">
                         <div class="cr-sidebar-block">
                             <div class="cr-sb-title">
@@ -168,44 +175,91 @@
                     <div class="cr-checkout-content">
                         <div class="cr-checkout-inner">
 
-                            <div class="cr-checkout-wrap  mb-30">
+                            <div class="cr-checkout-wrap mb-30">
                                 <div class="cr-checkout-block cr-check-bill">
                                     <h3 class="cr-checkout-title">Billing Details</h3>
                                     <div class="cr-bl-block-content">
 
                                         <div class="cr-check-bill-form mb-minus-24">
-                                            <form action="#" method="post">
-                                                <span class="cr-bill-wrap cr-bill-half">
+                                            <form action="{{ route('place_order') }}" method="post" id="place_order">
+                                                @csrf
+                                                <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Name<span class="text-danger">*</span></label>
                                                     <input type="text" name="name" placeholder="Enter name"
-                                                        required="">
+                                                        class="form-control @error('name')
+                                                        is-invalid
+                                                    @enderror">
+                                                    @error('name')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </span>
-                                                <span class="cr-bill-wrap cr-bill-half">
+                                                <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Phone<span class="text-danger">*</span></label>
                                                     <input type="text" name="phone" placeholder="Enter phone"
-                                                        required="">
-                                                </span>
-                                                <span class="cr-bill-wrap">
+                                                        class="form-control @error('phone')
+                                                            is-invalid
+                                                        @enderror">
+                                                    @error('phone')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror </span>
+                                                <span class="cr-bill-wrap mb-3">
                                                     <label>Address<span class="text-danger">*</span></label>
-                                                    <input type="text" name="address" placeholder="Enter address">
+                                                    <input type="text" name="address" placeholder="Enter address"
+                                                        class="form-control @error('address')
+                                                                is-invalid
+                                                            @enderror">
+                                                    @error('address')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </span>
-                                                <span class="cr-bill-wrap cr-bill-half">
+                                                <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>City<span class="text-danger">*</span></label>
-                                                    <input type="text" name="address" placeholder="Enter city">
+                                                    <input type="text" name="city" placeholder="Enter city"
+                                                        class="form-control @error('city')
+                                                                is-invalid
+                                                            @enderror">
+                                                    @error('city')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </span>
-                                                <span class="cr-bill-wrap cr-bill-half">
+                                                <span class="cr-bill-wrap cr-bill-half  mb-3">
                                                     <label>Post Code<span class="text-danger">*</span></label>
                                                     <input type="text" name="postalcode"
+                                                        class="form-control @error('postalcode')
+                                                                is-invalid
+                                                            @enderror"
                                                         placeholder="Enter post code">
+                                                    @error('postalcode')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </span>
-                                                <span class="cr-bill-wrap cr-bill-half">
+                                                <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Country<span class="text-danger">*</span></label>
-                                                    <input type="text" name="address" placeholder="Enter country">
+                                                    <input type="text" name="country" placeholder="Enter country"
+                                                        class="form-control @error('country')
+                                                        is-invalid
+                                                    @enderror">
+                                                    @error('country')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </span>
-                                                <span class="cr-bill-wrap cr-bill-half">
+                                                <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Region State</label>
-                                                    <input type="text" name="address"
+                                                    <input type="text" name="region_state"
+                                                        class="form-control @error('region_state')
+                                                        is-invalid
+                                                    @enderror"
                                                         placeholder="Enter region state">
+                                                    @error('region_state')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
                                                 </span>
                                             </form>
                                         </div>
@@ -241,7 +295,7 @@
                                 </div>
                             @endif
                             <span class="cr-check-order-btn">
-                                <a class="cr-button mt-30" href="#">Place Order</a>
+                                <a href="javascript::void(0)" class="cr-button mt-30 place_order_submit">Place Order</a>
                             </span>
                         </div>
                     </div>
@@ -253,4 +307,19 @@
 @endsection
 
 @push('script')
+    <script>
+        $(document).ready(function() {
+            $('.place_order_submit').on('click', function(event) {
+                event.preventDefault();
+                var paymentMethod = $('input[name="payment_method"]:checked').val();
+                if (!$('#place_order input[name="payment_method"]').length) {
+                    $('#place_order').append('<input type="hidden" name="payment_method" value="' +
+                        paymentMethod + '">');
+                } else {
+                    $('#place_order input[name="payment_method"]').val(paymentMethod);
+                }
+                $('#place_order').submit();
+            });
+        });
+    </script>
 @endpush

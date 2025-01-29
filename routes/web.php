@@ -129,8 +129,6 @@ Route::prefix('/')->group(function () {
     Route::get('update-item-color/{color}/{rowId}', [CartController::class, 'updateItemColor'])->name('update_item_color');
     Route::get('update-item-size/{size}/{rowId}', [CartController::class, 'updateItemSize'])->name('update_item_size');
     Route::get('update-item-qty/{qty}/{rowId}', [CartController::class, 'updateItemQty'])->name('update_item_qty');
-    Route::post('apply-coupon',[CheckoutController::class,'applyCoupon'])->name('apply_coupon');
-    Route::get('remove-coupon',[CheckoutController::class,'removeCoupon'])->name('remove_coupon');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -142,7 +140,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     // checkout routes
+    Route::post('apply-coupon',[CheckoutController::class,'applyCoupon'])->name('apply_coupon');
+    Route::get('remove-coupon',[CheckoutController::class,'removeCoupon'])->name('remove_coupon');
     Route::get('checkout',[CheckoutController::class,'checkoutPage'])->name('checkout_page');
+    Route::post('place-order',[CheckoutController::class,'placeOrder'])->name('place_order');
 });
 
 require __DIR__ . '/auth.php';
