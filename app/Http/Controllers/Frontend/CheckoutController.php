@@ -1,14 +1,15 @@
 <?php
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Order;
-use App\Models\Coupon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\InvoiceMail;
+use App\Models\Coupon;
+use App\Models\Order;
 use App\Models\OrderDetail;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CheckoutController extends Controller
 {
@@ -64,49 +65,50 @@ class CheckoutController extends Controller
             'country'      => 'required|string|max:255',
             'region_state' => 'nullable|string|max:255',
         ]);
-        $order= new Order();
-        $order->user_id=Auth::user()->id;
-        $order->name=$request->name;
-        $order->phone=$request->phone;
-        $order->address=$request->address;
-        $order->city=$request->city;
-        $order->post=$request->postalcode;
-        $order->country=$request->country;
-        $order->region_state=$request->region_state;
-        if(Session::has('coupon')){
-            $order->subtotal=Cart::subtotal();
-            $order->total=Cart::total();
-            $order->coupon_code=Session::get('coupon')['name'];
-            $order->coupon_discount=Session::get('coupon')['discount'];
-            $order->after_discount=Session::get('coupon')['after_discount'];
-        }else{
-            $order->subtotal=Cart::subtotal();
-            $order->total=Cart::total();
+        $order               = new Order();
+        $order->user_id      = Auth::user()->id;
+        $order->name         = $request->name;
+        $order->phone        = $request->phone;
+        $order->address      = $request->address;
+        $order->city         = $request->city;
+        $order->post         = $request->postalcode;
+        $order->country      = $request->country;
+        $order->region_state = $request->region_state;
+        if (Session::has('coupon')) {
+            $order->subtotal        = Cart::subtotal();
+            $order->coupon_code     = Session::get('coupon')['name'];
+            $order->coupon_discount = Session::get('coupon')['discount'];
+            $order->after_discount  = Session::get('coupon')['after_discount'];
+        } else {
+            $order->subtotal = Cart::subtotal();
         }
-        $order->payment_type=$request->payment_method;
-        $order->tax=Cart::tax();
-        $order->shipping_charge=0;
-        $order->status=0;
-        $order->order_id=rand(10000,900000);
+        $order->total           = Cart::total();
+        $order->payment_type    = $request->payment_method;
+        $order->tax             = Cart::tax();
+        $order->shipping_charge = 0;
+        $order->status          = 0;
+        $order->order_id        = rand(10000, 900000);
         $order->save();
 
-        $cart_content=Cart::content();
-        $order_details=new OrderDetail();
-        foreach($cart_content as $row){
-            $order_details->order_id=$order->id;
-            $order_details->product_id=$row->id;
-            $order_details->product_name=$row->name;
-            $order_details->color=$row->options->color;
-            $order_details->size=$row->options->size;
-            $order_details->qty=$row->qty;
-            $order_details->single_price=$row->price;
-            $order_details->subtotal_price=$row->price*$row->qty;
+        $cart_content  = Cart::content();
+        $order_details = new OrderDetail();
+        foreach ($cart_content as $row) {
+            $order_details->order_id       = $order->id;
+            $order_details->product_id     = $row->id;
+            $order_details->product_name   = $row->name;
+            $order_details->color          = $row->options->color;
+            $order_details->size           = $row->options->size;
+            $order_details->qty            = $row->qty;
+            $order_details->single_price   = $row->price;
+            $order_details->subtotal_price = $row->price * $row->qty;
             $order_details->save();
         }
+
+        Mail::to($request->email)->send(new InvoiceMail($order,$order_details));
         Cart::destroy();
-        if(Session::has('coupon')){
+        if (Session::has('coupon')) {
             Session::forget('coupon');
         }
-        return redirect()->route('homePage')->with('success','Order placed successfully.');
+        return redirect()->route('homePage')->with('success', 'Order placed successfully.');
     }
 }

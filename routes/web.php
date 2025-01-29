@@ -147,3 +147,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get('a',function(){
+    return view('mail.invoice_mail');
+});
