@@ -88,7 +88,7 @@ class CheckoutController extends Controller
         $order->tax             = Cart::tax();
         $order->shipping_charge = 0;
         $order->status          = 0;
-        $order->order_id        = rand(10000, 900000);
+        $order->order_id        = rand(100000, 900000);
         $order->save();
 
         $cart_content  = Cart::content();

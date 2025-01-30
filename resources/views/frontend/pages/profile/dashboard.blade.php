@@ -107,6 +107,64 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label>City<span class="text-danger">*</span></label>
+                                                        <input type="text" name="city" placeholder="Enter city"
+                                                            value="{{ old('city',Auth::user()->city) }}"
+                                                            class="form-control @error('city')
+                                                                    is-invalid
+                                                                @enderror">
+                                                        @error('city')
+                                                            <span class="invalid-feedback"
+                                                                role="alert"><strong>{{ $message }}</strong></span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label>Post Code<span class="text-danger">*</span></label>
+                                                    <input type="text" name="postalcode"
+                                                        value="{{ old('postalcode',Auth::user()->postalcode) }}"
+                                                        class="form-control @error('postalcode')
+                                                                is-invalid
+                                                            @enderror"
+                                                        placeholder="Enter post code">
+                                                    @error('postalcode')
+                                                        <span class="invalid-feedback"
+                                                            role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label>Country<span class="text-danger">*</span></label>
+                                                        <input type="text" name="country" placeholder="Enter country"
+                                                            value="{{ old('country',Auth::user()->country) }}"
+                                                            class="form-control @error('country')
+                                                            is-invalid
+                                                        @enderror">
+                                                        @error('country')
+                                                            <span class="invalid-feedback"
+                                                                role="alert"><strong>{{ $message }}</strong></span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label>Region State</label>
+                                                        <input type="text" name="region_state" value="{{ old('region_state',Auth::user()->region_state) }}"
+                                                            class="form-control @error('region_state')
+                                                            is-invalid
+                                                        @enderror"
+                                                            placeholder="Enter region state">
+                                                        @error('region_state')
+                                                            <span class="invalid-feedback"
+                                                                role="alert"><strong>{{ $message }}</strong></span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
                                                 <div class="col-12 col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label>Password</label>

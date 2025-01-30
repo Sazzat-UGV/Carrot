@@ -39,8 +39,13 @@
                                 @auth
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a class=" text-start" href="{{ route('dashboard') }}">
+                                            <a class="dropdown-item" href="{{ route('dashboard') }}">
                                                 My Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ route('my_order') }}">
+                                                My Order
                                             </a>
                                         </li>
                                         <li>
@@ -169,6 +174,11 @@
                                     @auth
                                         <li>
                                             <a class="dropdown-item" href="{{ route('dashboard') }}">My Profile</a>
+                                        </li>
+                                        <li>
+                                            <a class=" dropdown-item" href="{{ route('my_order') }}">
+                                                My Order
+                                            </a>
                                         </li>
                                         <li>
                                             <form action="{{ route('logout') }}" method="POST" class="m-0 p-0 logout">

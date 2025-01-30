@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,11 +26,19 @@ class DashboardController extends Controller
             'address' => 'required|string|max:255',
             'phone'   => 'required|numeric',
             'image'   => 'sometimes|image|mimes:png,jpg,jpeg|max:10240',
+            'city'         => 'required|string|max:255',
+            'postalcode'   => 'required|numeric',
+            'country'      => 'required|string|max:255',
+            'region_state' => 'nullable|string|max:255',
         ]);
         $user          = User::findOrFail(Auth::user()->id);
         $user->name    = $request->name ?? $user->name;
         $user->phone   = $request->phone ?? $user->phone;
         $user->address = $request->address ?? $user->address;
+        $user->city         = $request->city ?? $user->city;
+        $user->postalcode         = $request->postalcode?? $user->postalcode;
+        $user->country      = $request->country?? $user->country;
+        $user->region_state = $request->region_state?? $user->region_state;
         if ($request->password) {
             $request->validate([
                 'password' => 'required|string|min:6|confirmed',
@@ -60,5 +69,10 @@ class DashboardController extends Controller
         $user->update([
             'image' => $new_photo_name,
         ]);
+    }
+
+    public function myOrderPage(){
+        $orders=Order::where('user_id',Auth::id())->latest('id')->paginate(10);
+        return view('frontend.pages.profile.my_order',compact('orders'));
     }
 }

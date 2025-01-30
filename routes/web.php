@@ -137,6 +137,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('review', [ReviewController::class, 'store'])->name('create_review');
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist_list');
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
+    Route::get('my-order', [FrontendDashboardController::class, 'myOrderPage'])->name('my_order');
 
 
     // checkout routes

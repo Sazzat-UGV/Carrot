@@ -97,7 +97,7 @@
                                         <span class="text-left">Tax <b>(5%)</b></span>
                                         <span class="text-right">{{ $setting->currency }}{{ Cart::tax() }}</span>
                                     </div>
-                                  
+
                                     @if (Session::has('coupon'))
                                         <div class="cr-checkout-summary-total">
                                             <span class="text-left">Total Amount</span>
@@ -183,7 +183,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Name<span class="text-danger">*</span></label>
                                                     <input type="text" name="name" placeholder="Enter name"
-                                                        value="{{ Auth::user()->name }}"
+                                                        value="{{ old('name',Auth::user()->name) }}"
                                                         class="form-control @error('name')
                                                         is-invalid
                                                     @enderror">
@@ -195,7 +195,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Email<span class="text-danger">*</span></label>
                                                     <input type="email" name="email" placeholder="Enter email"
-                                                        value="{{ Auth::user()->email }}"
+                                                        value="{{ old('email',Auth::user()->email) }}"
                                                         class="form-control @error('email')
                                                             is-invalid
                                                         @enderror">
@@ -206,7 +206,7 @@
                                                 <span class="cr-bill-wrap mb-3">
                                                     <label>Address<span class="text-danger">*</span></label>
                                                     <input type="text" name="address" placeholder="Enter address"
-                                                        value="{{ Auth::user()->address }}"
+                                                        value="{{ old('address',Auth::user()->address) }}"
                                                         class="form-control @error('address')
                                                                 is-invalid
                                                             @enderror">
@@ -218,7 +218,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>City<span class="text-danger">*</span></label>
                                                     <input type="text" name="city" placeholder="Enter city"
-                                                        value="{{ Auth::user()->city }}"
+                                                        value="{{ old('city',Auth::user()->city) }}"
                                                         class="form-control @error('city')
                                                                 is-invalid
                                                             @enderror">
@@ -230,7 +230,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half  mb-3">
                                                     <label>Post Code<span class="text-danger">*</span></label>
                                                     <input type="text" name="postalcode"
-                                                        value="{{ Auth::user()->postalcode }}"
+                                                        value="{{ old('postalcode',Auth::user()->postalcode) }}"
                                                         class="form-control @error('postalcode')
                                                                 is-invalid
                                                             @enderror"
@@ -243,7 +243,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Country<span class="text-danger">*</span></label>
                                                     <input type="text" name="country" placeholder="Enter country"
-                                                        value="{{ Auth::user()->country }}"
+                                                        value="{{ old('country',Auth::user()->country ) }}"
                                                         class="form-control @error('country')
                                                         is-invalid
                                                     @enderror">
@@ -254,7 +254,7 @@
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Region State</label>
-                                                    <input type="text" name="region_state"
+                                                    <input type="text" name="region_state" value="{{ old('region_state',Auth::user()->region_state) }}"
                                                         class="form-control @error('region_state')
                                                         is-invalid
                                                     @enderror"

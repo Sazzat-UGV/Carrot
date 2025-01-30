@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('postalcode')->nullable();
+            $table->string('region_state')->nullable();
             $table->string('country')->nullable();
             $table->enum('role',['Admin','User'])->default('User');
             $table->string('image')->default('default_profile.png');
