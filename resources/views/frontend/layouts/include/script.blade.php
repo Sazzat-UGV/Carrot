@@ -134,7 +134,7 @@
             event.preventDefault();
             var url = $(this).attr('action');
             var request = $(this).serialize();
-            flasher.info("Welcome back");
+
             $.ajax({
                 url: url,
                 type: 'POST',

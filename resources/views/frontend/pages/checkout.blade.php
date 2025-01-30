@@ -97,18 +97,12 @@
                                         <span class="text-left">Tax <b>(5%)</b></span>
                                         <span class="text-right">{{ $setting->currency }}{{ Cart::tax() }}</span>
                                     </div>
-                            @php
-    $delivery_charge = 0;
-@endphp
-                                    <div>
-                                        <span class="text-left">Delivery Charges</span>
-                                        <span class="text-right">{{ $setting->currency }}{{ $delivery_charge }}</span>
-                                    </div>
+                                  
                                     @if (Session::has('coupon'))
                                         <div class="cr-checkout-summary-total">
                                             <span class="text-left">Total Amount</span>
                                             <span
-                                                class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['after_discount']+Cart::tax()+$delivery_charge }}</span>
+                                                class="text-right">{{ $setting->currency }}{{ Session::get('coupon')['after_discount'] + Cart::tax() }}</span>
                                         </div>
                                     @else
                                         <div class="cr-checkout-summary-total">
@@ -188,7 +182,8 @@
                                                 @csrf
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Name<span class="text-danger">*</span></label>
-                                                    <input type="text" name="name" placeholder="Enter name" value="{{ Auth::user()->name }}"
+                                                    <input type="text" name="name" placeholder="Enter name"
+                                                        value="{{ Auth::user()->name }}"
                                                         class="form-control @error('name')
                                                         is-invalid
                                                     @enderror">
@@ -198,18 +193,20 @@
                                                     @enderror
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
-                                                    <label>Phone<span class="text-danger">*</span></label>
-                                                    <input type="text" name="phone" placeholder="Enter phone"
-                                                        class="form-control @error('phone')
+                                                    <label>Email<span class="text-danger">*</span></label>
+                                                    <input type="email" name="email" placeholder="Enter email"
+                                                        value="{{ Auth::user()->email }}"
+                                                        class="form-control @error('email')
                                                             is-invalid
                                                         @enderror">
-                                                    @error('phone')
+                                                    @error('email')
                                                         <span class="invalid-feedback"
                                                             role="alert"><strong>{{ $message }}</strong></span>
                                                     @enderror </span>
                                                 <span class="cr-bill-wrap mb-3">
                                                     <label>Address<span class="text-danger">*</span></label>
                                                     <input type="text" name="address" placeholder="Enter address"
+                                                        value="{{ Auth::user()->address }}"
                                                         class="form-control @error('address')
                                                                 is-invalid
                                                             @enderror">
@@ -221,6 +218,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>City<span class="text-danger">*</span></label>
                                                     <input type="text" name="city" placeholder="Enter city"
+                                                        value="{{ Auth::user()->city }}"
                                                         class="form-control @error('city')
                                                                 is-invalid
                                                             @enderror">
@@ -232,6 +230,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half  mb-3">
                                                     <label>Post Code<span class="text-danger">*</span></label>
                                                     <input type="text" name="postalcode"
+                                                        value="{{ Auth::user()->postalcode }}"
                                                         class="form-control @error('postalcode')
                                                                 is-invalid
                                                             @enderror"
@@ -244,6 +243,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Country<span class="text-danger">*</span></label>
                                                     <input type="text" name="country" placeholder="Enter country"
+                                                        value="{{ Auth::user()->country }}"
                                                         class="form-control @error('country')
                                                         is-invalid
                                                     @enderror">

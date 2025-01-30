@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -17,11 +15,11 @@ class InvoiceMail extends Mailable
      * Create a new message instance.
      */
 
-     public $order,$order_details;
-    public function __construct($order,$order_details)
+    public $order, $cart_content;
+    public function __construct($order, $cart_content)
     {
-        $this->order=$order;
-        $this->order_details=$order_details;
+        $this->order         = $order;
+        $this->cart_content = $cart_content;
     }
 
     /**
@@ -40,7 +38,7 @@ class InvoiceMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'email.invoice_mail',
+            view: 'mail.invoice_mail',
         );
     }
 

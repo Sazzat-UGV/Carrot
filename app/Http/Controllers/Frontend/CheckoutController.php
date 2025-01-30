@@ -9,6 +9,7 @@ use App\Models\OrderDetail;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
@@ -58,7 +59,7 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'name'         => 'required|string|max:255',
-            'phone'        => 'required|string|max:15',
+            'email'        => 'required|email|max:255',
             'address'      => 'required|string|max:255',
             'city'         => 'required|string|max:255',
             'postalcode'   => 'required|numeric',
@@ -68,7 +69,7 @@ class CheckoutController extends Controller
         $order               = new Order();
         $order->user_id      = Auth::user()->id;
         $order->name         = $request->name;
-        $order->phone        = $request->phone;
+        $order->email        = $request->email;
         $order->address      = $request->address;
         $order->city         = $request->city;
         $order->post         = $request->postalcode;
@@ -104,7 +105,7 @@ class CheckoutController extends Controller
             $order_details->save();
         }
 
-        Mail::to($request->email)->send(new InvoiceMail($order,$order_details));
+        Mail::to($request->email)->send(new InvoiceMail($order, $cart_content));
         Cart::destroy();
         if (Session::has('coupon')) {
             Session::forget('coupon');

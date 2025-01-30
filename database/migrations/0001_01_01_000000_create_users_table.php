@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postalcode')->nullable();
+            $table->string('country')->nullable();
             $table->enum('role',['Admin','User'])->default('User');
             $table->string('image')->default('default_profile.png');
             $table->boolean('status')->default(1);
