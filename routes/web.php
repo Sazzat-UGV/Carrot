@@ -20,6 +20,7 @@ use App\Http\Controllers\Backend\Setting\GeneralSettingController;
 use App\Http\Controllers\Backend\Setting\PageController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
+use App\Http\Controllers\Backend\SupportTicket;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\WarehouseController;
 use App\Http\Controllers\Frontend\CartController;
@@ -109,6 +110,9 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('slider/status/{id}', [SliderController::class, 'changeStatus'])->name('slider.status');
         Route::get('service/status/{id}', [ServiceController::class, 'changeStatus'])->name('service.status');
         Route::get('campaign/status/{id}', [CampaignController::class, 'changeStatus'])->name('campaign.status');
+
+        //support ticket route
+        Route::get('support-ticket',[SupportTicket::class,'allTicket'])->name('all.ticket');
     });
 });
 

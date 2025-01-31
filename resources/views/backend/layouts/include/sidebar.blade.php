@@ -203,6 +203,12 @@
                 <div class="text-truncate">Users</div>
             </a>
         </li>
+        <li class="menu-item @if (Route::is('admin.all.ticket')) active @endif">
+            <a href="{{ route('admin.all.ticket') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-send"></i>
+                <div class="text-truncate">Support Tickets</div>
+            </a>
+        </li>
         <li class="menu-item  @if (Route::is('admin.faq.index') || Route::is('admin.faq.create')) active open @endif">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-comment-dots"></i>

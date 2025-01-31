@@ -59,8 +59,8 @@
                                             </span>
                                         </td>
                                         <td class="cr-cart-remove">
-                                            <a href="£">
-                                                <i class="ri-eye-fill"></i>
+                                            <a href="#" class=" badge bg-info text-white">
+                                                <i class="ri-eye-line"></i>
                                             </a>
                                         </td>
                                     </tr>

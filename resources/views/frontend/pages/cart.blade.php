@@ -109,7 +109,7 @@
                                                             {{ $setting->currency }}{{ $item->price * $item->qty }}</td>
                                                         <td class="cr-cart-remove">
                                                             <a href="{{ route('remove_single_item', $item->rowId) }}"
-                                                                class="item_delete">
+                                                                class="item_delete badge bg-danger text-white">
                                                                 <i class="ri-delete-bin-line"></i>
                                                             </a>
                                                         </td>

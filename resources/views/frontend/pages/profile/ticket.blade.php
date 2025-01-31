@@ -45,12 +45,14 @@
                                             </span>
                                         </td>
                                         <td class="cr-cart-remove">
-                                            <a href="#">
-                                                <i class="ri-eye-fill"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="ri-delete-bin-2-fill"></i>
-                                            </a>
+                                            <div class="d-flex gap-1">
+                                                <a href="#" class=" badge bg-info text-white">
+                                                    <i class="ri-eye-line"></i>
+                                                </a>
+                                                <a href="#" class=" badge bg-danger text-white">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
