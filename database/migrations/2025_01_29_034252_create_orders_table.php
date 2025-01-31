@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('payment_type')->nullable();
             $table->string('tax')->nullable();
             $table->string('shipping_charge')->nullable();
-            $table->string('status')->default(0);
+            $table->enum('status', ['Pending', 'Received', 'Shipped', 'Return', 'Cancel', 'Complete'])->status('Pending');
             $table->string('order_id')->nullable()->comment('using this id you can track your order');
             $table->timestamps();
         });

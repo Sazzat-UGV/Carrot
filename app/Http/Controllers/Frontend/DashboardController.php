@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\SupportTicket;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,29 +17,33 @@ class DashboardController extends Controller
         if (Auth::user()->role == 'Admin') {
             return redirect()->route('admin.dashboard');
         }
-        return view('frontend.pages.profile.dashboard');
+        $total_order    = Order::where('user_id', Auth::id())->count();
+        $complete_order = Order::where('user_id', Auth::id())->where('status', 'Complete')->count();
+        $cancel_order   = Order::where('user_id', Auth::id())->where('status', 'Cancel')->count();
+        $return_order   = Order::where('user_id', Auth::id())->where('status', 'Return')->count();
+        $orders         = Order::where('user_id', Auth::id())->latest('id')->take(3)->get();
+        return view('frontend.pages.profile.dashboard', compact('total_order', 'complete_order', 'cancel_order', 'return_order', 'orders'));
     }
 
-    public function profile(Request $request)
+    public function profileUpdate(Request $request)
     {
         $request->validate([
-            'name'    => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'phone'   => 'required|numeric',
-            'image'   => 'sometimes|image|mimes:png,jpg,jpeg|max:10240',
+            'name'         => 'required|string|max:255',
+            'address'      => 'required|string|max:255',
+            'phone'        => 'required|numeric',
             'city'         => 'required|string|max:255',
             'postalcode'   => 'required|numeric',
             'country'      => 'required|string|max:255',
             'region_state' => 'nullable|string|max:255',
         ]);
-        $user          = User::findOrFail(Auth::user()->id);
-        $user->name    = $request->name ?? $user->name;
-        $user->phone   = $request->phone ?? $user->phone;
-        $user->address = $request->address ?? $user->address;
+        $user               = User::findOrFail(Auth::user()->id);
+        $user->name         = $request->name ?? $user->name;
+        $user->phone        = $request->phone ?? $user->phone;
+        $user->address      = $request->address ?? $user->address;
         $user->city         = $request->city ?? $user->city;
-        $user->postalcode         = $request->postalcode?? $user->postalcode;
-        $user->country      = $request->country?? $user->country;
-        $user->region_state = $request->region_state?? $user->region_state;
+        $user->postalcode   = $request->postalcode ?? $user->postalcode;
+        $user->country      = $request->country ?? $user->country;
+        $user->region_state = $request->region_state ?? $user->region_state;
         if ($request->password) {
             $request->validate([
                 'password' => 'required|string|min:6|confirmed',
@@ -46,15 +51,16 @@ class DashboardController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->save();
-        if ($request->hasFile('image')) {
-            $this->image_upload($request->file('image'), $user);
-        }
         return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
-    public function image_upload($uploaded_photo, $user)
+    public function updateProfileImage(Request $request)
     {
-        $user = User::findOrFail($user->id);
+        $request->validate([
+            'image' => 'sometimes|image|mimes:png,jpg,jpeg|max:10240',
+        ]);
+        $uploaded_photo = $request->file('image');
+        $user           = User::findOrFail(Auth::id());
         if ($user->image != 'default_profile.png') {
             $old_photo_path = base_path('public/uploads/user/' . $user->image);
 
@@ -69,10 +75,57 @@ class DashboardController extends Controller
         $user->update([
             'image' => $new_photo_name,
         ]);
+        $user->save();
+        return redirect()->back()->with('success', 'Profile updated successfully.');
     }
 
-    public function myOrderPage(){
-        $orders=Order::where('user_id',Auth::id())->latest('id')->paginate(10);
-        return view('frontend.pages.profile.my_order',compact('orders'));
+    public function profile()
+    {
+        return view('frontend.pages.profile.profile');
+    }
+
+    public function myOrderPage()
+    {
+        $orders = Order::where('user_id', Auth::id())->latest('id')->paginate(5);
+        return view('frontend.pages.profile.my_order', compact('orders'));
+    }
+
+    public function allTicket()
+    {
+        $tickets = SupportTicket::where('user_id', Auth::id())->latest('id')->paginate(4);
+        return view('frontend.pages.profile.ticket', compact('tickets'));
+    }
+
+    public function newTicket()
+    {
+        return view('frontend.pages.profile.new_ticket');
+    }
+
+    public function newTicketSubmit(Request $request)
+    {
+        $request->validate([
+            'subject'      => 'required|string|max:255',
+            'service'      => 'required|string',
+            'priority'     => 'required|string',
+            'message'      => 'required|string',
+            'ticket_image' => 'sometimes|image|mimes:png,jpg,jpeg|max:10240',
+        ]);
+        $support_ticket           = new SupportTicket();
+        $support_ticket->user_id  = Auth::id();
+        $support_ticket->subject  = $request->subject;
+        $support_ticket->service  = $request->service;
+        $support_ticket->priority = $request->priority;
+        $support_ticket->message  = $request->message;
+        $support_ticket->status   = 'Pending';
+        if ($request->hasFile('ticket_image')) {
+            $uploaded_photo = $request->file('ticket_image');
+            $photo_location = 'uploads/ticket/';
+            $new_photo_name = time() . '.' . $uploaded_photo->getClientOriginalExtension();
+            $uploaded_photo->move(public_path($photo_location), $new_photo_name);
+            $support_ticket->image = $new_photo_name;
+        }
+        $support_ticket->save();
+
+        return redirect()->route('open.ticket')->with('success', 'Ticket submitted successfully.');
     }
 }

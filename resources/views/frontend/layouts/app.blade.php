@@ -114,6 +114,24 @@
             border-color: #64b496;
             outline: none;
         }
+
+        .udashboard {
+            color: #7A7A7A;
+        }
+
+        .udashboard:hover {
+            background: #E4F2ED;
+            transition: .6s;
+        }
+
+        .udashboard_active {
+            background: #E4F2ED;
+            color: #7A7A7A !important;
+        }
+
+        .udashboard-i {
+            font-size: 18px;
+        }
     </style>
 
 </head>

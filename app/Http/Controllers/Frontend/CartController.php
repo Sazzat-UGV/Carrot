@@ -33,7 +33,7 @@ class CartController extends Controller
     {
         Cart::setGlobalTax(5);
         $cart_content = Cart::content();
-        return view('frontend.pages.profile.cart', compact('cart_content'));
+        return view('frontend.pages.cart', compact('cart_content'));
     }
 
     public function removeSingleItem($rowId)

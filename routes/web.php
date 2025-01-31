@@ -133,7 +133,9 @@ Route::prefix('/')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [FrontendDashboardController::class, 'dashboard'])->name('dashboard');
-    Route::post('update-profile', [FrontendDashboardController::class, 'profile'])->name('update_profile');
+    Route::get('profile', [FrontendDashboardController::class, 'profile'])->name('profile');
+    Route::post('update-profile', [FrontendDashboardController::class, 'profileUpdate'])->name('update_profile');
+    Route::post('update-profile-image', [FrontendDashboardController::class, 'updateProfileImage'])->name('update_profile_image');
     Route::post('review', [ReviewController::class, 'store'])->name('create_review');
     Route::get('wishlist', [WishlistController::class, 'index'])->name('wishlist_list');
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
@@ -145,10 +147,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('remove-coupon',[CheckoutController::class,'removeCoupon'])->name('remove_coupon');
     Route::get('checkout',[CheckoutController::class,'checkoutPage'])->name('checkout_page');
     Route::post('place-order',[CheckoutController::class,'placeOrder'])->name('place_order');
+
+    //support ticket
+    Route::get('open-ticket',[FrontendDashboardController::class,'allTicket'])->name('open.ticket');
+    Route::get('new-ticket',[FrontendDashboardController::class,'newTicket'])->name('new.ticket');
+    Route::post('new-ticket',[FrontendDashboardController::class,'newTicketSubmit'])->name('new.ticket');
 });
 
 require __DIR__ . '/auth.php';
-
-Route::get('a',function(){
-    return view('mail.invoice_mail');
-});

@@ -87,7 +87,7 @@ class CheckoutController extends Controller
         $order->payment_type    = $request->payment_method;
         $order->tax             = Cart::tax();
         $order->shipping_charge = 0;
-        $order->status          = 0;
+        $order->status          = 'Pending';
         $order->order_id        = rand(100000, 900000);
         $order->save();
 
