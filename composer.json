@@ -11,6 +11,7 @@
         "barryvdh/laravel-dompdf": "^3.0",
         "browner12/helpers": "^3.6",
         "intervention/image": "^2",
+        "jorenvanhocht/laravel-share": "^4.2",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
         "maatwebsite/excel": "^3.1",

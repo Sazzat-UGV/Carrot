@@ -203,7 +203,7 @@
                 <div class="text-truncate">Users</div>
             </a>
         </li>
-        <li class="menu-item @if (Route::is('admin.all.ticket')) active @endif">
+        <li class="menu-item @if (Route::is('admin.all.ticket') ||Route::is('admin.ticket.show')) active @endif">
             <a href="{{ route('admin.all.ticket') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-send"></i>
                 <div class="text-truncate">Support Tickets</div>

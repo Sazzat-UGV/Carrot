@@ -113,6 +113,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         //support ticket route
         Route::get('support-ticket',[SupportTicket::class,'allTicket'])->name('all.ticket');
+        Route::get('support-ticket-show/{id}',[SupportTicket::class,'show'])->name('ticket.show');
     });
 });
 

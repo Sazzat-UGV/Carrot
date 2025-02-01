@@ -22,9 +22,15 @@ class SupportTicket extends Controller
             ->when($request->search, function ($query) use ($request) {
                 $query->where('subject', 'LIKE', '%' . $request->search . '%');
             })
-            ->paginate($request->input('per_page', 10));
+            ->latest('id')->paginate($request->input('per_page', 10));
 
         return view('backend.pages.ticket.index', compact('tickets'));
+    }
+
+    public function show($id)
+    {
+        $ticket = ModelsSupportTicket::with('user:id,name')->findOrFail($id);
+        return view('backend.pages.ticket.show', compact('ticket'));
     }
 
 }

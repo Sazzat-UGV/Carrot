@@ -112,7 +112,7 @@
                                                     data-bs-toggle="dropdown" aria-expanded="false"><i
                                                         class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu" style="">
-                                                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#"><i
+                                                    <a class="dropdown-item" href="{{ route('admin.ticket.show',$ticket->id) }}"><i
                                                             class="bx bx-show-alt me-1"></i> View</a>
 
                                                     <form action="#" class="show_confirm" method="POST">
