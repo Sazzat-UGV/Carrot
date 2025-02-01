@@ -48,7 +48,7 @@
                                     <select id="status" class="form-select @error('status') is-invalid @enderror"
                                         name="status">
                                         <option value="All">All</option>
-                                        <option value="Pending" @if (request('status') == 'Pending') selected @endif>Pending
+                                        <option value="Pending" @if (request( 'status') == 'Pending') selected @endif>Pending
                                         </option>
                                         <option value="Replied" @if (request('status') == 'Replied') selected @endif>Replied
                                         </option>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col-12 col-md-3 mb-4">
                                     <label class="form-label">Date</label>
-                                    <input type="date" class="form-control" name="date">
+                                    <input type="date" class="form-control" name="date" value="{{ request('date') }}">
                                 </div>
                             </div>
                         </div>
