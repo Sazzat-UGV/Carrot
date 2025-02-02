@@ -91,9 +91,15 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');
 
         // news letter route
-        Route::get('news-letter',[NewsletterController::class,'index'])->name('newsLetter');
-        Route::get('news-letter-form',[NewsletterController::class,'formGet'])->name('newsLetterformGet');
-        Route::post('news-letter-form',[NewsletterController::class,'formPost'])->name('newsLetterformPost');
+        Route::get('news-letter', [NewsletterController::class, 'index'])->name('newsLetter');
+        Route::get('news-letter-form', [NewsletterController::class, 'formGet'])->name('newsLetterformGet');
+        Route::post('news-letter-form', [NewsletterController::class, 'formPost'])->name('newsLetterformPost');
+
+        // campains route
+        Route::get('all-product-list/{campaign_id}', [CampaignController::class, 'allProduct'])->name('all.product');
+        Route::get('add-product-campaign/{product_id}/{campaign_id}', [CampaignController::class, 'addProduct'])->name('add.product');
+        Route::get('campaign-product-list/{campaign_id}', [CampaignController::class, 'productList'])->name('product.list');
+        Route::get('campaign-product-delete/{product_id}/{campaign_id}', [CampaignController::class, 'productDelete'])->name('product.delete');
 
         // status routes
         Route::get('user/status/{id}', [UserController::class, 'changeStatus'])->name('user.status');
@@ -112,8 +118,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('campaign/status/{id}', [CampaignController::class, 'changeStatus'])->name('campaign.status');
 
         //support ticket route
-        Route::get('support-ticket',[SupportTicket::class,'allTicket'])->name('all.ticket');
-        Route::get('support-ticket-show/{id}',[SupportTicket::class,'show'])->name('ticket.show');
+        Route::get('support-ticket', [SupportTicket::class, 'allTicket'])->name('all.ticket');
+        Route::get('support-ticket-show/{id}', [SupportTicket::class, 'show'])->name('ticket.show');
     });
 });
 
@@ -124,7 +130,9 @@ Route::prefix('/')->group(function () {
     Route::get('products/{type}/{slug}', [HomeController::class, 'allProducts'])->name('allProducts');
     Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacyPolicy');
     Route::get('terms-condition', [HomeController::class, 'TermsCondition'])->name('TermsCondition');
-    Route::post('newsletter',[HomeController::class,'newsLetter'])->name('news_letter');
+    Route::post('newsletter', [HomeController::class, 'newsLetter'])->name('news_letter');
+    Route::get('campaign-product/{campaign_id}',[HomeController::class,'campaign'])->name('campaign.products');
+    Route::get('campaign-product-detail/{campaign_id}/{product_id}',[HomeController::class,'campaignProductDetail'])->name('campaign.products.details');
 
     // cart routes
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');
@@ -146,17 +154,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('wishlist/{id}', [WishlistController::class, 'store'])->name('wishlist_store');
     Route::get('my-order', [FrontendDashboardController::class, 'myOrderPage'])->name('my_order');
 
-
     // checkout routes
-    Route::post('apply-coupon',[CheckoutController::class,'applyCoupon'])->name('apply_coupon');
-    Route::get('remove-coupon',[CheckoutController::class,'removeCoupon'])->name('remove_coupon');
-    Route::get('checkout',[CheckoutController::class,'checkoutPage'])->name('checkout_page');
-    Route::post('place-order',[CheckoutController::class,'placeOrder'])->name('place_order');
+    Route::post('apply-coupon', [CheckoutController::class, 'applyCoupon'])->name('apply_coupon');
+    Route::get('remove-coupon', [CheckoutController::class, 'removeCoupon'])->name('remove_coupon');
+    Route::get('checkout', [CheckoutController::class, 'checkoutPage'])->name('checkout_page');
+    Route::post('place-order', [CheckoutController::class, 'placeOrder'])->name('place_order');
 
     //support ticket
-    Route::get('open-ticket',[FrontendDashboardController::class,'allTicket'])->name('open.ticket');
-    Route::get('new-ticket',[FrontendDashboardController::class,'newTicket'])->name('new.ticket');
-    Route::post('new-ticket',[FrontendDashboardController::class,'newTicketSubmit'])->name('new.ticket');
+    Route::get('open-ticket', [FrontendDashboardController::class, 'allTicket'])->name('open.ticket');
+    Route::get('new-ticket', [FrontendDashboardController::class, 'newTicket'])->name('new.ticket');
+    Route::post('new-ticket', [FrontendDashboardController::class, 'newTicketSubmit'])->name('new.ticket');
 });
 
 require __DIR__ . '/auth.php';

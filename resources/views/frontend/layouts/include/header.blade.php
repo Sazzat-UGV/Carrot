@@ -1,3 +1,9 @@
+@php
+     $campaign     = App\Models\Campaign::where('status', 1)
+            ->whereDate('start_date', '<=', now())
+            ->whereDate('end_date', '>=', now())
+            ->first();
+@endphp
 <header>
     <div class="container">
         <div class="row">
@@ -233,7 +239,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('campaign.products',$campaign->id) }}">
                                     Campaign
                                 </a>
                             </li>
@@ -290,7 +296,7 @@
                 </li>
 
                 <li class="dropdown drop-list">
-                    <a class="" href="#">
+                    <a class="" href="{{ route('campaign.products',$campaign->id) }}">
                         Campaign
                     </a>
                 </li>

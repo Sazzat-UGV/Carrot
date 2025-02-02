@@ -72,6 +72,9 @@
                                                         class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu" style="">
                                                     <a class="dropdown-item"
+                                                        href="{{ route('admin.all.product',$campaign->id) }}"><i
+                                                            class="bx bx-plus me-1"></i> Add Product</a>
+                                                    <a class="dropdown-item"
                                                         href="{{ route('admin.campaign.edit', $campaign->id) }}"><i
                                                             class="bx bx-edit-alt me-1"></i> Edit</a>
                                                     <form action="{{ route('admin.campaign.destroy', $campaign->id) }}"

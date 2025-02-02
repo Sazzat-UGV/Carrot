@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Campaign;
+use App\Models\CampaignProduct;
 use App\Models\Category;
 use App\Models\Newsletter;
 use App\Models\Page;
@@ -25,12 +27,12 @@ class HomeController extends Controller
         $categories    = Category::withCount('products')->where('show_home', 1)->get();
         $brands        = Brand::where('show_home', 1)->latest('id')->get();
         $today_deals   = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('status', 1)->where('today_deal', 1)->latest('id')->take(10)->get();
-        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories', 'brands', 'today_deals'));
-    }
+        $campaign      = Campaign::where('status', 1)
+            ->whereDate('start_date', '<=', now())
+            ->whereDate('end_date', '>=', now())
+            ->first();
 
-    public function productDetails()
-    {
-        return view('frontend.pages.product-detail');
+        return view('frontend.pages.home_page', compact('sliders', 'featureds', 'services', 'most_populars', 'trendies', 'categories', 'brands', 'today_deals', 'campaign'));
     }
 
     public function productDetail($slug)
@@ -155,4 +157,41 @@ class HomeController extends Controller
         ]);
         return back()->with('success', 'You have successfully subscribed to the newsletter.');
     }
+
+    public function campaign($campaign_id)
+    {
+        $campaign             = Campaign::findOrFail($campaign_id);
+        $campaign_product_ids = CampaignProduct::where('campaign_id', $campaign->id)->pluck('product_id');
+        $products             = Product::with(['category:id,name,slug'])
+            ->withCount('reviews')
+            ->withSum('reviews', 'rating')
+            ->whereIn('id', $campaign_product_ids)
+            ->latest('id')
+            ->paginate(30);
+
+        foreach ($products as $product) {
+            $campaignProduct = CampaignProduct::where('product_id', $product->id)
+                ->where('campaign_id', $campaign->id)
+                ->first();
+            $product->discount_price = $product->selling_price;
+            $product->selling_price  = $campaignProduct ? $campaignProduct->price : null;
+        }
+
+        return view('frontend.pages.campaign', compact('products', 'campaign'));
+    }
+    public function campaignProductDetail($campaign_id, $product_id)
+    {
+        $campaign_data = CampaignProduct::where('campaign_id', $campaign_id)->where('product_id',$product_id)->first();
+        $product            = Product::with('brand:id,name', 'warehouse:id,name', 'pickup_point:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')
+        ->where('id', $product_id)
+        ->first();
+        $product->discount_price = $product->selling_price;
+            $product->selling_price  = $campaign_data ? $campaign_data->price : null;
+
+        Product::where('id', $product_id)->increment('product_view');
+        $related_products = Product::with('category:id,name,slug', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('sub_category_id', $product->sub_category_id)->whereNot('id', $product->id)->take(5)->get();
+        $reviews          = Review::with('user:id,name,image')->where('product_id', $product->id)->latest('id')->paginate(10)->appends(['stage' => 'review']);
+      return view('frontend.pages.campaign_product_detail',compact('reviews','related_products','product'));
+    }
+
 }

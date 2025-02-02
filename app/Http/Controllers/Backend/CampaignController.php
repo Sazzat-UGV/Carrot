@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
+use App\Models\CampaignProduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Image;
@@ -134,5 +136,48 @@ class CampaignController extends Controller
         $campaign->update([
             'image' => $new_photo_name,
         ]);
+    }
+
+    public function allProduct(Request $request, $campaign_id)
+    {
+        $campaign = Campaign::findOrFail($campaign_id);
+        $products = Product::where('status', 1);
+        if ($request->search) {
+            $products = $products->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        $products = $products->paginate(10);
+        return view('backend.pages.campaign.add_product', compact('products', 'campaign'));
+    }
+
+    public function addProduct($product_id, $campaign_id)
+    {
+        $campaign       = Campaign::findOrFail($campaign_id);
+        $product        = Product::findOrFail($product_id);
+        $discount_amout = $product->selling_price / 100 * $campaign->discount;
+        $discount_price = $product->selling_price - $discount_amout;
+        $price          = 10;
+        CampaignProduct::create([
+            'campaign_id' => $campaign_id,
+            'product_id'  => $product_id,
+            'price'       => $discount_price,
+        ]);
+        return back()->with('success', 'Product added to this campaign.');
+    }
+
+    public function productList(Request $request,$campaign_id)
+    {
+        $campaign             = Campaign::findOrFail($campaign_id);
+        $campaign_product_ids = CampaignProduct::where('campaign_id', $campaign->id)->pluck('product_id');
+        $products             = Product::whereIn('id', $campaign_product_ids);
+        if($request->search){
+            $products=$products->where('name',"LIKE",'%'.$request->search.'%');
+        }
+        $products=$products->latest('id')->paginate(10);
+        return view('backend.pages.campaign.product_list', compact('campaign', 'products'));
+    }
+
+    public function productDelete($product_id,$campaign_id){
+        CampaignProduct::where('product_id',$product_id)->where('campaign_id',$campaign_id)->delete();
+        return back()->with('success','Product deleted from this campaign.');
     }
 }

@@ -34,4 +34,8 @@ class Product extends Model
     public function wishlists(){
         return $this->hasMany(Wishlist::class);
     }
+
+    public function campaign(){
+        return $this->belongsTo(CampaignProduct::class);
+    }
 }

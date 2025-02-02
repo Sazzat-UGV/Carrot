@@ -39,24 +39,6 @@ class CampaignSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'title'      => 'Tech Gadgets Fiesta',
-                'start_date' => date('Y-m-d'),
-                'end_date'   => date('Y-m-d', strtotime('+1 month')),
-                'image'      => '4.jpg',
-                'discount'   => 15,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'title'      => 'Fashion Frenzy',
-                'start_date' => date('Y-m-d'),
-                'end_date'   => date('Y-m-d', strtotime('+1 month')),
-                'image'      => '5.jpg',
-                'discount'   => 50,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
         ];
 
         Campaign::insert($campaigns);

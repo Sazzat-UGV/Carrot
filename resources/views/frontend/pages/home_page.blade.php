@@ -566,15 +566,14 @@
                 </div>
                 <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-12" data-aos="fade-up" data-aos-duration="2000">
                     <div class="cr-products-rightbar">
-                        <img src="{{ asset('assets/frontend') }}/img/product/products-rightview.jpg"
-                            alt="products-rightview">
+                        <img src="{{ asset('uploads/campaign') }}/{{ $campaign->image }}" alt="products-rightview">
                         <div class="cr-products-rightbar-content">
-                            <h4>Organic & Healthy <br> Vegetables</h4>
+                            <h4>{{ $campaign->title }}</h4>
                             <div class="cr-off">
-                                <span>25% <code>OFF</code></span>
+                                <span>{{ $campaign->discount }}% <code>OFF</code></span>
                             </div>
                             <div class="rightbar-buttons">
-                                <a href="shop-left-sidebar.html" class="cr-button">
+                                <a href="{{ route('campaign.products', $campaign->id) }}" class="cr-button">
                                     shop now
                                 </a>
                             </div>
