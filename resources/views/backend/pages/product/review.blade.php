@@ -59,8 +59,8 @@
                                         <th>{{ $index + 1 }}</th>
                                         <td class="wrap">{{ $review->created_at->diffForHumans() }}</td>
                                         <td>
-                                            <img src="{{ asset('uploads/user') }}/{{ $review->user->image }}" alt="Image"
-                                                style="max-width: 100px" class="me-3 rounded-circle">
+                                            <img src="{{ $review->user->image }}" alt="Image" style="max-width: 100px"
+                                                class="me-3 rounded-circle">
                                         </td>
                                         <td class="wrap">{{ $review->user->name }}</td>
                                         <td class="wrap">{{ $review->comment }}</td>

@@ -65,7 +65,7 @@
                                     <tr>
                                         <th>{{ $index + 1 }}</th>
                                         <td>
-                                            <img src="{{ asset('uploads/user') }}/{{ $user->image }}" alt="Image"
+                                            <img src="{{ $user->image }}" alt="Image"
                                                 height="50" width="50" class="me-3  rounded-circle">
                                         </td>
                                         <td class="wrap">{{ $user->name }}</td>

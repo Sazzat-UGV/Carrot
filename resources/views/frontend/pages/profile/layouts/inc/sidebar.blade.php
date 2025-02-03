@@ -3,9 +3,9 @@
         <div class="cr-sidebar-block">
             <div class="cr-sb-block-content text-center">
                 <div class="cr-check-pay-img position-relative d-inline-block">
-                    <img id="profile-image" src="{{ asset('uploads/user') }}/{{ Auth::user()->image }}" alt="User Profile"
+                    <img id="profile-image" src="{{ Auth::user()->image }}" alt="User Profile"
                         class="border border-2 rounded-circle border-success-subtle" style="max-width: 180px;">
-                    @if (Route::is('profile'))
+                    @if (Route::is('profile') && !Auth::user()->google_id)
                         <label for="file-input" id="edit-button"
                             class="position-absolute bg-light border rounded-circle px-1"
                             style="bottom: 10px; right: 5px; cursor: pointer; color: #64B496;">

@@ -27,6 +27,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\SocialLoginController;
 use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -131,8 +132,8 @@ Route::prefix('/')->group(function () {
     Route::get('privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacyPolicy');
     Route::get('terms-condition', [HomeController::class, 'TermsCondition'])->name('TermsCondition');
     Route::post('newsletter', [HomeController::class, 'newsLetter'])->name('news_letter');
-    Route::get('campaign-product/{campaign_id}',[HomeController::class,'campaign'])->name('campaign.products');
-    Route::get('campaign-product-detail/{campaign_id}/{product_id}',[HomeController::class,'campaignProductDetail'])->name('campaign.products.details');
+    Route::get('campaign-product/{campaign_id}', [HomeController::class, 'campaign'])->name('campaign.products');
+    Route::get('campaign-product-detail/{campaign_id}/{product_id}', [HomeController::class, 'campaignProductDetail'])->name('campaign.products.details');
 
     // cart routes
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');
@@ -165,5 +166,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('new-ticket', [FrontendDashboardController::class, 'newTicket'])->name('new.ticket');
     Route::post('new-ticket', [FrontendDashboardController::class, 'newTicketSubmit'])->name('new.ticket');
 });
+
+Route::get('google-login', [SocialLoginController::class, 'googleLogin'])->name('google.login');
+Route::get('auth/google-callback', [SocialLoginController::class, 'googleLoginCallback'])->name('google.login.callback');
+Route::get('facebook-login', [SocialLoginController::class, 'facebookLogin'])->name('facebook.login');
+Route::get('auth/facebook-callback', [SocialLoginController::class, 'facebookLoginCallback'])->name('facebook.login.callback');
 
 require __DIR__ . '/auth.php';

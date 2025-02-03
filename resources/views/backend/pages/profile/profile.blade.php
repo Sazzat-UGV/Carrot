@@ -14,7 +14,7 @@
                     <input type="hidden" name="name" value="{{ Auth::user()->name }}">
                     <div class="card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-6 pb-4 border-bottom">
-                            <img src="{{ asset('uploads/user') }}/{{ Auth::user()->image }}" alt="image"
+                            <img src="{{ Auth::user()->image }}" alt="image"
                                 class="d-block w-px-100 h-px-100 rounded" id="uploadedAvatar">
                             <div class="button-wrapper">
                                 <label for="upload" class="btn btn-primary me-3 mb-4" tabindex="0">

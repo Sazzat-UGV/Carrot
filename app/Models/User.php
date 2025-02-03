@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -18,7 +17,6 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var list<string>
      */
     protected $guarded = ["id"];
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -39,7 +37,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
+
+    public function getImageAttribute($image)
+    {
+        if (! $this->google_id) {
+            return asset('uploads/user/' . $image);
+        } else {
+            return $image;
+        }
+    }
+
 }

@@ -205,7 +205,7 @@
                                     <div class="reviews-container">
                                         @foreach ($reviews as $review)
                                             <div class="content">
-                                                <img src="{{ asset('uploads/user') }}/{{ $review->user->image }}"
+                                                <img src="{{ $review->user->image }}"
                                                     alt="image" class="border">
                                                 <div class="details">
                                                     <span

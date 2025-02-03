@@ -15,7 +15,7 @@
                 </div>
                 <div class="user-profile-header d-flex flex-column flex-lg-row text-sm-start text-center mb-8">
                     <div class="flex-shrink-0 mt-1 mx-sm-0 mx-auto">
-                        <img src="{{ asset('uploads/user') }}/{{ $user->image }}" alt="user image"
+                        <img src="{{ $user->image }}" alt="user image"
                             class="d-block h-auto ms-0 ms-sm-6 rounded-3 user-profile-img">
                     </div>
                     <div class="flex-grow-1 mt-3 mt-lg-5">
