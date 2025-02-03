@@ -169,7 +169,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 Route::get('google-login', [SocialLoginController::class, 'googleLogin'])->name('google.login');
 Route::get('auth/google-callback', [SocialLoginController::class, 'googleLoginCallback'])->name('google.login.callback');
-Route::get('facebook-login', [SocialLoginController::class, 'facebookLogin'])->name('facebook.login');
-Route::get('auth/facebook-callback', [SocialLoginController::class, 'facebookLoginCallback'])->name('facebook.login.callback');
-
 require __DIR__ . '/auth.php';

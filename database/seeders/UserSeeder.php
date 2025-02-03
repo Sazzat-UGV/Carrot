@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Roger S. Allen',
-            'email' => 'RogerSAllen@armyspy.com',
+            'email' => 'user@gmail.com',
             'address' => '2440 Boundary Street Jacksonville, FL 32208',
             'phone' => '904-713-1558',
             'city' => 'Sydney',
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Kevin J. Harter',
-            'email' => 'DonaldSLewis@teleworm.us',
+            'email' => 'user1@gmail.com',
             'address' => '499 Raoul Wallenberg Place Stamford, CT 06902',
             'phone' => '203-883-9331',
             'city' => 'London',
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Gene A. Green',
-            'email' => 'GeneAGreen@teleworm.us',
+            'email' => 'user2@gmail.coms',
             'address' => '414 John Daniel Drive Saint Louis, MO 63101',
             'phone' => '573-710-9095',
             'city' => 'New York',
@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Carmen J. Alley',
-            'email' => 'CarmenJAlley@dayrep.com',
+            'email' => 'user3@gmail.com',
             'address' => '4224 Pringle Drive Elk Grove Village, IL 60007',
             'phone' => '312-416-5374',
             'city' => 'Chattogram',
@@ -70,7 +70,7 @@ class UserSeeder extends Seeder
         ]);
         User::create([
             'name' => 'Kevin J. Harter',
-            'email' => 'user@gmail.com',
+            'email' => 'user4@gmail.com',
             'address' => '115 Rainbow Drive Richfield, OH 44286',
             'phone' => '330-523-6618',
             'city' => 'Dhaka',

@@ -60,26 +60,20 @@
                                 <label for="html" class="ms-2 me-auto">Remember Me</label>
                                 <a class="link" href="{{ route('password.request') }}">Forgot Password?</a>
                             </div>
-                            <br>
-                            <div class="cr-register-buttons">
+                            <div class="my-2">
+                                <a href="{{ route('google.login') }}" class="cr-button google-button w-100">
+                                    <i class="ri-google-line"
+                                        style="font-size: 25px; align-items: center; text-align: center;"></i> Continue with
+                                    Google
+                                </a>
+                            </div>
+                               <div class="cr-register-buttons">
                                 <button type="submit" class="cr-button">Login</button>
                                 <a href="{{ route('register') }}" class="link">
                                     Signup?
                                 </a>
                             </div>
                         </form>
-                        <div class="mt-3 d-flex justify-content-between gap-4">
-                            <a href="{{ route('google.login') }}" class="cr-button google-button w-100">
-                                <i class="ri-google-line"
-                                    style="font-size: 25px; align-items: center; text-align: center;"></i> Continue with
-                                Google
-                            </a>
-                            <a href="{{ route('facebook.login') }}" class="cr-button facebook-button w-100">
-                                <i class="ri-facebook-line"
-                                    style="font-size: 25px; align-items: center; text-align: center;"></i> Continue with
-                                Facebook
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>

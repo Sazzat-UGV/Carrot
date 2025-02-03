@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('region_state')->nullable();
             $table->string('country')->nullable();
             $table->string('google_id')->nullable();
+            $table->string('facebook_id')->nullable();
             $table->enum('role',['Admin','User'])->default('User');
             $table->string('image')->default('default_profile.png');
             $table->boolean('status')->default(1);
