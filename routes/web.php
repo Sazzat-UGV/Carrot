@@ -134,6 +134,8 @@ Route::prefix('/')->group(function () {
     Route::post('newsletter', [HomeController::class, 'newsLetter'])->name('news_letter');
     Route::get('campaign-product/{campaign_id}', [HomeController::class, 'campaign'])->name('campaign.products');
     Route::get('campaign-product-detail/{campaign_id}/{product_id}', [HomeController::class, 'campaignProductDetail'])->name('campaign.products.details');
+    Route::get('contact_us',[HomeController::class,'contactUs'])->name('contact.us');
+    Route::post('contact_us',[HomeController::class,'contactUsSubmit'])->name('contact.us');
 
     // cart routes
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');

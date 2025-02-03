@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ContactUsMail;
 use App\Models\Brand;
 use App\Models\Campaign;
 use App\Models\CampaignProduct;
@@ -13,7 +14,9 @@ use App\Models\Review;
 use App\Models\Service;
 use App\Models\Slider;
 use App\Models\SubCategory;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -181,17 +184,38 @@ class HomeController extends Controller
     }
     public function campaignProductDetail($campaign_id, $product_id)
     {
-        $campaign_data = CampaignProduct::where('campaign_id', $campaign_id)->where('product_id',$product_id)->first();
-        $product            = Product::with('brand:id,name', 'warehouse:id,name', 'pickup_point:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')
-        ->where('id', $product_id)
-        ->first();
+        $campaign_data = CampaignProduct::where('campaign_id', $campaign_id)->where('product_id', $product_id)->first();
+        $product       = Product::with('brand:id,name', 'warehouse:id,name', 'pickup_point:id,name', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')
+            ->where('id', $product_id)
+            ->first();
         $product->discount_price = $product->selling_price;
-            $product->selling_price  = $campaign_data ? $campaign_data->price : null;
+        $product->selling_price  = $campaign_data ? $campaign_data->price : null;
 
         Product::where('id', $product_id)->increment('product_view');
         $related_products = Product::with('category:id,name,slug', 'reviews')->withCount('reviews')->withSum('reviews', 'rating')->where('sub_category_id', $product->sub_category_id)->whereNot('id', $product->id)->take(5)->get();
         $reviews          = Review::with('user:id,name,image')->where('product_id', $product->id)->latest('id')->paginate(10)->appends(['stage' => 'review']);
-      return view('frontend.pages.campaign_product_detail',compact('reviews','related_products','product'));
+        return view('frontend.pages.campaign_product_detail', compact('reviews', 'related_products', 'product'));
     }
 
+    public function contactUs()
+    {
+        return view('frontend.pages.contact_us');
+    }
+
+    public function contactUsSubmit(Request $request)
+    {
+        $request->validate([
+            'name'    => 'required|string',
+            'email'   => 'required|email',
+            'phone'   => 'required|string',
+            'message' => 'required|string',
+        ]);
+        $name         = $request->name;
+        $email        = $request->email;
+        $phone        = $request->phone;
+        $mail_message = $request->message;
+        $admin        = User::where('id', 1)->first();
+        Mail::to($admin->email)->send(new ContactUsMail($name, $email, $phone, $mail_message));
+        return back()->with('success', 'Contact us form submitted successfully.');
+    }
 }

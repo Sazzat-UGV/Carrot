@@ -1,8 +1,8 @@
 @php
-     $campaign     = App\Models\Campaign::where('status', 1)
-            ->whereDate('start_date', '<=', now())
-            ->whereDate('end_date', '>=', now())
-            ->first();
+    $campaign = App\Models\Campaign::where('status', 1)
+        ->whereDate('start_date', '<=', now())
+        ->whereDate('end_date', '>=', now())
+        ->first();
 @endphp
 <header>
     <div class="container">
@@ -239,7 +239,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('campaign.products',$campaign->id) }}">
+                                <a class="nav-link" href="{{ route('campaign.products', $campaign->id) }}">
                                     Campaign
                                 </a>
                             </li>
@@ -254,8 +254,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    Contact
+                                <a class="nav-link" href="{{ route('contact.us') }}">
+                                    Contact Us
                                 </a>
                             </li>
                         </ul>
@@ -296,7 +296,7 @@
                 </li>
 
                 <li class="dropdown drop-list">
-                    <a class="" href="{{ route('campaign.products',$campaign->id) }}">
+                    <a class="" href="{{ route('campaign.products', $campaign->id) }}">
                         Campaign
                     </a>
                 </li>
@@ -311,8 +311,8 @@
                     </a>
                 </li>
                 <li class="dropdown drop-list">
-                    <a class="" href="#">
-                        Contact
+                    <a class="" href="{{ route('contact.us') }}">
+                        Contact Us
                     </a>
                 </li>
             </ul>

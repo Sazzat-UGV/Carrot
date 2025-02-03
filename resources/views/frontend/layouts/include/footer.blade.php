@@ -42,7 +42,7 @@
                             <li><a href="track-order.html">Delivery Information****</a></li>
                             <li><a href="{{ route('privacyPolicy') }}">Privacy Policy</a></li>
                             <li><a href="{{ route('TermsCondition') }}">Terms & Conditions</a></li>
-                            <li><a href="contact-us.html">Contact Us**</a></li>
+                            <li><a href="{{ route('contact.us') }}">Contact Us</a></li>
                             <li><a href="faq.html">Support Center**</a></li>
                         </ul>
                     </div>
