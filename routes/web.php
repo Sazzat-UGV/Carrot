@@ -98,6 +98,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         // order route
         Route::get('orders', [OrderController::class, 'index'])->name('order.list');
         Route::get('order-export/pdf', [OrderExportController::class, 'exportPDF'])->name('order.exportPDF');
+        Route::delete('order-delete/{id}', [OrderController::class, 'delete'])->name('order.delete');
 
         // news letter route
         Route::get('news-letter', [NewsletterController::class, 'index'])->name('newsLetter');
@@ -126,6 +127,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('service/status/{id}', [ServiceController::class, 'changeStatus'])->name('service.status');
         Route::get('campaign/status/{id}', [CampaignController::class, 'changeStatus'])->name('campaign.status');
         Route::get('blog/status/{id}', [BlogController::class, 'changeStatus'])->name('blog.status');
+        Route::post('order/status/{id}', [OrderController::class, 'changeStatus'])->name('order.status');
 
         //support ticket route
         Route::get('support-ticket', [SupportTicket::class, 'allTicket'])->name('all.ticket');

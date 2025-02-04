@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -28,4 +29,21 @@ class OrderController extends Controller
         $orders = $orders->paginate(10);
         return view('backend.pages.orders', compact('orders'));
     }
+
+    public function delete($id)
+    {
+        OrderDetail::where('order_id', $id)->delete();
+        $order = Order::findOrFail($id);
+        $order->delete();
+        return back()->with('success', 'Order deleted successfully.');
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        $order         = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+        return back()->with('success', 'Order status updated successfully.');
+    }
+
 }

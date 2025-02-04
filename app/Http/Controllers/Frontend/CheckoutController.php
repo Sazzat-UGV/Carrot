@@ -92,8 +92,8 @@ class CheckoutController extends Controller
         $order->save();
 
         $cart_content  = Cart::content();
-        $order_details = new OrderDetail();
         foreach ($cart_content as $row) {
+            $order_details = new OrderDetail();
             $order_details->order_id       = $order->id;
             $order_details->product_id     = $row->id;
             $order_details->product_name   = $row->name;

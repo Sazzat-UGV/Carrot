@@ -24,7 +24,20 @@
                         alt="image" />
                 </div>
                 <div class="col-sm-5 text-center text-sm-end">
-                    <h4 class="text-7 mb-0">Invoice</h4>
+                    <h5 class="text-7 mb-0">Invoice</h5>
+                    @if ($order->status == 'Pending')
+                        <span class="badge bg-secondary">{{ $order->status }}</span>
+                    @elseif($order->status == 'Received')
+                        <span class="badge bg-info">{{ $order->status }}</span>
+                    @elseif($order->status == 'Shipped')
+                        <span class="badge bg-primary">{{ $order->status }}</span>
+                    @elseif($order->status == 'Complete')
+                        <span class="badge bg-success">{{ $order->status }}</span>
+                    @elseif($order->status == 'Return')
+                        <span class="badge bg-warning">{{ $order->status }}</span>
+                    @elseif($order->status == 'Cancel')
+                        <span class="badge bg-danger">{{ $order->status }}</span>
+                    @endif
                 </div>
             </div>
             <hr />
