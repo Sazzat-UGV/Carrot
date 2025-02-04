@@ -221,6 +221,12 @@
                 <div class="text-truncate">Users</div>
             </a>
         </li>
+        <li class="menu-item @if (Route::is('admin.order.list')) active @endif">
+            <a href="{{ route('admin.order.list') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ol"></i>
+                <div class="text-truncate">Orders</div>
+            </a>
+        </li>
         <li class="menu-item @if (Route::is('admin.all.ticket') || Route::is('admin.ticket.show')) active @endif">
             <a href="{{ route('admin.all.ticket') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-send"></i>

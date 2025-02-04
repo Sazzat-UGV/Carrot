@@ -8,9 +8,11 @@ use App\Http\Controllers\Backend\CampaignController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CouponController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Export\OrderExportController;
 use App\Http\Controllers\Backend\Export\UserExportController;
 use App\Http\Controllers\Backend\FaqController;
 use App\Http\Controllers\Backend\NewsletterController;
+use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PickupPointController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\ProfileController;
@@ -92,6 +94,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         // backup download route
         Route::get('/backup/download/{file_name}', [BackUpcontroller::class, 'download'])->name('backupDownload');
+
+        // order route
+        Route::get('orders', [OrderController::class, 'index'])->name('order.list');
+        Route::get('order-export/pdf', [OrderExportController::class, 'exportPDF'])->name('order.exportPDF');
 
         // news letter route
         Route::get('news-letter', [NewsletterController::class, 'index'])->name('newsLetter');
