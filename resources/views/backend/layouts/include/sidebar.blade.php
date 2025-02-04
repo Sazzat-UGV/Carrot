@@ -197,13 +197,31 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item  @if (Route::is('admin.blog.index') || Route::is('admin.blog.create')) active open @endif">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bxl-blogger"></i>
+                <div class="text-truncate">Blogs</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item  @if (Route::is('admin.blog.index')) active @endif">
+                    <a href="{{ route('admin.blog.index') }}" class="menu-link">
+                        <div class="text-truncate">Blog List</div>
+                    </a>
+                </li>
+                <li class="menu-item  @if (Route::is('admin.blog.create')) active @endif">
+                    <a href="{{ route('admin.blog.create') }}" class="menu-link">
+                        <div class="text-truncate">Add New Blog</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li class="menu-item @if (Route::is('admin.user.index') || Route::is('admin.user.show')) active @endif">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
                 <div class="text-truncate">Users</div>
             </a>
         </li>
-        <li class="menu-item @if (Route::is('admin.all.ticket') ||Route::is('admin.ticket.show')) active @endif">
+        <li class="menu-item @if (Route::is('admin.all.ticket') || Route::is('admin.ticket.show')) active @endif">
             <a href="{{ route('admin.all.ticket') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-send"></i>
                 <div class="text-truncate">Support Tickets</div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\Auth\AuthenticationController;
 use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\BlogController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CampaignController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -60,6 +61,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('slider', SliderController::class);
         Route::resource('service', ServiceController::class);
         Route::resource('campaign', CampaignController::class);
+        Route::resource('blog', BlogController::class);
 
         Route::get('review/show/{id}', [ReviewController::class, 'index'])->name('review_index');
         Route::delete('review/delete/{id}', [ReviewController::class, 'delete'])->name('review_delete');
@@ -117,6 +119,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('slider/status/{id}', [SliderController::class, 'changeStatus'])->name('slider.status');
         Route::get('service/status/{id}', [ServiceController::class, 'changeStatus'])->name('service.status');
         Route::get('campaign/status/{id}', [CampaignController::class, 'changeStatus'])->name('campaign.status');
+        Route::get('blog/status/{id}', [BlogController::class, 'changeStatus'])->name('blog.status');
 
         //support ticket route
         Route::get('support-ticket', [SupportTicket::class, 'allTicket'])->name('all.ticket');
@@ -134,8 +137,10 @@ Route::prefix('/')->group(function () {
     Route::post('newsletter', [HomeController::class, 'newsLetter'])->name('news_letter');
     Route::get('campaign-product/{campaign_id}', [HomeController::class, 'campaign'])->name('campaign.products');
     Route::get('campaign-product-detail/{campaign_id}/{product_id}', [HomeController::class, 'campaignProductDetail'])->name('campaign.products.details');
-    Route::get('contact_us',[HomeController::class,'contactUs'])->name('contact.us');
-    Route::post('contact_us',[HomeController::class,'contactUsSubmit'])->name('contact.us');
+    Route::get('contact_us', [HomeController::class, 'contactUs'])->name('contact.us');
+    Route::post('contact_us', [HomeController::class, 'contactUsSubmit'])->name('contact.us');
+    Route::get('blog', [HomeController::class, 'blogList'])->name('blog.list');
+    Route::get('blog-details/{slug}', [HomeController::class, 'blogDetails'])->name('blog.details');
 
     // cart routes
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');

@@ -249,7 +249,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('blog.list') }}">
                                     Blog
                                 </a>
                             </li>
@@ -306,7 +306,7 @@
                     </a>
                 </li>
                 <li class="dropdown drop-list">
-                    <a class="" href="#">
+                    <a class="" href="{{ route('blog.list') }}">
                         Blog
                     </a>
                 </li>

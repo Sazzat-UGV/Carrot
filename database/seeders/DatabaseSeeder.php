@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             CampaignSeeder::class,
             CampaignProductSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }

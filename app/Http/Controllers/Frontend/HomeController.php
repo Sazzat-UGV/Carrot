@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ContactUsMail;
+use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\Campaign;
 use App\Models\CampaignProduct;
@@ -217,5 +218,17 @@ class HomeController extends Controller
         $admin        = User::where('id', 1)->first();
         Mail::to($admin->email)->send(new ContactUsMail($name, $email, $phone, $mail_message));
         return back()->with('success', 'Contact us form submitted successfully.');
+    }
+
+    public function blogList()
+    {
+        $blogs = Blog::with('user')->latest('id')->where('status', 1)->paginate(6);
+        return view('frontend.pages.blog.index', compact('blogs'));
+    }
+
+    public function blogDetails($slug)
+    {
+        $blog = Blog::where('slug', $slug)->first();
+        return view('frontend.pages.blog.show', compact('blog'));
     }
 }
