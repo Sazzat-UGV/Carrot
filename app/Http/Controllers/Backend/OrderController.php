@@ -2,9 +2,11 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderStatusMail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -43,7 +45,27 @@ class OrderController extends Controller
         $order         = Order::findOrFail($id);
         $order->status = $request->status;
         $order->save();
-        return back()->with('success', 'Order status updated successfully.');
+        $cart_content = $order->orderDetails;
+        if ($order->status == 'Pending') {
+            $subject = 'Your Order is Pending';
+        } elseif ($order->status == 'Received') {
+            $subject = 'We’ve Received Your Order';
+        } elseif ($order->status == 'Shipped') {
+            $subject = 'Your Order is Shipped';
+        } elseif ($order->status == 'Complete') {
+            $subject = 'Order Delivered';
+        } elseif ($order->status == 'Return') {
+            $subject = 'Return Request Processed';
+        } elseif ($order->status == 'Cancel') {
+            $subject = 'Order Cancelled';
+        }
+
+        Mail::to($order->email)->send(new OrderStatusMail($order, $cart_content, $subject));
+        return response()->json([
+            'status'  => true,
+            'message' => 'Updated Successfully',
+            'data'    => $order,
+        ]);
     }
 
 }

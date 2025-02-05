@@ -1,19 +1,18 @@
 <?php
+
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class InvoiceMail extends Mailable
+class OrderStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
 
     public $order, $cart_content,$subject;
     public function __construct($order, $cart_content,$subject)
@@ -22,6 +21,7 @@ class InvoiceMail extends Mailable
         $this->cart_content = $cart_content;
         $this->subject = $subject;
     }
+
 
     /**
      * Get the message envelope.
@@ -39,7 +39,7 @@ class InvoiceMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.invoice_mail',
+            view: 'mail.status_mail',
         );
     }
 

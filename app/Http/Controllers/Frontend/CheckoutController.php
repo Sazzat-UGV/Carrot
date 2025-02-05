@@ -91,9 +91,9 @@ class CheckoutController extends Controller
         $order->order_id        = rand(100000, 900000);
         $order->save();
 
-        $cart_content  = Cart::content();
+        $cart_content = Cart::content();
         foreach ($cart_content as $row) {
-            $order_details = new OrderDetail();
+            $order_details                 = new OrderDetail();
             $order_details->order_id       = $order->id;
             $order_details->product_id     = $row->id;
             $order_details->product_name   = $row->name;
@@ -104,8 +104,8 @@ class CheckoutController extends Controller
             $order_details->subtotal_price = $row->price * $row->qty;
             $order_details->save();
         }
-
-        Mail::to($request->email)->send(new InvoiceMail($order, $cart_content));
+        $subject = 'Order Invoice';
+        Mail::to($request->email)->send(new InvoiceMail($order, $cart_content, $subject));
         Cart::destroy();
         if (Session::has('coupon')) {
             Session::forget('coupon');

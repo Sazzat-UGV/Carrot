@@ -8,6 +8,47 @@
             white-space: normal !important;
             word-wrap: break-word;
         }
+
+        /* Dropdown Button */
+        .btn-status {
+            width: 120px;
+            text-align: left;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-weight: 600;
+            border: none;
+            background-color: #f8f9fa;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .btn-status:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Status Dropdown */
+        .status-dropdown {
+            min-width: 150px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-dropdown .dropdown-item {
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .status-dropdown .dropdown-item i {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        /* Hover Effect */
+        .status-dropdown .dropdown-item:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
     </style>
 @endpush
 @section('content')
@@ -117,21 +158,38 @@
                                         <td class="wrap">{{ $setting->currency }}{{ $order->subtotal }}</td>
                                         <td class="wrap">{{ $setting->currency }}{{ $order->total }}</td>
                                         <td class="">{{ $order->payment_type }}</td>
-                                        <td class="">
-                                            @if ($order->status == 'Pending')
-                                                <span class="badge bg-secondary">{{ $order->status }}</span>
-                                            @elseif($order->status == 'Received')
-                                                <span class="badge bg-info">{{ $order->status }}</span>
-                                            @elseif($order->status == 'Shipped')
-                                                <span class="badge bg-primary">{{ $order->status }}</span>
-                                            @elseif($order->status == 'Complete')
-                                                <span class="badge bg-success">{{ $order->status }}</span>
-                                            @elseif($order->status == 'Return')
-                                                <span class="badge bg-warning">{{ $order->status }}</span>
-                                            @elseif($order->status == 'Cancel')
-                                                <span class="badge bg-danger">{{ $order->status }}</span>
-                                            @endif
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-status dropdown-toggle" type="button"
+                                                    id="dropdownMenuButton{{ $order->id }}" data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                    <span class="status-text">{{ ucfirst($order->status) }}</span>
+                                                </button>
+
+                                                <ul class="dropdown-menu status-dropdown"
+                                                    aria-labelledby="dropdownMenuButton{{ $order->id }}">
+                                                    <li><a class="dropdown-item status-option text-secondary"
+                                                            data-value="Pending" data-order-id="{{ $order->id }}"><i
+                                                                class="bi bi-clock"></i> Pending</a></li>
+                                                    <li><a class="dropdown-item status-option text-info"
+                                                            data-value="Received" data-order-id="{{ $order->id }}"><i
+                                                                class="bi bi-check-circle"></i> Received</a></li>
+                                                    <li><a class="dropdown-item status-option text-primary"
+                                                            data-value="Shipped" data-order-id="{{ $order->id }}"><i
+                                                                class="bi bi-truck"></i> Shipped</a></li>
+                                                    <li><a class="dropdown-item status-option text-success"
+                                                            data-value="Complete" data-order-id="{{ $order->id }}"><i
+                                                                class="bi bi-bag-check"></i> Complete</a></li>
+                                                    <li><a class="dropdown-item status-option text-warning"
+                                                            data-value="Return" data-order-id="{{ $order->id }}"><i
+                                                                class="bi bi-arrow-return-left"></i> Return</a></li>
+                                                    <li><a class="dropdown-item status-option text-danger"
+                                                            data-value="Cancel" data-order-id="{{ $order->id }}"><i
+                                                                class="bi bi-x-circle"></i> Cancel</a></li>
+                                                </ul>
+                                            </div>
                                         </td>
+
                                         <td>
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -183,81 +241,26 @@
                                                                     <div class="col-md-6 mb-2"><b>Total:</b>
                                                                         {{ $setting->currency }}{{ $order->total }}</div>
                                                                     <div class="col-md-6 mb-2">
-                                                                        <div class="dropdown">
-                                                                            <button
-                                                                                class="btn badge-status btn-sm dropdown-toggle"
-                                                                                type="button" id="orderStatusDropdown"
-                                                                                data-bs-toggle="dropdown"
-                                                                                aria-expanded="false">
-                                                                                {{ $order->status }}
-                                                                            </button>
-                                                                            <ul class="dropdown-menu">
-                                                                                <li><a class="dropdown-item status-option"
-                                                                                        href="#"
-                                                                                        data-status="Pending">Pending</a>
-                                                                                </li>
-                                                                                <li><a class="dropdown-item status-option"
-                                                                                        href="#"
-                                                                                        data-status="Received">Received</a>
-                                                                                </li>
-                                                                                <li><a class="dropdown-item status-option"
-                                                                                        href="#"
-                                                                                        data-status="Shipped">Shipped</a>
-                                                                                </li>
-                                                                                <li><a class="dropdown-item status-option"
-                                                                                        href="#"
-                                                                                        data-status="Complete">Complete</a>
-                                                                                </li>
-                                                                                <li><a class="dropdown-item status-option"
-                                                                                        href="#"
-                                                                                        data-status="Return">Return</a>
-                                                                                </li>
-                                                                                <li><a class="dropdown-item status-option"
-                                                                                        href="#"
-                                                                                        data-status="Cancel">Cancel</a>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                        <form id="statusForm-{{ $order->id }}"
-                                                                            method="POST" style="display: none;">
-                                                                            @csrf
-                                                                            @method('PATCH')
-                                                                            <input type="hidden" name="status"
-                                                                                id="selectedStatus-{{ $order->id }}">
-                                                                        </form>
-
+                                                                        @if ($order->status == 'Pending')
+                                                                            <span
+                                                                                class="badge bg-secondary">{{ $order->status }}</span>
+                                                                        @elseif($order->status == 'Received')
+                                                                            <span
+                                                                                class="badge bg-info">{{ $order->status }}</span>
+                                                                        @elseif($order->status == 'Shipped')
+                                                                            <span
+                                                                                class="badge bg-primary">{{ $order->status }}</span>
+                                                                        @elseif($order->status == 'Complete')
+                                                                            <span
+                                                                                class="badge bg-success">{{ $order->status }}</span>
+                                                                        @elseif($order->status == 'Return')
+                                                                            <span
+                                                                                class="badge bg-warning">{{ $order->status }}</span>
+                                                                        @elseif($order->status == 'Cancel')
+                                                                            <span
+                                                                                class="badge bg-danger">{{ $order->status }}</span>
+                                                                        @endif
                                                                     </div>
-
-                                                                    <style>
-                                                                        .badge-status {
-                                                                            display: inline-block;
-                                                                            color: #fff;
-                                                                            border-radius: 0.375rem;
-                                                                            border: none;
-                                                                            text-align: center;
-                                                                        }
-
-                                                                        .dropdown-toggle::after {
-                                                                            display: none;
-                                                                        }
-
-                                                                        .badge-status {
-                                                                            background-color: @if ($order->status == 'Pending')
-                                                                                #6c757d
-                                                                            @elseif($order->status == 'Received')
-                                                                                #0dcaf0
-                                                                            @elseif($order->status == 'Shipped')
-                                                                                #696CFF
-                                                                            @elseif($order->status == 'Complete')
-                                                                                #71DD37
-                                                                            @elseif($order->status == 'Return')
-                                                                                #FFAB00
-                                                                            @elseif($order->status == 'Cancel')
-                                                                                #FF3E1D
-                                                                            @endif
-                                                                            ;
-                                                                        }
-                                                                    </style>
                                                                 </div>
                                                                 <hr>
                                                                 <h6>Order Items</h6>
@@ -344,15 +347,47 @@
     </script>
     <script>
         $(document).ready(function() {
-            $(".status-option").on("click", function(event) {
-                event.preventDefault();
-                var status = $(this).data("status");
-                var dropdown = $(this).closest(".dropdown");
-                var orderId = dropdown.find("button").attr("id").split("-")[1];
-                alert(orderId)
-                var form = $("#statusForm-" + orderId);
-                form.submit();
-                console.log(form);
+            $('.status-option').on('click', function() {
+                let newStatus = $(this).data('value');
+                let orderId = $(this).data('order-id');
+                let button = $(`#dropdownMenuButton${orderId}`);
+                let statusText = button.find('.status-text');
+                let url = "{{ route('admin.order.status', ':id') }}".replace(':id', orderId);
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        status: newStatus,
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            statusText.text(newStatus);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Status updated successfully!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: 'Failed to update status.',
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Something went wrong. Please try again later!',
+                        });
+                        console.error(xhr.responseText);
+                    }
+                });
             });
         });
     </script>

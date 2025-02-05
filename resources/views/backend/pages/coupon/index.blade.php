@@ -109,11 +109,13 @@
                     url: url,
                     dataType: "JSON",
                     success: function(response) {
-                        Swal.fire(
-                            'Status Updated!',
-                            'The status has been successfully updated.',
-                            'success'
-                        );
+                        Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Coupon updated successfully!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                     },
                     error: function(err) {
                         console.error(err);

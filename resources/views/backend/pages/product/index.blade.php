@@ -105,7 +105,7 @@
                                     <th>Subcategory</th>
                                     <th>Brand</th>
                                     <th>Featured</th>
-                                    <th>Total Deal</th>
+                                    <th>Today Deal</th>
                                     <th>Trending</th>
                                     <th>Status</th>
                                     <th>Actions</th>
@@ -366,11 +366,13 @@
                     url: url,
                     dataType: "JSON",
                     success: function(response) {
-                        Swal.fire(
-                            'Status Updated!',
-                            'The status has been successfully updated.',
-                            'success'
-                        );
+                        Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Featured updated successfully!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                     },
                     error: function(err) {
                         console.error(err);
@@ -392,11 +394,13 @@
                     url: url,
                     dataType: "JSON",
                     success: function(response) {
-                        Swal.fire(
-                            'Status Updated!',
-                            'The status has been successfully updated.',
-                            'success'
-                        );
+                        Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Today deal updated successfully!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                     },
                     error: function(err) {
                         console.error(err);
@@ -418,11 +422,13 @@
                     url: url,
                     dataType: "JSON",
                     success: function(response) {
-                        Swal.fire(
-                            'Status Updated!',
-                            'The status has been successfully updated.',
-                            'success'
-                        );
+                        Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Trending updated successfully!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                     },
                     error: function(err) {
                         console.error(err);
@@ -444,11 +450,13 @@
                     url: url,
                     dataType: "JSON",
                     success: function(response) {
-                        Swal.fire(
-                            'Status Updated!',
-                            'The status has been successfully updated.',
-                            'success'
-                        );
+                        Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Status updated successfully!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                     },
                     error: function(err) {
                         console.error(err);
