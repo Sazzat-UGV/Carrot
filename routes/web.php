@@ -31,6 +31,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SocialLoginController;
+use App\Http\Controllers\Frontend\TrackOrder;
 use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -158,6 +159,10 @@ Route::prefix('/')->group(function () {
     Route::get('update-item-color/{color}/{rowId}', [CartController::class, 'updateItemColor'])->name('update_item_color');
     Route::get('update-item-size/{size}/{rowId}', [CartController::class, 'updateItemSize'])->name('update_item_size');
     Route::get('update-item-qty/{qty}/{rowId}', [CartController::class, 'updateItemQty'])->name('update_item_qty');
+
+    // track order
+    Route::get('track',[TrackOrder::class,'trackOrderPage'])->name('track.order');
+    Route::post('track',[TrackOrder::class,'trackOrder'])->name('track.order');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
