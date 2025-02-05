@@ -185,6 +185,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('open-ticket', [FrontendDashboardController::class, 'allTicket'])->name('open.ticket');
     Route::get('new-ticket', [FrontendDashboardController::class, 'newTicket'])->name('new.ticket');
     Route::post('new-ticket', [FrontendDashboardController::class, 'newTicketSubmit'])->name('new.ticket');
+    Route::get('reply-ticket/{id}', [FrontendDashboardController::class, 'replyTicket'])->name('reply.ticket');
 });
 
 Route::get('google-login', [SocialLoginController::class, 'googleLogin'])->name('google.login');

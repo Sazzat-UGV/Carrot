@@ -46,7 +46,7 @@
                                         </td>
                                         <td class="cr-cart-remove">
                                             <div class="d-flex gap-1">
-                                                <a href="#" class=" badge bg-info text-white">
+                                                <a href="{{ route('reply.ticket',$ticket->id) }}" class=" badge bg-info text-white">
                                                     <i class="ri-eye-line"></i>
                                                 </a>
                                                 <a href="#" class=" badge bg-danger text-white">

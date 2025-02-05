@@ -128,4 +128,9 @@ class DashboardController extends Controller
 
         return redirect()->route('open.ticket')->with('success', 'Ticket submitted successfully.');
     }
+
+    public function replyTicket($id){
+$ticket=SupportTicket::where('id',$id)->where('user_id',Auth::id())->first();
+        return view('frontend.pages.profile.reply_ticket',compact('ticket'));
+    }
 }
