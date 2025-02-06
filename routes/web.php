@@ -134,6 +134,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('support-ticket', [SupportTicket::class, 'allTicket'])->name('all.ticket');
         Route::get('support-ticket-show/{id}', [SupportTicket::class, 'show'])->name('ticket.show');
         Route::post('support-ticket-reply/{id}', [SupportTicket::class, 'reply'])->name('ticket.reply');
+        Route::get('support-ticket-status/{id}', [SupportTicket::class, 'status'])->name('ticket.status');
+        Route::delete('support-ticket-delete/{id}', [SupportTicket::class, 'delete'])->name('ticket.delete');
     });
 });
 

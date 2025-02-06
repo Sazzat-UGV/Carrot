@@ -93,7 +93,23 @@
  col-12 @endif">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="mb-1">Ticket Info</h5>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="mb-1">Ticket Info</h5>
+                        </div>
+                        <div>
+                            @if ($ticket->status == 'Pending')
+                                <a class="btn btn-warning py-1"
+                                    href="{{ route('admin.ticket.status', $ticket->id) }}">{{ $ticket->status }}</a>
+                            @elseif($ticket->status == 'Replied')
+                                <a class="btn btn-success py-1"
+                                    href="{{ route('admin.ticket.status', $ticket->id) }}">{{ $ticket->status }}</a>
+                            @elseif($ticket->status == 'Closed')
+                                <a class="btn btn-danger py-1"
+                                    href="{{ route('admin.ticket.status', $ticket->id) }}">{{ $ticket->status }}</a>
+                            @endif
+                        </div>
+                    </div>
                     <hr>
                     <p class="mb-3 card-subtitle mt-0"><b>User Name: </b>{{ $ticket->user->name }}</p>
                     <p class="mb-3 card-subtitle mt-0"><b>Subject: </b>{{ $ticket->subject }}</p>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\ReplyTicket;
 use App\Models\SupportTicket as ModelsSupportTicket;
+use App\Models\SupportTicket as SupportTicketModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,5 +58,30 @@ class SupportTicket extends Controller
         }
         $reply_ticket->save();
         return redirect()->back()->with('success', 'Reply submitted successfully.');
+    }
+
+    public function status($id)
+    {
+        $ticket = SupportTicketModel::where('id', $id)->first();
+        $ticket->update([
+            'status' => 'Closed',
+        ]);
+        return back()->with('success', 'Status updated successfully.');
+    }
+    public function delete($id)
+    {
+        $ticket = SupportTicketModel::findOrFail($id);
+        if ($ticket->image && file_exists(public_path('uploads/ticket/' . $ticket->image))) {
+            unlink(public_path('uploads/ticket/' . $ticket->image));
+        }
+        $replies = ReplyTicket::where('ticket_id', $id)->get();
+        foreach ($replies as $reply) {
+            if ($reply->image && file_exists(public_path('uploads/ticket/' . $reply->image))) {
+                unlink(public_path('uploads/ticket/' . $reply->image));
+            }
+        }
+        ReplyTicket::where('ticket_id', $id)->delete();
+        $ticket->delete();
+        return back()->with('success', 'Ticket deleted successfully.');
     }
 }

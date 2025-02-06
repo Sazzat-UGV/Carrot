@@ -48,7 +48,7 @@
                                     <select id="status" class="form-select @error('status') is-invalid @enderror"
                                         name="status">
                                         <option value="All">All</option>
-                                        <option value="Pending" @if (request( 'status') == 'Pending') selected @endif>Pending
+                                        <option value="Pending" @if (request('status') == 'Pending') selected @endif>Pending
                                         </option>
                                         <option value="Replied" @if (request('status') == 'Replied') selected @endif>Replied
                                         </option>
@@ -65,8 +65,8 @@
 
                         <div class="row d-flex justify-content-end">
                             <div class="col-auto mb-4 d-flex">
-                                <input class="form-control me-2" type="text" placeholder="Search by subject" name="search"
-                                    value="{{ request('search') }}">
+                                <input class="form-control me-2" type="text" placeholder="Search by subject"
+                                    name="search" value="{{ request('search') }}">
                                 <button type="submit" class="btn badge bg-label-primary waves-effect waves-light">
                                     <i class="bx bx-search align-middle"></i>
                                 </button>
@@ -112,10 +112,12 @@
                                                     data-bs-toggle="dropdown" aria-expanded="false"><i
                                                         class="bx bx-dots-vertical-rounded"></i></button>
                                                 <div class="dropdown-menu" style="">
-                                                    <a class="dropdown-item" href="{{ route('admin.ticket.show',$ticket->id) }}"><i
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('admin.ticket.show', $ticket->id) }}"><i
                                                             class="bx bx-show-alt me-1"></i> View</a>
 
-                                                    <form action="#" class="show_confirm" method="POST">
+                                                    <form action="{{ route('admin.ticket.delete', $ticket->id) }}"
+                                                        class="show_confirm" method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="dropdown-item" type="submit"><i
