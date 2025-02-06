@@ -2,8 +2,10 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ReplyTicket;
 use App\Models\SupportTicket as ModelsSupportTicket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SupportTicket extends Controller
 {
@@ -29,8 +31,31 @@ class SupportTicket extends Controller
 
     public function show($id)
     {
-        $ticket = ModelsSupportTicket::with('user:id,name')->findOrFail($id);
-        return view('backend.pages.ticket.show', compact('ticket'));
+        $ticket  = ModelsSupportTicket::with('user:id,name')->findOrFail($id);
+        $replies = ReplyTicket::where('ticket_id', $id)->get();
+        return view('backend.pages.ticket.show', compact('ticket', 'replies'));
     }
 
+    public function reply(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'sometimes|mimes:png,jpg,jpeg|max:10240',
+        ]);
+        $ticket         = ModelsSupportTicket::findOrFail($id);
+        $ticket->status = 'Replied';
+        $ticket->save();
+        $reply_ticket            = new ReplyTicket();
+        $reply_ticket->ticket_id = $id;
+        $reply_ticket->user_id   = Auth::id();
+        $reply_ticket->message   = $request->message;
+        if ($request->hasFile('image')) {
+            $uploaded_photo = $request->file('image');
+            $photo_location = 'uploads/ticket/';
+            $new_photo_name = time() . '.' . $uploaded_photo->getClientOriginalExtension();
+            $uploaded_photo->move(public_path($photo_location), $new_photo_name);
+            $reply_ticket->image = $new_photo_name;
+        }
+        $reply_ticket->save();
+        return redirect()->back()->with('success', 'Reply submitted successfully.');
+    }
 }

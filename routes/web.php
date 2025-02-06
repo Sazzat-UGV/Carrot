@@ -133,6 +133,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         //support ticket route
         Route::get('support-ticket', [SupportTicket::class, 'allTicket'])->name('all.ticket');
         Route::get('support-ticket-show/{id}', [SupportTicket::class, 'show'])->name('ticket.show');
+        Route::post('support-ticket-reply/{id}', [SupportTicket::class, 'reply'])->name('ticket.reply');
     });
 });
 
@@ -186,6 +187,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('new-ticket', [FrontendDashboardController::class, 'newTicket'])->name('new.ticket');
     Route::post('new-ticket', [FrontendDashboardController::class, 'newTicketSubmit'])->name('new.ticket');
     Route::get('reply-ticket/{id}', [FrontendDashboardController::class, 'replyTicket'])->name('reply.ticket');
+    Route::post('reply-ticket/{id}', [FrontendDashboardController::class, 'replyTicketSubmit'])->name('reply.ticket.submit');
 });
 
 Route::get('google-login', [SocialLoginController::class, 'googleLogin'])->name('google.login');
