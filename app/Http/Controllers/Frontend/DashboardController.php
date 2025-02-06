@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\ReplyTicket;
 use App\Models\SupportTicket;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -129,8 +130,11 @@ class DashboardController extends Controller
         return redirect()->route('open.ticket')->with('success', 'Ticket submitted successfully.');
     }
 
-    public function replyTicket($id){
-$ticket=SupportTicket::where('id',$id)->where('user_id',Auth::id())->first();
-        return view('frontend.pages.profile.reply_ticket',compact('ticket'));
+    public function replyTicket($id)
+    {
+        $ticket  = SupportTicket::where('id', $id)->where('user_id', Auth::id())->first();
+        $replies = ReplyTicket::where('ticket_id',$id)->get();
+        return view('frontend.pages.profile.reply_ticket', compact('ticket', 'replies'));
     }
 }
+

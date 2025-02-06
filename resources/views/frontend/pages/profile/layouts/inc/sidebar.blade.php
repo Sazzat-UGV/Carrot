@@ -42,7 +42,7 @@
                     <i class="ri-profile-line udashboard-i"></i> Profile
                 </a>
                 <a href="{{ route('open.ticket') }}"
-                    class="btn w-100 text-start udashboard @if (Route::is('open.ticket') || Route::is('new.ticket')) udashboard_active @endif">
+                    class="btn w-100 text-start udashboard @if (Route::is('open.ticket') || Route::is('new.ticket') || Route::is('reply.ticket')) udashboard_active @endif">
                     <i class="ri-send-plane-line udashboard-i"></i> Open Ticket
                 </a>
                 <form action="{{ route('logout') }}" method="POST" class=" w-100 text-start udashboard logout">

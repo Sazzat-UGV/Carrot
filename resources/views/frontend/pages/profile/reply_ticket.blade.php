@@ -31,47 +31,57 @@
                     <!-- Chat Messages -->
                     <div class="chat-messages p-3 flex-grow-1 overflow-auto">
                         <div class="d-flex flex-column">
-                            <div class="message received p-2 rounded bg-light mb-2">
-                                <p class="mb-0">Hello! How are you?</p>
-                            </div>
-                            <div class="message sent p-2 rounded bg-light text-white align-self-end mb-2">
-                                <p class="mb-0">I'm good, thanks! What about you?</p>
-                            </div>
-                            <div class="message sent rounded bg-light text-white align-self-end mb-2">
-                                <img src="{{ asset('assets/backend/img/pages/app-academy-tutor-6.png') }}"
-                                class="img-fluid rounded" style="max-height: 150px;" alt="Received Image">
-                            </div>
-                            <div class="message received mb-2">
-                                <img src="{{ asset('assets/backend/img/pages/app-academy-tutor-6.png') }}"
-                                    class="img-fluid rounded" style="max-height: 150px;" alt="Received Image">
-                            </div>
-                            <div class="message received p-2 rounded bg-light mb-2">
-                                <p class="mb-0">Hello! How are you?</p>
-                            </div> <div class="message received p-2 rounded bg-light mb-2">
-                                <p class="mb-0">Hello! How are you?</p>
-                            </div>
+                            @if ($replies->count() > 0)
+                                @foreach ($replies as $reply)
+                                    @if ($reply->user_id == Auth::user()->id)
+                                        @if ($reply->image)
+                                            <div class="message sent rounded bg-light text-white align-self-end mb-2">
+                                                <img src="{{ asset('assets/backend/img/pages/app-academy-tutor-6.png') }}"
+                                                    class="img-fluid rounded" style="max-height: 150px;"
+                                                    alt="Received Image">
+                                            </div>
+                                        @else
+                                            <div class="message sent p-2 rounded bg-light text-white align-self-end mb-2">
+                                                <p class="mb-0">{{ $reply->message }}</p>
+                                            </div>
+                                        @endif
+                                    @else
+                                        @if ($reply->image)
+                                            <div class="message received mb-2">
+                                                <img src="{{ asset('assets/backend/img/pages/app-academy-tutor-2.png') }}"
+                                                    class="img-fluid rounded" style="max-height: 150px;"
+                                                    alt="Received Image">
+                                            </div>
+                                        @else
+                                            <div class="message received p-2 rounded bg-light mb-2">
+                                                <p class="mb-0">{{ $reply->message }}</p>
+                                            </div>
+                                        @endif
+                                    @endif
+                                @endforeach
+                            @else
+                                <h4 class="text-center" style="color: #777777; font-weight: 600;">No reply found.</h4>
+                            @endif
                         </div>
                     </div>
 
                     <div class="chat-input p-2 border-top d-flex align-items-center">
                         <!-- File Upload Button -->
-                        <button class="btn btn-light file-upload-btn me-2" onclick="document.getElementById('imageUpload').click()">
+                        <button class="btn btn-light file-upload-btn"
+                            onclick="document.getElementById('imageUpload').click()">
                             <i class="ri-attachment-line"></i>
                         </button>
                         <input type="file" id="imageUpload" class="d-none" accept="image/*" name="image">
-
-                        <!-- Message Input Field -->
                         <div class="input-group flex-grow-1">
-                            <input type="text" class="form-control chat-message-input" placeholder="Type a message..." name="message">
+                            <input type="text" class="form-control chat-message-input" placeholder="Type a message..."
+                                name="message">
                         </div>
-
-                        <!-- Send Button -->
-                        <button type="submit" class="btn btn-primary send-btn ms-2">
-                            <i class="ri-send-plane-2-line"></i>
+                        <button type="submit" class="btn  send-btn" style="background:#64B496;">
+                            <i class="ri-send-plane-2-line " style="color: white; font-size: 16px;"></i>
                         </button>
                     </div>
 
-            </div>
+                </div>
         </form>
     </div>
 
@@ -79,7 +89,7 @@
         .chat-box {
             display: flex;
             flex-direction: column;
-            max-height: 400px;
+            max-height: 500px;
             border-radius: 5px;
             overflow: hidden;
         }
@@ -127,7 +137,7 @@
 
         .sent {
             align-self: flex-end;
-            background: #007bff;
+            background: #64B496;
             color: white;
         }
 

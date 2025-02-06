@@ -47,6 +47,9 @@
             </div>
         @endif
     </div>
+<div class="row">
+    start from here 
+</div>
 @endsection
 @push('script')
 @endpush
