@@ -244,7 +244,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('faq.list') }}">
                                     FAQ
                                 </a>
                             </li>
@@ -301,7 +301,7 @@
                     </a>
                 </li>
                 <li class="dropdown drop-list">
-                    <a class="" href="#">
+                    <a class="" href="{{ route('faq.list') }}">
                         FAQ
                     </a>
                 </li>

@@ -153,6 +153,7 @@ Route::prefix('/')->group(function () {
     Route::post('contact_us', [HomeController::class, 'contactUsSubmit'])->name('contact.us');
     Route::get('blog', [HomeController::class, 'blogList'])->name('blog.list');
     Route::get('blog-details/{slug}', [HomeController::class, 'blogDetails'])->name('blog.details');
+    Route::get('faq', [HomeController::class, 'faq'])->name('faq.list');
 
     // cart routes
     Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add_to_cart');

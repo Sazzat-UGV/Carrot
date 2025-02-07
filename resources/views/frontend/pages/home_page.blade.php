@@ -58,7 +58,7 @@
     </section>
 
     <!-- Category -->
-    <section class="section-popular margin-b-100 aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000">
+    <section class="section-popular  aos-init aos-animate" data-aos="fade-up" data-aos-duration="2000">
         <div class="container">
             <div class="row">
                 <div class="title-2 mb-30 d-none">
@@ -105,7 +105,7 @@
     </section>
 
     <!-- today deal products -->
-    <section class="section-popular-products padding-tb-100" data-aos="fade-up" data-aos-duration="2000"
+    <section class="section-popular-products padding-t-100" data-aos="fade-up" data-aos-duration="2000"
         data-aos-delay="400">
         <div class="container">
             <div class="row">
@@ -205,7 +205,7 @@
     </section>
 
     <!-- featured products -->
-    <section class="section-popular-products padding-tb-100" data-aos="fade-up" data-aos-duration="2000"
+    <section class="section-popular-products padding-t-100" data-aos="fade-up" data-aos-duration="2000"
         data-aos-delay="400">
         <div class="container">
             <div class="row">
@@ -307,7 +307,7 @@
     </section>
 
     <!-- Services -->
-    <section class="section-services padding-b-100">
+    <section class="section-services padding-tb-100">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">

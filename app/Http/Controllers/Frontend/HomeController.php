@@ -8,6 +8,7 @@ use App\Models\Brand;
 use App\Models\Campaign;
 use App\Models\CampaignProduct;
 use App\Models\Category;
+use App\Models\Faq;
 use App\Models\Newsletter;
 use App\Models\Page;
 use App\Models\Product;
@@ -230,5 +231,11 @@ class HomeController extends Controller
     {
         $blog = Blog::where('slug', $slug)->first();
         return view('frontend.pages.blog.show', compact('blog'));
+    }
+
+    public function faq()
+    {
+        $faqs = Faq::latest('id')->get();
+        return view('frontend.pages.faq', compact('faqs'));
     }
 }

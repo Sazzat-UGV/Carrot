@@ -1,4 +1,9 @@
-    <!-- Footer -->
+@php
+    $campaign = App\Models\Campaign::where('status', 1)
+        ->whereDate('start_date', '<=', now())
+        ->whereDate('end_date', '>=', now())
+        ->first();
+@endphp
     <footer class="footer padding-t-100 bg-off-white">
         <div class="container">
             <div class="row footer-top padding-b-100">
@@ -38,12 +43,12 @@
                             <span class="cr-heading-res"></span>
                         </h4>
                         <ul class="cr-footer-links cr-footer-dropdown">
-                            <li><a href="about.html">About Us****</a></li>
+                            <li><a href="{{ route('campaign.products',$campaign->id) }}">Campaign</a></li>
                             <li><a href="{{ route('track.order') }}">Track Order</a></li>
                             <li><a href="{{ route('privacyPolicy') }}">Privacy Policy</a></li>
                             <li><a href="{{ route('TermsCondition') }}">Terms & Conditions</a></li>
                             <li><a href="{{ route('contact.us') }}">Contact Us</a></li>
-                            <li><a href="faq.html">Support Center**</a></li>
+                            <li><a href="{{ route('faq.list') }}">Support Center</a></li>
                         </ul>
                     </div>
                 </div>
