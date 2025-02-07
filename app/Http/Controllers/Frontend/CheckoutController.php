@@ -1,16 +1,18 @@
 <?php
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use App\Mail\InvoiceMail;
-use App\Models\Coupon;
+use App\Models\User;
 use App\Models\Order;
+use App\Models\Coupon;
+use App\Mail\InvoiceMail;
 use App\Models\OrderDetail;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Notifications\OrderNotification;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CheckoutController extends Controller
 {
@@ -110,6 +112,13 @@ class CheckoutController extends Controller
         if (Session::has('coupon')) {
             Session::forget('coupon');
         }
+        $data = [
+            'image'   => Auth::user()->image,
+            'type'    => 'order',
+            'message'=>'A new order has been placed. Please review and process it.'
+        ];
+        $admin = User::findOrFail(1);
+        $admin->notify(new OrderNotification($data));
         return redirect()->route('homePage')->with('success', 'Order placed successfully.');
     }
 }

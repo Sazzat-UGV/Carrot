@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\ReplyTicket;
 use App\Models\SupportTicket;
 use App\Models\User;
+use App\Notifications\SupportTicketNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -127,6 +128,13 @@ class DashboardController extends Controller
         }
         $support_ticket->save();
 
+        $data = [
+            'image'   => Auth::user()->image,
+            'message' => $request->message,
+            'type'    => 'support_ticket',
+        ];
+        $admin = User::findOrFail(1);
+        $admin->notify(new SupportTicketNotification($data));
         return redirect()->route('open.ticket')->with('success', 'Ticket submitted successfully.');
     }
 
