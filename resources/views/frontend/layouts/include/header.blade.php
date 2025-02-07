@@ -3,6 +3,7 @@
         ->whereDate('start_date', '<=', now())
         ->whereDate('end_date', '>=', now())
         ->first();
+    $categories = App\Models\Category::where('status', 1)->get();
 @endphp
 <header>
     <div class="container">
@@ -14,20 +15,12 @@
                         <img src="{{ asset('uploads/settings') }}/{{ $setting->site_logo }}" alt="logo"
                             class="dark-logo">
                     </a>
-                    <form class="cr-search">
-                        <input class="search-input" type="text" placeholder="Search For items...">
-                        @php
-                            $categories = App\Models\Category::where('status', 1)->get();
-                        @endphp
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>All Categories</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                        <a href="javascript:void(0)" class="search-btn">
+                    <form class="cr-search" action="{{ route('search') }}" method="GET">
+                        <input class="search-input" type="text" placeholder="Search For items..." name="search"
+                            value="{{ request('search') }}">
+                        <button type="submit" class="search-btn border-0">
                             <i class="ri-search-line"></i>
-                        </a>
+                        </button>
                     </form>
                     <div class="cr-right-bar">
                         <ul class="navbar-nav">

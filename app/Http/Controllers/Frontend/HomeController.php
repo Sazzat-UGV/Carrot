@@ -238,4 +238,39 @@ class HomeController extends Controller
         $faqs = Faq::latest('id')->get();
         return view('frontend.pages.faq', compact('faqs'));
     }
+
+    public function search(Request $request)
+    {
+        if (! $request->search) {
+            return back();
+        }
+        $categories = Category::withCount('products')->where('status', 1)->get();
+        $sizes      = Product::pluck('size')
+            ->map(function ($size) {
+                $decoded = json_decode($size, true);
+                return $decoded;
+            })
+            ->flatten(1)
+            ->pluck('value')
+            ->unique()
+            ->values();
+
+        $colors = Product::pluck('color')
+            ->map(function ($color) {
+                $decoded = json_decode($color, true);
+                return $decoded;
+            })
+            ->flatten(1)
+            ->pluck('value')
+            ->unique()
+            ->values();
+
+        $products = Product::with('category:id,name,slug')->withCount('reviews')->withSum('reviews', 'rating')->where('status', 1);
+        if ($request->search) {
+            $products = $products->where('name', 'LIKE', '%' . $request->search . '%');
+        }
+        $totalProducts = $products->count();
+        $products      = $products->latest('id')->paginate(20);
+        return view('frontend.pages.products', compact('products', 'categories', 'sizes', 'colors', 'totalProducts'));
+    }
 }

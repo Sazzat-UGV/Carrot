@@ -18,7 +18,7 @@
                                 <div class="cr-checkbox">
                                     @foreach ($categories as $category)
                                         <div class="checkbox-group">
-                                            <input type="checkbox" id="category-{{ $category->id }}" name="category_id[]"
+                                            <input type="checkbox" id="category-{{ $category->id }}" name="category_id[]" class="category_select"
                                                 value="{{ $category->id }}"
                                                 @if (is_array(request('category_id')) && in_array($category->id, request('category_id'))) checked @endif>
                                             <label for="category-{{ $category->id }}">
@@ -36,7 +36,7 @@
                                         @foreach ($colors as $color)
                                             <div class="checkbox-group">
                                                 <input type="checkbox" id="{{ $color }}" name="color[]"
-                                                    value="{{ $color }}"
+                                                    value="{{ $color }}" class="color_select"
                                                     @if (is_array(request('color')) && in_array($color, request('color'))) checked @endif>
                                                 <label for="{{ $color }}">{{ $color }}</label>
                                             </div>
@@ -51,7 +51,7 @@
                                         @foreach ($sizes as $size)
                                             <div class="checkbox-group">
                                                 <input type="checkbox" id="{{ $size }}" name="size[]"
-                                                    value="{{ $size }}"
+                                                    value="{{ $size }}" class="size_select"
                                                     @if (is_array(request('size')) && in_array($size, request('size'))) checked @endif>
                                                 <label for="{{ $size }}">{{ $size }}</label>
                                             </div>
@@ -60,7 +60,7 @@
                                 </div>
                             @endif
                             <div class="cr-shop-tags">
-                                <button type="submit" class="cr-button">Filter</button>
+                                <button type="submit" class="cr-button" id="submit_button">Filter</button>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,8 @@
                                     </div>
                                     <div class="cr-select">
                                         <label>Sort By :</label>
-                                        <select class="form-select" aria-label="Default select example" name="sort_by">
+                                        <select class="form-select sort_by" aria-label="Default select example"
+                                            name="sort_by">
                                             <option value="name_asc" @if (request('sort_by') == 'name_asc') selected @endif>Name:
                                                 A to Z</option>
                                             <option value="name_desc" @if (request('sort_by') == 'name_desc') selected @endif>
@@ -180,4 +181,14 @@
 @endsection
 
 @push('script')
+    <script>
+        $(document).ready(function() {
+            $('.sort_by').on('change', function() {
+                $('#submit_button').click()
+            })
+            $('.category_select, .size_select, .color_select').on('click', function() {
+                $('#submit_button').click()
+            })
+        })
+    </script>
 @endpush
