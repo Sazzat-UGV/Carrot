@@ -30,6 +30,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\SocialLoginController;
 use App\Http\Controllers\Frontend\TrackOrder;
 use App\Http\Controllers\Frontend\WishlistController;
@@ -168,6 +169,9 @@ Route::prefix('/')->group(function () {
     // track order
     Route::get('track',[TrackOrder::class,'trackOrderPage'])->name('track.order');
     Route::post('track',[TrackOrder::class,'trackOrder'])->name('track.order');
+
+    //notification
+    Route::get('mark-all-notification',[NotificationController::class,'markAll'])->name('mark.all');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -34,6 +34,20 @@
                 }
             });
         });
+
+        $('.mark_all_notification').on('click', function() {
+            var url = '{{ route('mark.all') }}'
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(response) {
+                    console.error(response);
+                },
+                error: function(err) {
+                    console.error(err);
+                }
+            });
+        });
     });
 </script>
 @stack('script')

@@ -12,79 +12,78 @@
                 $unreadNotificationsCount = Auth::user()->notifications()->whereNull('read_at')->count();
                 $notifications = Auth::user()->notifications;
             @endphp
-            @if ($unreadNotificationsCount > 0)
-                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
-                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside" aria-expanded="false">
-                        <span class="position-relative">
-                            <i class="bx bx-bell bx-md"></i>
+            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-expanded="false">
+                    <span class="position-relative">
+                        <i class="bx bx-bell bx-md"></i>
+                        @if ($unreadNotificationsCount > 0)
+                            <span class="badge rounded-pill bg-danger badge-dot badge-notifications border"></span>
+                        @endif
+                    </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end p-0">
+                    <li class="dropdown-menu-header border-bottom">
+                        <div class="dropdown-header d-flex align-items-center py-3">
+                            <h6 class="mb-0 me-auto">Notification</h6>
                             @if ($unreadNotificationsCount > 0)
-                                <span class="badge rounded-pill bg-danger badge-dot badge-notifications border"></span>
+                                <div class="d-flex align-items-center h6 mb-0">
+                                    <span class="badge bg-label-primary me-2">{{ $unreadNotificationsCount }}
+                                        New</span>
+                                    <a href="javascript:void(0)"
+                                        class="dropdown-notifications-all p-2 mark_all_notification"
+                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read"><i
+                                            class="bx bx-envelope-open text-heading"></i></a>
+                                </div>
                             @endif
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end p-0">
-                        <li class="dropdown-menu-header border-bottom">
-                            <div class="dropdown-header d-flex align-items-center py-3">
-                                <h6 class="mb-0 me-auto">Notification</h6>
-                                @if ($unreadNotificationsCount > 0)
-                                    <div class="d-flex align-items-center h6 mb-0">
-                                        <span class="badge bg-label-primary me-2">{{ $unreadNotificationsCount }}
-                                            New</span>
-                                        <a href="javascript:void(0)" class="dropdown-notifications-all p-2"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read"><i
-                                                class="bx bx-envelope-open text-heading"></i></a>
-                                    </div>
+                        </div>
+                    </li>
+                    <li class="dropdown-notifications-list scrollable-container">
+                        <ul class="list-group list-group-flush">
+                            @foreach ($notifications->take(10) as $notification)
+                                @if ($notification->data['type'] == 'order')
+                                    <a href="{{ route('admin.order.list') }}" class="d-flex">
+                                    @elseif ($notification->data['type'] == 'support_ticket')
+                                        <a href="{{ route('admin.all.ticket') }}" class="d-flex">
                                 @endif
-                            </div>
-                        </li>
-                        <li class="dropdown-notifications-list scrollable-container">
-                            <ul class="list-group list-group-flush">
-                                @foreach ($notifications as $notification)
-                                    @if ($notification->data['type'] == 'order')
-                                        <a href="{{ route('admin.order.list') }}" class="d-flex">
-                                        @elseif ($notification->data['type'] == 'support_ticket')
-                                            <a href="{{ route('admin.all.ticket') }}" class="d-flex">
-                                    @endif
-                                    <li class="list-group-item list-group-item-action dropdown-notifications-item">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar">
-                                                    <img src="{{ $notification->data['image'] }}" alt
-                                                        class="rounded-circle">
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <h6 class="small mb-0">{{ $notification->data['title'] }}</h6>
-                                                <small
-                                                    class="mb-1 d-block text-body">{{ Str::limit($notification->data['message'], 50, '...') }}</small>
-                                                <small
-                                                    class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
-                                            </div>
-                                            <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
-                                                        class="badge badge-dot"></span></a>
-                                                <a href="javascript:void(0)"
-                                                    class="dropdown-notifications-archive"><span
-                                                        class="bx bx-x"></span></a>
+                                <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0 me-3">
+                                            <div class="avatar">
+                                                <img src="{{ $notification->data['image'] }}" alt
+                                                    class="rounded-circle">
                                             </div>
                                         </div>
-                                    </li>
-                                    </a>
-                                @endforeach
-                            </ul>
-                        </li>
-                        <li class="border-top">
-                            <div class="d-grid p-4">
-                                <a class="btn btn-primary btn-sm d-flex" href="javascript:void(0);">
-                                    <small class="align-middle">View all notifications</small>
+                                        <div class="flex-grow-1">
+                                            <h6 class="small mb-0">{{ $notification->data['title'] }}</h6>
+                                            <small
+                                                class="mb-1 d-block text-body">{{ Str::limit($notification->data['message'], 50, '...') }}</small>
+                                            <small
+                                                class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                        </div>
+                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                            @if ($notification->read_at == null)
+                                                <a href="javascript:void(0)" class="dropdown-notifications-read"><span
+                                                        class="badge badge-dot"></span></a>
+                                            @endif
+                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
+                                                    class="bx bx-x"></span></a>
+                                        </div>
+                                    </div>
+                                </li>
                                 </a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-            @endif
-
+                            @endforeach
+                        </ul>
+                    </li>
+                    <li class="border-top">
+                        <div class="d-grid p-4">
+                            <a class="btn btn-primary btn-sm d-flex" href="javascript:void(0);">
+                                <small class="align-middle">View all notifications</small>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
