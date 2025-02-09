@@ -41,11 +41,6 @@
                     <li class="dropdown-notifications-list scrollable-container">
                         <ul class="list-group list-group-flush">
                             @foreach ($notifications->take(10) as $notification)
-                                @if ($notification->data['type'] == 'order')
-                                    <a href="{{ route('admin.order.list') }}" class="d-flex">
-                                    @elseif ($notification->data['type'] == 'support_ticket')
-                                        <a href="{{ route('admin.all.ticket') }}" class="d-flex">
-                                @endif
                                 <li class="list-group-item list-group-item-action dropdown-notifications-item">
                                     <div class="d-flex">
                                         <div class="flex-shrink-0 me-3">
@@ -55,7 +50,15 @@
                                             </div>
                                         </div>
                                         <div class="flex-grow-1">
+                                            @if ($notification->data['type'] == 'order')
+                                                <a href="{{ route('mark.single', $notification->id) }}?redirect={{ urlencode(route('admin.order.list')) }}"
+                                                    class="d-flex">
+                                                @elseif ($notification->data['type'] == 'support_ticket')
+                                                    <a href="{{ route('mark.single', $notification->id) }}?redirect={{ urlencode(route('admin.all.ticket')) }}"
+                                                        class="d-flex">
+                                            @endif
                                             <h6 class="small mb-0">{{ $notification->data['title'] }}</h6>
+                                            </a>
                                             <small
                                                 class="mb-1 d-block text-body">{{ Str::limit($notification->data['message'], 50, '...') }}</small>
                                             <small
@@ -66,18 +69,18 @@
                                                 <a href="javascript:void(0)" class="dropdown-notifications-read"><span
                                                         class="badge badge-dot"></span></a>
                                             @endif
-                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span
+                                            <a href="{{ route('delete.notification', $notification->id) }}"
+                                                class="dropdown-notifications-archive delete_notification"><span
                                                     class="bx bx-x"></span></a>
                                         </div>
                                     </div>
                                 </li>
-                                </a>
                             @endforeach
                         </ul>
                     </li>
                     <li class="border-top">
                         <div class="d-grid p-4">
-                            <a class="btn btn-primary btn-sm d-flex" href="javascript:void(0);">
+                            <a class="btn btn-primary btn-sm d-flex" href="{{ route('all.notification') }}">
                                 <small class="align-middle">View all notifications</small>
                             </a>
                         </div>

@@ -167,11 +167,14 @@ Route::prefix('/')->group(function () {
     Route::get('update-item-qty/{qty}/{rowId}', [CartController::class, 'updateItemQty'])->name('update_item_qty');
 
     // track order
-    Route::get('track',[TrackOrder::class,'trackOrderPage'])->name('track.order');
-    Route::post('track',[TrackOrder::class,'trackOrder'])->name('track.order');
+    Route::get('track', [TrackOrder::class, 'trackOrderPage'])->name('track.order');
+    Route::post('track', [TrackOrder::class, 'trackOrder'])->name('track.order');
 
     //notification
-    Route::get('mark-all-notification',[NotificationController::class,'markAll'])->name('mark.all');
+    Route::get('mark-all-notification', [NotificationController::class, 'markAll'])->name('mark.all');
+    Route::get('mark-single-notification/{notification_id}', [NotificationController::class, 'markSingle'])->name('mark.single');
+    Route::get('delete-notification/{notification_id}', [NotificationController::class, 'delete'])->name('delete.notification');
+    Route::get('all-notification', [NotificationController::class, 'allNotification'])->name('all.notification');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

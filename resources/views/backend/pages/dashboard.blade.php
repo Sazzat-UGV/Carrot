@@ -13,22 +13,225 @@
                         <div class="card-body">
                             <div class="d-flex align-items-start justify-content-between">
                                 <div class="content-left">
-                                    <span class="text-heading">Session</span>
+                                    <span class="text-heading">Category</span>
                                     <div class="d-flex align-items-center my-1">
-                                        <h4 class="mb-0 me-2">21,459</h4>
-                                        <p class="text-success mb-0">(+29%)</p>
+                                        <h4 class="mb-0 me-2">{{ $total_category }}</h4>
+                                        <p class="text-success mb-0">({{ $total_active_category }})</p>
                                     </div>
-                                    <small class="mb-0">Total Users</small>
                                 </div>
                                 <div class="avatar">
                                     <span class="avatar-initial rounded bg-label-primary">
-                                        <i class="bx bx-group bx-lg"></i>
+                                        <i class="bx bx-category-alt bx-lg"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Subcategory</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_subcategory }}</h4>
+                                        <p class="text-success mb-0">({{ $total_active_subcategory }})</p>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-secondary">
+                                        <i class="bx bx-category-alt bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Brand</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_brand }}</h4>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-info">
+                                        <i class="bx bxs-category-alt bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Warehouse</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_warehouse }}</h4>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-warning">
+                                        <i class="bx bx-buildings bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Active Coupon</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $active_coupon }}</h4>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-danger">
+                                        <i class="bx bxs-coupon bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Pickup Point</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_pickup_point }}</h4>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-success">
+                                        <i class="bx bxs-truck bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Product</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_product }}</h4>
+                                        <p class="text-success mb-0">({{ $total_active_product }})</p>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-dark">
+                                        <i class="bx  bx-shopping-bag bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Campaign</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_campaign }}</h4>
+                                        <p class="text-success mb-0">({{ $total_active_campaign }})</p>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-primary">
+                                        <i class="bx bx-list-check bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Blog</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_blog }}</h4>
+                                        <p class="text-success mb-0">({{ $total_active_blog }})</p>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-secondary">
+                                        <i class="bx bxl-blogger bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">User</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_user }}</h4>
+                                        <p class="text-success mb-0">({{ $total_active_user }})</p>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-info">
+                                        <i class="bx bx-user bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start justify-content-between">
+                                <div class="content-left">
+                                    <span class="text-heading">Order</span>
+                                    <div class="d-flex align-items-center my-1">
+                                        <h4 class="mb-0 me-2">{{ $total_order }}</h4>
+                                    </div>
+                                </div>
+                                <div class="avatar">
+                                    <span class="avatar-initial rounded bg-label-warning">
+                                        <i class="bx bx-list-ol bx-lg"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
                 <div class="col-sm-6 col-xl-3">
                     <div class="card">
                         <div class="card-body">

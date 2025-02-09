@@ -48,6 +48,20 @@
                 }
             });
         });
+        $('.delete_notification').on('click', function(event) {
+            event.preventDefault();
+            var url = $(this).attr('href');
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(response) {
+                    console.log(response);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
     });
 </script>
 @stack('script')
