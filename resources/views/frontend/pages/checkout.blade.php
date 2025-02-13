@@ -135,8 +135,8 @@
                                     </span>
                                     <span class="cr-pay-option">
                                         <span>
-                                            <input type="radio" id="pay2" name="payment_method" value="SSLCOMMERZ">
-                                            <label for="pay2">SSLCOMMERZ</label>
+                                            <input type="radio" id="pay2" name="payment_method" value="Stripe">
+                                            <label for="pay2">Stripe</label>
                                         </span>
                                     </span>
                                     <span class="cr-pay-option">
