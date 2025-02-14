@@ -194,6 +194,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('place-order', [CheckoutController::class, 'placeOrder'])->name('place_order');
     Route::get('stripe-success', [CheckoutController::class, 'Stripesuccess'])->name('stripe_success');
     Route::get('stripe-cancel', [CheckoutController::class, 'Stripecancel'])->name('stripe_cancel');
+    Route::get('paypal-success', [CheckoutController::class, 'paypalSuccess'])->name('paypal_success');
+Route::get('paypal-cancel', [CheckoutController::class, 'paypalCancel'])->name('paypal_cancel');
 
     //support ticket
     Route::get('open-ticket', [FrontendDashboardController::class, 'allTicket'])->name('open.ticket');

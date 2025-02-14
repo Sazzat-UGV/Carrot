@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class CheckoutController extends Controller
 {
@@ -176,6 +177,46 @@ class CheckoutController extends Controller
                 session()->put('cart', $cart_content);
                 return redirect($response->url);
             } else {
+                return redirect()->route('stripe_cancel');
+            }
+        }
+        if ($request->payment_method == "PayPal") {
+            if (Session::has('coupon')) {
+                $tax            = Cart::tax();
+                $discountAmount = Session::get('coupon')['after_discount'];
+                $total_amount   = ($tax + $discountAmount) * 100;
+            } else {
+                $total_amount = (float) Cart::total() * 100;
+            }
+
+            $provider = new PayPalClient;
+            $provider->setApiCredentials(config('paypal'));
+            $paypalToken = $provider->getAccessToken();
+            $response    = $provider->createOrder([
+                "intent"              => "CAPTURE",
+                "application_context" => [
+                    "return_url" => route('paypal_success'),
+                    "cancel_url" => route('paypal_cancel'),
+                ],
+                "purchase_units"      => [
+                    [
+                        "amount" => [
+                            "currency_code" => "USD",
+                            "value"         => $total_amount,
+                        ],
+                    ],
+                ],
+            ]);
+            //dd($response);
+            if (isset($response['id']) && $response['id'] != null) {
+                foreach ($response['links'] as $link) {
+                    if ($link['rel'] === 'approve') {
+                        session()->put('product_name', $request->product_name);
+                        session()->put('quantity', $request->quantity);
+                        return redirect()->away($link['href']);
+                    }
+                }
+            } else {
                 return redirect()->route('cancel');
             }
         }
@@ -258,6 +299,44 @@ class CheckoutController extends Controller
     }
 
     public function Stripecancel()
+    {
+        Session::forget('coupon');
+        return redirect()->route('homePage')->with('success', 'Order is canceled.');
+    }
+
+    public function paypalSuccess(Request $request)
+    {
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $paypalToken = $provider->getAccessToken();
+        $response    = $provider->capturePaymentOrder($request->token);
+        //dd($response);
+        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+
+            // Insert data into database
+            $payment                 = new Payment;
+            $payment->payment_id     = $response['id'];
+            $payment->product_name   = session()->get('product_name');
+            $payment->quantity       = session()->get('quantity');
+            $payment->amount         = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
+            $payment->currency       = $response['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'];
+            $payment->payer_name     = $response['payer']['name']['given_name'];
+            $payment->payer_email    = $response['payer']['email_address'];
+            $payment->payment_status = $response['status'];
+            $payment->payment_method = "PayPal";
+            $payment->save();
+
+            return "Payment is successful";
+
+            unset($_SESSION['product_name']);
+            unset($_SESSION['quantity']);
+
+        } else {
+            return redirect()->route('cancel');
+        }
+    }
+
+    public function paypalCancel()
     {
         Session::forget('coupon');
         return redirect()->route('homePage')->with('success', 'Order is canceled.');
