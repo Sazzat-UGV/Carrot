@@ -125,33 +125,32 @@
                                 <div class="cr-checkout-pay">
                                     <div class="cr-pay-desc">Please select the preferred payment method to use on this
                                         order.</div>
-
-                                    <span class="cr-pay-option">
-                                        <span>
-                                            <input type="radio" id="pay1" name="payment_method"
-                                                value="Cash On Delivery" checked>
-                                            <label for="pay1">Cash On Delivery</label>
+                                    <div class="d-flex gap-2">
+                                        <span class="cr-pay-option">
+                                            <span>
+                                                <input type="radio" id="pay1" name="payment_method"
+                                                    value="Cash On Delivery" checked>
+                                                <label for="pay1">Cash On Delivery</label>
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span class="cr-pay-option">
-                                        <span>
-                                            <input type="radio" id="pay2" name="payment_method" value="Stripe">
-                                            <label for="pay2">Stripe</label>
+                                        <span class="cr-pay-option">
+                                            <span>
+                                                <input type="radio" id="pay2" name="payment_method" value="Stripe">
+                                                <label for="pay2">Stripe</label>
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span class="cr-pay-option">
-                                        <span>
-                                            <input type="radio" id="pay3" name="payment_method" value="PayPal">
-                                            <label for="pay3">PayPal</label>
+                                        <span class="cr-pay-option">
+                                            <span>
+                                                <input type="radio" id="pay3" name="payment_method" value="PayPal">
+                                                <label for="pay3">PayPal</label>
+                                            </span>
                                         </span>
-                                    </span>
+                                    </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
 
                     <div class="cr-sidebar-wrap cr-check-pay-img-wrap">
                         <div class="cr-sidebar-block">
@@ -183,7 +182,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Name<span class="text-danger">*</span></label>
                                                     <input type="text" name="name" placeholder="Enter name"
-                                                        value="{{ old('name',Auth::user()->name) }}"
+                                                        value="{{ old('name', Auth::user()->name) }}"
                                                         class="form-control @error('name')
                                                         is-invalid
                                                     @enderror">
@@ -195,7 +194,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Email<span class="text-danger">*</span></label>
                                                     <input type="email" name="email" placeholder="Enter email"
-                                                        value="{{ old('email',Auth::user()->email) }}"
+                                                        value="{{ old('email', Auth::user()->email) }}"
                                                         class="form-control @error('email')
                                                             is-invalid
                                                         @enderror">
@@ -206,7 +205,7 @@
                                                 <span class="cr-bill-wrap mb-3">
                                                     <label>Address<span class="text-danger">*</span></label>
                                                     <input type="text" name="address" placeholder="Enter address"
-                                                        value="{{ old('address',Auth::user()->address) }}"
+                                                        value="{{ old('address', Auth::user()->address) }}"
                                                         class="form-control @error('address')
                                                                 is-invalid
                                                             @enderror">
@@ -218,7 +217,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>City<span class="text-danger">*</span></label>
                                                     <input type="text" name="city" placeholder="Enter city"
-                                                        value="{{ old('city',Auth::user()->city) }}"
+                                                        value="{{ old('city', Auth::user()->city) }}"
                                                         class="form-control @error('city')
                                                                 is-invalid
                                                             @enderror">
@@ -230,7 +229,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half  mb-3">
                                                     <label>Post Code<span class="text-danger">*</span></label>
                                                     <input type="text" name="postalcode"
-                                                        value="{{ old('postalcode',Auth::user()->postalcode) }}"
+                                                        value="{{ old('postalcode', Auth::user()->postalcode) }}"
                                                         class="form-control @error('postalcode')
                                                                 is-invalid
                                                             @enderror"
@@ -243,7 +242,7 @@
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Country<span class="text-danger">*</span></label>
                                                     <input type="text" name="country" placeholder="Enter country"
-                                                        value="{{ old('country',Auth::user()->country ) }}"
+                                                        value="{{ old('country', Auth::user()->country) }}"
                                                         class="form-control @error('country')
                                                         is-invalid
                                                     @enderror">
@@ -254,7 +253,8 @@
                                                 </span>
                                                 <span class="cr-bill-wrap cr-bill-half mb-3">
                                                     <label>Region State</label>
-                                                    <input type="text" name="region_state" value="{{ old('region_state',Auth::user()->region_state) }}"
+                                                    <input type="text" name="region_state"
+                                                        value="{{ old('region_state', Auth::user()->region_state) }}"
                                                         class="form-control @error('region_state')
                                                         is-invalid
                                                     @enderror"
