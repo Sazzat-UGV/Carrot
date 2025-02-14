@@ -323,7 +323,12 @@
                                         <h6 class="fw-normal mb-0">{{ $transaction->status }}</h6>
                                     </div>
                                     <div class="user-progress d-flex align-items-center gap-2">
-                                        <h6 class="fw-normal mb-0">{{ $transaction->total }}</h6>
+                                        @if ($transaction->coupon_code)
+                                            <h6 class="fw-normal mb-0">
+                                                {{ $transaction->after_discount + $transaction->tax }}</h6>
+                                        @else
+                                            <h6 class="fw-normal mb-0">{{ $transaction->total }}</h6>
+                                        @endif
                                         @if ($setting->currency == '$')
                                             <span class="text-muted">USD</span>
                                         @elseif ($setting->currency == '৳')
@@ -361,7 +366,7 @@
                             <tr>
                                 <th>Product</th>
                                 <th>Category</th>
-                                <th>Payment</th>
+                                <th>Price</th>
                                 <th>Order Status</th>
                             </tr>
                         </thead>
@@ -381,7 +386,7 @@
                                     <td>{{ $history->product->category->name }}</td>
                                     <td>
                                         <div class="text-body"><span
-                                                class="text-primary fw-medium">{{ $setting->currency }}{{ $history->single_price }}</span>/{{ $history->product->selling_price }}
+                                                class="text-primary fw-medium">{{ $setting->currency }}{{ $history->single_price }}</span>
                                         </div>
                                     </td>
                                     <td>

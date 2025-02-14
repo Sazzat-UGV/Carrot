@@ -15,6 +15,7 @@ use App\Models\SubCategory;
 use App\Models\SupportTicket;
 use App\Models\User;
 use App\Models\Warehouse;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -43,9 +44,9 @@ class DashboardController extends Controller
         $total_order              = Order::count();
         $transactions             = Order::latest('id')->take(6)->get();
         $order_histories          = OrderDetail::with('order', 'product:id,name,category_id,thumbnail,brand_id,selling_price', 'product.category:id,icon,name', 'product.brand:id,name')->latest('id')->take(7)->get();
-        $cash_on_delivery_chart   = Order::where('payment_type', 'Cash On Delivery')->sum('total');
-        $stripe_chart             = Order::where('payment_type', 'Stripe')->sum('total');
-        $paypal_chart             = Order::where('payment_type', 'PayPal')->sum('total');
+        $cash_on_delivery_chart   = Order::where('payment_type', 'Cash On Delivery')->whereNull('coupon_code')->sum('total') + Order::where('payment_type', 'Cash On Delivery')->whereNotNull('coupon_code')->sum(DB::raw('after_discount + tax'));
+        $stripe_chart             = Order::where('payment_type', 'Stripe')->whereNull('coupon_code')->sum('total') + Order::where('payment_type', 'Stripe')->whereNotNull('coupon_code')->sum(DB::raw('after_discount + tax'));
+        $paypal_chart             = Order::where('payment_type', 'PayPal')->whereNull('coupon_code')->sum('total') + Order::where('payment_type', 'PayPal')->whereNotNull('coupon_code')->sum(DB::raw('after_discount + tax'));
         return view('backend.pages.dashboard', compact([
             'total_category',
             'total_active_category',

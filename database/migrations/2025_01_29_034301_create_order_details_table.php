@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('color')->nullable();
             $table->string('size')->nullable();
             $table->string('qty')->nullable();
-            $table->string('single_price')->nullable();
-            $table->string('subtotal_price')->nullable();
+            $table->decimal('single_price')->nullable();
+            $table->decimal('subtotal_price')->nullable();
             $table->timestamps();
         });
     }

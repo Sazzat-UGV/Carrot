@@ -184,9 +184,9 @@ class CheckoutController extends Controller
             if (Session::has('coupon')) {
                 $tax            = Cart::tax();
                 $discountAmount = Session::get('coupon')['after_discount'];
-                $total_amount   = ($tax + $discountAmount) * 100;
+                $total_amount   = ($tax + $discountAmount);
             } else {
-                $total_amount = (float) Cart::total() * 100;
+                $total_amount = (float) Cart::total();
             }
 
             $provider = new PayPalClient;
@@ -207,17 +207,32 @@ class CheckoutController extends Controller
                     ],
                 ],
             ]);
-            //dd($response);
             if (isset($response['id']) && $response['id'] != null) {
                 foreach ($response['links'] as $link) {
                     if ($link['rel'] === 'approve') {
-                        session()->put('product_name', $request->product_name);
-                        session()->put('quantity', $request->quantity);
+                        session()->put('name', $request->name);
+                        session()->put('email', $request->email);
+                        session()->put('address', $request->address);
+                        session()->put('city', $request->city);
+                        session()->put('post', $request->postalcode);
+                        session()->put('country', $request->country);
+                        session()->put('region_state', $request->region_state);
+                        if (Session::has('coupon')) {
+                            session()->put('subtotal', Cart::subtotal());
+                            session()->put('coupon_code', Session::get('coupon')['name']);
+                            session()->put('coupon_discount', Session::get('coupon')['discount']);
+                            session()->put('after_discount', Session::get('coupon')['after_discount']);
+                        } else {
+                            session()->put('subtotal', Cart::subtotal());
+                        }
+                        session()->put('total', Cart::total());
+                        session()->put('tax', Cart::tax());
+                        session()->put('cart', $cart_content);
                         return redirect()->away($link['href']);
                     }
                 }
             } else {
-                return redirect()->route('cancel');
+                return redirect()->route('paypal_cancel');
             }
         }
     }
@@ -277,7 +292,6 @@ class CheckoutController extends Controller
             ];
             $admin = User::findOrFail(1);
             $admin->notify(new OrderNotification($data));
-            return redirect()->route('homePage')->with('success', 'Order placed successfully.');
             session()->forget('stripe_session_id');
             session()->forget('name');
             session()->forget('email');
@@ -293,7 +307,10 @@ class CheckoutController extends Controller
             session()->forget('total');
             session()->forget('tax');
             session()->forget('cart');
+            Session::forget('coupon');
+            return redirect()->route('homePage')->with('success', 'Order placed successfully.');
         } else {
+            Session::forget('coupon');
             return redirect()->route('stripe_cancel');
         }
     }
@@ -310,29 +327,75 @@ class CheckoutController extends Controller
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
         $response    = $provider->capturePaymentOrder($request->token);
-        //dd($response);
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-
-            // Insert data into database
-            $payment                 = new Payment;
-            $payment->payment_id     = $response['id'];
-            $payment->product_name   = session()->get('product_name');
-            $payment->quantity       = session()->get('quantity');
-            $payment->amount         = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
-            $payment->currency       = $response['purchase_units'][0]['payments']['captures'][0]['amount']['currency_code'];
-            $payment->payer_name     = $response['payer']['name']['given_name'];
-            $payment->payer_email    = $response['payer']['email_address'];
-            $payment->payment_status = $response['status'];
-            $payment->payment_method = "PayPal";
-            $payment->save();
-
-            return "Payment is successful";
-
-            unset($_SESSION['product_name']);
-            unset($_SESSION['quantity']);
-
+            $order                  = new Order();
+            $order->user_id         = Auth::user()->id;
+            $order->name            = session()->get('name');
+            $order->email           = session()->get('email');
+            $order->address         = session()->get('address');
+            $order->city            = session()->get('city');
+            $order->post            = session()->get('post');
+            $order->country         = session()->get('country');
+            $order->region_state    = session()->get('region_state');
+            $order->subtotal        = session()->get('subtotal');
+            $order->coupon_code     = session()->get('coupon_code');
+            $order->coupon_discount = session()->get('coupon_discount');
+            $order->after_discount  = session()->get('after_discount');
+            $order->total           = session()->get('total');
+            $order->payment_type    = 'PayPal';
+            $order->tax             = session()->get('tax');
+            $order->shipping_charge = 0;
+            $order->status          = 'Pending';
+            $order->order_id        = rand(100000, 900000);
+            $order->save();
+            foreach (session()->get('cart') as $row) {
+                $order_details                 = new OrderDetail();
+                $order_details->order_id       = $order->id;
+                $order_details->product_id     = $row->id;
+                $order_details->product_name   = $row->name;
+                $order_details->color          = $row->options->color;
+                $order_details->size           = $row->options->size;
+                $order_details->qty            = $row->qty;
+                $order_details->single_price   = $row->price;
+                $order_details->subtotal_price = $row->price * $row->qty;
+                $order_details->save();
+            }
+            $subject      = 'Order Invoice';
+            $cart_content = session()->get('cart');
+            $subtotal     = session()->get('subtotal');
+            $cart_tax     = session()->get('tax');
+            $cart_total   = session()->get('total');
+            Mail::to(session()->get('email'))->send(new InvoiceMail($order, $cart_content, $subject, $subtotal, $cart_tax, $cart_total));
+            Cart::destroy();
+            if (Session::has('coupon')) {
+                Session::forget('coupon');
+            }
+            $data = [
+                'image'   => Auth::user()->image,
+                'type'    => 'order',
+                'message' => 'A new order has been placed. Please review and process it.',
+            ];
+            $admin = User::findOrFail(1);
+            $admin->notify(new OrderNotification($data));
+            session()->forget('name');
+            session()->forget('email');
+            session()->forget('address');
+            session()->forget('city');
+            session()->forget('post');
+            session()->forget('country');
+            session()->forget('region_state');
+            session()->forget('subtotal');
+            session()->forget('coupon_code');
+            session()->forget('coupon_discount');
+            session()->forget('after_discount');
+            session()->forget('total');
+            session()->forget('tax');
+            session()->forget('cart');
+            Session::forget('coupon');
+            return redirect()->route('homePage')->with('success', 'Order placed successfully.');
         } else {
-            return redirect()->route('cancel');
+            Session::forget('coupon');
+            return redirect()->route('paypal_cancel');
         }
     }
 

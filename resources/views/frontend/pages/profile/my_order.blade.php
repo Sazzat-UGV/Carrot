@@ -92,7 +92,10 @@
                                                                 <div class="col-md-6 mb-2"><b>Payment Type:</b>
                                                                     {{ $order->payment_type }}</div>
                                                                 <div class="col-md-6 mb-2"><b>Total:</b>
-                                                                    {{ $setting->currency }}{{ $order->total }}</div>
+                                                                    @if ($order->coupon_code){{ $setting->currency }}{{ $order->after_discount + $order->tax }}
+                                                                    @else
+                                                                    {{ $setting->currency }}{{ $order->total }}
+                                                                @endif</div>
                                                                 <div class="col-md-6 mb-2">
                                                                     @if ($order->status == 'Pending')
                                                                         <span

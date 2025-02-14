@@ -156,7 +156,11 @@
                                         <td class="wrap">{{ $order->name }}</td>
                                         <td class="wrap">{{ $order->email }}</td>
                                         <td class="wrap">{{ $setting->currency }}{{ $order->subtotal }}</td>
-                                        <td class="wrap">{{ $setting->currency }}{{ $order->total }}</td>
+                                        @if ($order->coupon_code)
+                                        <td class="wrap">{{ $setting->currency }}{{ $order->after_discount + $order->tax }}</td>
+                                            @else
+                                            <td class="wrap">{{ $setting->currency }}{{ $order->total }}</td>
+                                        @endif
                                         <td class="">{{ $order->payment_type }}</td>
                                         <td>
                                             <div class="dropdown">
@@ -239,7 +243,11 @@
                                                                     <div class="col-md-6 mb-2"><b>Payment Type:</b>
                                                                         {{ $order->payment_type }}</div>
                                                                     <div class="col-md-6 mb-2"><b>Total:</b>
-                                                                        {{ $setting->currency }}{{ $order->total }}</div>
+                                                                        @if ($order->coupon_code){{ $setting->currency }}{{ $order->after_discount + $order->tax }}
+                                                                            @else
+                                                                            {{ $setting->currency }}{{ $order->total }}
+                                                                        @endif
+                                                                        </div>
                                                                     <div class="col-md-6 mb-2">
                                                                         @if ($order->status == 'Pending')
                                                                             <span
