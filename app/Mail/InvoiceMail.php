@@ -15,12 +15,15 @@ class InvoiceMail extends Mailable
      * Create a new message instance.
      */
 
-    public $order, $cart_content,$subject;
-    public function __construct($order, $cart_content,$subject)
+    public $order, $cart_content,$subject,$subtotal,$cart_tax,$cart_total;
+    public function __construct($order, $cart_content,$subject,$subtotal,$cart_tax,$cart_total)
     {
         $this->order         = $order;
         $this->cart_content = $cart_content;
         $this->subject = $subject;
+        $this->subtotal = $subtotal;
+        $this->cart_tax = $cart_tax;
+        $this->cart_total = $cart_total;
     }
 
     /**

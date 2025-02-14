@@ -109,7 +109,7 @@
                         <td class="text-end">
                             <strong>Sub Total:</strong>
                         </td>
-                        <td class="col-sm-2 text-end">{{ $setting->currency }}{{ Cart::subtotal() }}</td>
+                        <td class="col-sm-2 text-end">{{ $setting->currency }}{{ $subtotal }}</td>
                     </tr>
                     @if (Session::has('coupon'))
                         <tr class="bg-light">
@@ -122,20 +122,20 @@
                     @endif
                     <tr class="bg-light">
                         <td class="text-end"><strong>Tax:(5%)</strong></td>
-                        <td class="col-sm-2 text-end">{{ $setting->currency }}{{ Cart::tax() }}</td>
+                        <td class="col-sm-2 text-end">{{ $setting->currency }}{{ $cart_tax }}</td>
                     </tr>
                     @if (Session::has('coupon'))
                         <tr class="bg-light">
                             <td class="text-end"><strong>Total:</strong></td>
                             <td class="col-sm-2 text-end">
-                                {{ $setting->currency }}{{ Session::get('coupon')['after_discount'] + Cart::tax() }}
+                                {{ $setting->currency }}{{ Session::get('coupon')['after_discount'] + $cart_tax }}
                             </td>
                         </tr>
                     @else
                         <tr class="bg-light">
                             <td class="text-end"><strong>Total:</strong></td>
                             <td class="col-sm-2 text-end">
-                                {{ $setting->currency }}{{ Cart::total() }}</td>
+                                {{ $setting->currency }}{{ $cart_total }}</td>
                         </tr>
                     @endif
 

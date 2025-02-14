@@ -88,7 +88,7 @@ class CheckoutController extends Controller
                 $order->subtotal = Cart::subtotal();
             }
             $order->total           = Cart::total();
-            $order->payment_type    = $request->payment_method;
+            $order->payment_type    = 'Cash On Delivery';
             $order->tax             = Cart::tax();
             $order->shipping_charge = 0;
             $order->status          = 'Pending';
@@ -106,8 +106,11 @@ class CheckoutController extends Controller
                 $order_details->subtotal_price = $row->price * $row->qty;
                 $order_details->save();
             }
-            $subject = 'Order Invoice';
-            Mail::to($request->email)->send(new InvoiceMail($order, $cart_content, $subject));
+            $subject    = 'Order Invoice';
+            $subtotal   = Cart::subtotal();
+            $cart_tax   = Cart::tax();
+            $cart_total = Cart::total();
+            Mail::to($request->email)->send(new InvoiceMail($order, $cart_content, $subject, $subtotal, $cart_tax, $cart_total));
             Cart::destroy();
             if (Session::has('coupon')) {
                 Session::forget('coupon');
@@ -128,7 +131,7 @@ class CheckoutController extends Controller
                 $discountAmount = Session::get('coupon')['after_discount'];
                 $total_amount   = ($tax + $discountAmount) * 100;
             } else {
-                $total_amount = Cart::total() * 100;
+                $total_amount = (float) Cart::total() * 100;
             }
             $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
 
@@ -153,8 +156,24 @@ class CheckoutController extends Controller
 
             if (isset($response->id) && $response->id != '') {
                 session()->put('stripe_session_id', $response->id);
+                session()->put('name', $request->name);
+                session()->put('email', $request->email);
+                session()->put('address', $request->address);
+                session()->put('city', $request->city);
+                session()->put('post', $request->postalcode);
+                session()->put('country', $request->country);
+                session()->put('region_state', $request->region_state);
+                if (Session::has('coupon')) {
+                    session()->put('subtotal', Cart::subtotal());
+                    session()->put('coupon_code', Session::get('coupon')['name']);
+                    session()->put('coupon_discount', Session::get('coupon')['discount']);
+                    session()->put('after_discount', Session::get('coupon')['after_discount']);
+                } else {
+                    session()->put('subtotal', Cart::subtotal());
+                }
+                session()->put('total', Cart::total());
+                session()->put('tax', Cart::tax());
                 session()->put('cart', $cart_content);
-                session()->put('total_amount', $total_amount);
                 return redirect($response->url);
             } else {
                 return redirect()->route('cancel');
@@ -162,32 +181,77 @@ class CheckoutController extends Controller
         }
     }
 
-    public function Stripesuccess()
+    public function Stripesuccess(Request $request)
     {
         if (isset($request->session_id)) {
-
             $stripe   = new \Stripe\StripeClient(config('stripe.stripe_sk'));
             $response = $stripe->checkout->sessions->retrieve($request->session_id);
-            //dd($response);
 
-            $payment                 = new Payment();
-            $payment->payment_id     = $response->id;
-            $payment->product_name   = session()->get('product_name');
-            $payment->quantity       = session()->get('quantity');
-            $payment->amount         = session()->get('price');
-            $payment->currency       = $response->currency;
-            $payment->customer_name  = $response->customer_details->name;
-            $payment->customer_email = $response->customer_details->email;
-            $payment->payment_status = $response->status;
-            $payment->payment_method = "Stripe";
-            $payment->save();
-
-            return "Payment is successful";
-
-            session()->forget('product_name');
-            session()->forget('quantity');
-            session()->forget('price');
-
+            $order                  = new Order();
+            $order->user_id         = Auth::user()->id;
+            $order->name            = session()->get('name');
+            $order->email           = session()->get('email');
+            $order->address         = session()->get('address');
+            $order->city            = session()->get('city');
+            $order->post            = session()->get('post');
+            $order->country         = session()->get('country');
+            $order->region_state    = session()->get('region_state');
+            $order->subtotal        = session()->get('subtotal');
+            $order->coupon_code     = session()->get('coupon_code');
+            $order->coupon_discount = session()->get('coupon_discount');
+            $order->after_discount  = session()->get('after_discount');
+            $order->total           = session()->get('total');
+            $order->payment_type    = 'Stripe';
+            $order->tax             = session()->get('tax');
+            $order->shipping_charge = 0;
+            $order->status          = 'Pending';
+            $order->order_id        = rand(100000, 900000);
+            $order->save();
+            foreach (session()->get('cart') as $row) {
+                $order_details                 = new OrderDetail();
+                $order_details->order_id       = $order->id;
+                $order_details->product_id     = $row->id;
+                $order_details->product_name   = $row->name;
+                $order_details->color          = $row->options->color;
+                $order_details->size           = $row->options->size;
+                $order_details->qty            = $row->qty;
+                $order_details->single_price   = $row->price;
+                $order_details->subtotal_price = $row->price * $row->qty;
+                $order_details->save();
+            }
+            $subject      = 'Order Invoice';
+            $cart_content = session()->get('cart');
+            $subtotal     = session()->get('subtotal');
+            $cart_tax     = session()->get('tax');
+            $cart_total   = session()->get('total');
+            Mail::to(session()->get('email'))->send(new InvoiceMail($order, $cart_content, $subject, $subtotal, $cart_tax, $cart_total));
+            Cart::destroy();
+            if (Session::has('coupon')) {
+                Session::forget('coupon');
+            }
+            $data = [
+                'image'   => Auth::user()->image,
+                'type'    => 'order',
+                'message' => 'A new order has been placed. Please review and process it.',
+            ];
+            $admin = User::findOrFail(1);
+            $admin->notify(new OrderNotification($data));
+            return redirect()->route('homePage')->with('success', 'Order placed successfully.');
+            session()->forget('stripe_session_id');
+            session()->forget('name');
+            session()->forget('email');
+            session()->forget('address');
+            session()->forget('city');
+            session()->forget('post');
+            session()->forget('country');
+            session()->forget('region_state');
+            session()->forget('subtotal');
+            session()->forget('coupon_code');
+            session()->forget('coupon_discount');
+            session()->forget('after_discount');
+            session()->forget('total');
+            session()->forget('tax');
+            session()->forget('cart');
         } else {
             return redirect()->route('stripe_cancel');
         }
@@ -196,6 +260,6 @@ class CheckoutController extends Controller
     public function Stripecancel()
     {
         Session::forget('coupon');
-        return redirect()->route('homePage')->with('success', 'Payment is canceled.');
+        return redirect()->route('homePage')->with('success', 'Order is canceled.');
     }
 }
