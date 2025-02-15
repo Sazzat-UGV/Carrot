@@ -173,7 +173,6 @@ class HomeController extends Controller
             ->whereIn('id', $campaign_product_ids)
             ->latest('id')
             ->paginate(30);
-
         foreach ($products as $product) {
             $campaignProduct = CampaignProduct::where('product_id', $product->id)
                 ->where('campaign_id', $campaign->id)
@@ -181,7 +180,6 @@ class HomeController extends Controller
             $product->discount_price = $product->selling_price;
             $product->selling_price  = $campaignProduct ? $campaignProduct->price : null;
         }
-
         return view('frontend.pages.campaign', compact('products', 'campaign'));
     }
     public function campaignProductDetail($campaign_id, $product_id)
