@@ -32,6 +32,7 @@ use App\Http\Controllers\Frontend\DashboardController as FrontendDashboardContro
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\SocialLoginController;
+use App\Http\Controllers\Frontend\SslcommerzController;
 use App\Http\Controllers\Frontend\TrackOrder;
 use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -46,13 +47,13 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::post('logout', [AuthenticationController::class, 'logout'])->name('logout');
         Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-        //profile routes
+        // profile routes
         Route::get('profile', [ProfileController::class, 'profilePage'])->name('profile.page');
         Route::post('profile', [ProfileController::class, 'profile'])->name('profile');
         Route::get('change-password', [ProfileController::class, 'changePasswordPage'])->name('changePassword.page');
         Route::post('change-password', [ProfileController::class, 'changePassword'])->name('changePassword');
 
-        //resource controller
+        // resource controller
         Route::resource('backup', BackupController::class);
         Route::resource('faq', FaqController::class);
         Route::resource('category', CategoryController::class);
@@ -69,7 +70,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         Route::get('review/show/{id}', [ReviewController::class, 'index'])->name('review_index');
         Route::delete('review/delete/{id}', [ReviewController::class, 'delete'])->name('review_delete');
-        //user controller
+        // user controller
         Route::get('user', [UserController::class, 'index'])->name('user.index');
         Route::get('user/details/{id}', [UserController::class, 'show'])->name('user.show');
         Route::delete('user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
@@ -131,7 +132,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('blog/status/{id}', [BlogController::class, 'changeStatus'])->name('blog.status');
         Route::post('order/status/{id}', [OrderController::class, 'changeStatus'])->name('order.status');
 
-        //support ticket route
+        // support ticket route
         Route::get('support-ticket', [SupportTicket::class, 'allTicket'])->name('all.ticket');
         Route::get('support-ticket-show/{id}', [SupportTicket::class, 'show'])->name('ticket.show');
         Route::post('support-ticket-reply/{id}', [SupportTicket::class, 'reply'])->name('ticket.reply');
@@ -170,7 +171,7 @@ Route::prefix('/')->group(function () {
     Route::get('track', [TrackOrder::class, 'trackOrderPage'])->name('track.order');
     Route::post('track', [TrackOrder::class, 'trackOrder'])->name('track.order');
 
-    //notification
+    // notification
     Route::get('mark-all-notification', [NotificationController::class, 'markAll'])->name('mark.all');
     Route::get('mark-single-notification/{notification_id}', [NotificationController::class, 'markSingle'])->name('mark.single');
     Route::get('delete-notification/{notification_id}', [NotificationController::class, 'delete'])->name('delete.notification');
@@ -192,12 +193,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('remove-coupon', [CheckoutController::class, 'removeCoupon'])->name('remove_coupon');
     Route::get('checkout', [CheckoutController::class, 'checkoutPage'])->name('checkout_page');
     Route::post('place-order', [CheckoutController::class, 'placeOrder'])->name('place_order');
+
+    // stripe route
     Route::get('stripe-success', [CheckoutController::class, 'Stripesuccess'])->name('stripe_success');
     Route::get('stripe-cancel', [CheckoutController::class, 'Stripecancel'])->name('stripe_cancel');
+    // paypal route
     Route::get('paypal-success', [CheckoutController::class, 'paypalSuccess'])->name('paypal_success');
-Route::get('paypal-cancel', [CheckoutController::class, 'paypalCancel'])->name('paypal_cancel');
+    Route::get('paypal-cancel', [CheckoutController::class, 'paypalCancel'])->name('paypal_cancel');
+    // sslcommerz route
+    Route::post('sslcommerz/success', [CheckoutController::class, 'success'])->name('sslc.success');
+    Route::post('sslcommerz/failure', [CheckoutController::class, 'failure'])->name('sslc.failure');
+    Route::post('sslcommerz/cancel', [CheckoutController::class, 'cancel'])->name('sslc.cancel');
+    Route::post('sslcommerz/ipn', [CheckoutController::class, 'ipn'])->name('sslc.ipn');
 
-    //support ticket
+    // support ticket
     Route::get('open-ticket', [FrontendDashboardController::class, 'allTicket'])->name('open.ticket');
     Route::get('new-ticket', [FrontendDashboardController::class, 'newTicket'])->name('new.ticket');
     Route::post('new-ticket', [FrontendDashboardController::class, 'newTicketSubmit'])->name('new.ticket');
@@ -207,4 +216,4 @@ Route::get('paypal-cancel', [CheckoutController::class, 'paypalCancel'])->name('
 
 Route::get('google-login', [SocialLoginController::class, 'googleLogin'])->name('google.login');
 Route::get('auth/google-callback', [SocialLoginController::class, 'googleLoginCallback'])->name('google.login.callback');
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

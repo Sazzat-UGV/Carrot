@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'user' => \App\Http\Middleware\UserMiddleware::class,
             'auth.redirect' => \App\Http\Middleware\AuthUserMiddleware::class,
         ]);
+
+        $middleware->validateCsrfTokens([
+            'sslcommerz/*'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

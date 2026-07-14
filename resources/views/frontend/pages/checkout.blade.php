@@ -145,6 +145,13 @@
                                                 <label for="pay3">PayPal</label>
                                             </span>
                                         </span>
+                                        <span class="cr-pay-option">
+                                            <span>
+                                                <input type="radio" id="pay4" name="payment_method"
+                                                    value="SSLCOMMERZ">
+                                                <label for="pay4">SSLCOMMERZ</label>
+                                            </span>
+                                        </span>
                                     </div>
 
                                 </div>
