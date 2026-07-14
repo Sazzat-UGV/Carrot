@@ -30,6 +30,7 @@ return new class extends Migration
             $table->decimal('tax', 10, 2)->nullable();
             $table->decimal('shipping_charge', 10, 2)->nullable();
             $table->enum('status', ['Pending', 'Received', 'Shipped', 'Return', 'Cancel', 'Complete'])->status('Pending');
+            $table->string('payment_status')->default('pending');
             $table->string('order_id')->nullable()->comment('using this id you can track your order');
             $table->timestamps();
         });

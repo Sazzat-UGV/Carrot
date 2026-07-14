@@ -198,8 +198,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('stripe-success', [CheckoutController::class, 'Stripesuccess'])->name('stripe_success');
     Route::get('stripe-cancel', [CheckoutController::class, 'Stripecancel'])->name('stripe_cancel');
     // paypal route
-    Route::get('paypal-success', [CheckoutController::class, 'paypalSuccess'])->name('paypal_success');
-    Route::get('paypal-cancel', [CheckoutController::class, 'paypalCancel'])->name('paypal_cancel');
+    Route::get('paypal-success', [CheckoutController::class, 'PaypalSuccess'])->name('paypal_success');
+    Route::get('paypal-cancel', [CheckoutController::class, 'PaypalCancel'])->name('paypal_cancel');
     // sslcommerz route
     Route::post('sslcommerz/success', [CheckoutController::class, 'success'])->name('sslc.success');
     Route::post('sslcommerz/failure', [CheckoutController::class, 'failure'])->name('sslc.failure');
