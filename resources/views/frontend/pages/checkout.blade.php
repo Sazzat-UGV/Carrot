@@ -129,26 +129,33 @@
                                         <span class="cr-pay-option">
                                             <span>
                                                 <input type="radio" id="pay1" name="payment_method"
-                                                    value="Cash On Delivery" checked>
+                                                    value="Cash On Delivery"
+                                                    {{ old('payment_method', 'Cash On Delivery') == 'Cash On Delivery' ? 'checked' : '' }}>
                                                 <label for="pay1">Cash On Delivery</label>
                                             </span>
                                         </span>
+
                                         <span class="cr-pay-option">
                                             <span>
-                                                <input type="radio" id="pay2" name="payment_method" value="Stripe">
+                                                <input type="radio" id="pay2" name="payment_method" value="Stripe"
+                                                    {{ old('payment_method') == 'Stripe' ? 'checked' : '' }}>
                                                 <label for="pay2">Stripe</label>
                                             </span>
                                         </span>
+
                                         <span class="cr-pay-option">
                                             <span>
-                                                <input type="radio" id="pay3" name="payment_method" value="PayPal">
+                                                <input type="radio" id="pay3" name="payment_method" value="PayPal"
+                                                    {{ old('payment_method') == 'PayPal' ? 'checked' : '' }}>
                                                 <label for="pay3">PayPal</label>
                                             </span>
                                         </span>
+
                                         <span class="cr-pay-option">
                                             <span>
                                                 <input type="radio" id="pay4" name="payment_method"
-                                                    value="SSLCOMMERZ">
+                                                    value="SSLCOMMERZ"
+                                                    {{ old('payment_method') == 'SSLCOMMERZ' ? 'checked' : '' }}>
                                                 <label for="pay4">SSLCOMMERZ</label>
                                             </span>
                                         </span>

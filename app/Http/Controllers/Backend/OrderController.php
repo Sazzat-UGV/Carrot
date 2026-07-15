@@ -44,6 +44,9 @@ class OrderController extends Controller
     {
         $order         = Order::findOrFail($id);
         $order->status = $request->status;
+        if($order->payment_type=='Cash On Delivery' && $order->status=='Complete'){
+            $order->payment_status = 'paid';
+        }
         $order->save();
         $cart_content = $order->orderDetails;
         if ($order->status == 'Pending') {

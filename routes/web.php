@@ -195,16 +195,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('place-order', [CheckoutController::class, 'placeOrder'])->name('place_order');
 
     // stripe route
-    Route::get('stripe-success', [CheckoutController::class, 'Stripesuccess'])->name('stripe_success');
-    Route::get('stripe-cancel', [CheckoutController::class, 'Stripecancel'])->name('stripe_cancel');
+    Route::get('stripe-success', [CheckoutController::class, 'StripeSuccess'])->name('stripe_success');
+    Route::get('stripe-cancel', [CheckoutController::class, 'StripeCancel'])->name('stripe_cancel');
     // paypal route
     Route::get('paypal-success', [CheckoutController::class, 'PaypalSuccess'])->name('paypal_success');
     Route::get('paypal-cancel', [CheckoutController::class, 'PaypalCancel'])->name('paypal_cancel');
     // sslcommerz route
-    Route::post('sslcommerz/success', [CheckoutController::class, 'success'])->name('sslc.success');
-    Route::post('sslcommerz/failure', [CheckoutController::class, 'failure'])->name('sslc.failure');
-    Route::post('sslcommerz/cancel', [CheckoutController::class, 'cancel'])->name('sslc.cancel');
-    Route::post('sslcommerz/ipn', [CheckoutController::class, 'ipn'])->name('sslc.ipn');
+    Route::post('sslcommerz/success', [CheckoutController::class, 'sslSuccess'])->name('sslc.success');
+    Route::post('sslcommerz/failure', [CheckoutController::class, 'sslFailure'])->name('sslc.failure');
+    Route::post('sslcommerz/cancel', [CheckoutController::class, 'sslCancel'])->name('sslc.cancel');
+    Route::post('sslcommerz/ipn', [CheckoutController::class, 'sslIpn'])->name('sslc.ipn');
 
     // support ticket
     Route::get('open-ticket', [FrontendDashboardController::class, 'allTicket'])->name('open.ticket');

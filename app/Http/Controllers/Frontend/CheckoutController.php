@@ -76,156 +76,86 @@ class CheckoutController extends Controller
             'city' => 'required|string|max:255',
             'postalcode' => 'required|numeric',
             'country' => 'required|string|max:255',
-            'region_state' => 'nullable|string|max:255',
+            'payment_method' => 'required',
         ]);
-        try {
-            DB::beginTransaction();
-            $cart_content = Cart::content();
 
-            $order = new Order;
-            $order->user_id = Auth::user()->id;
-            $order->name = $request->name;
-            $order->email = $request->email;
-            $order->address = $request->address;
-            $order->city = $request->city;
-            $order->post = $request->postalcode;
-            $order->country = $request->country;
-            $order->region_state = $request->region_state;
-            if (Session::has('coupon')) {
-                $order->subtotal = Cart::subtotal(2, '.', '');
-                $order->coupon_code = Session::get('coupon')['name'];
-                $order->coupon_discount = Session::get('coupon')['discount'];
-                $order->after_discount = Session::get('coupon')['after_discount'];
+        Session::put('order_request_data', $request->all());
+
+        $totalAmount = Cart::total(2, '.', '');
+        $orderNumber = rand(100000, 999999);
+
+        if ($request->payment_method == 'Cash On Delivery') {
+            $order = $this->saveOrderToDatabase('Cash On Delivery');
+            if ($order) {
+                return redirect()->route('homePage')->with('success', 'Order placed successfully!');
             } else {
-                $order->subtotal = Cart::subtotal(2, '.', '');
+                return redirect()->back()->with('error', 'Something went wrong, please try again.');
             }
+        } elseif ($request->payment_method == 'Stripe') {
+            return $this->StripePayment($request, $totalAmount, $orderNumber);
+        } elseif ($request->payment_method == 'PayPal') {
+            return $this->PaypalPayment($request, $totalAmount, $orderNumber);
+        } elseif ($request->payment_method == 'SSLCOMMERZ') {
+            return $this->sslPayment($request, $totalAmount, $orderNumber);
+        }
+
+        return redirect()->back()->with('error', 'Invalid Payment Method.');
+    }
+
+    private function saveOrderToDatabase($paymentType)
+    {
+        $requestData = Session::get('order_request_data');
+
+        DB::beginTransaction();
+        try {
+            $order = new Order;
+            $order->user_id = Auth::id();
+            $order->name = $requestData['name'];
+            $order->email = $requestData['email'];
+            $order->address = $requestData['address'];
+            $order->city = $requestData['city'];
+            $order->post = $requestData['postalcode'];
+            $order->country = $requestData['country'];
+            $order->subtotal = Cart::subtotal(2, '.', '');
             $order->total = Cart::total(2, '.', '');
-            $order->payment_type = $request->payment_method;
-            $order->tax = Cart::tax(2, '.', '');
-            $order->shipping_charge = 0;
+            $order->payment_type = $paymentType;
+            $order->payment_status = $paymentType == 'Cash On Delivery' ? 'pending' : 'paid';
             $order->status = 'Pending';
             $order->order_id = rand(100000, 999999);
             $order->save();
 
-            foreach ($cart_content as $row) {
-                $order_details = new OrderDetail;
-                $order_details->order_id = $order->id;
-                $order_details->product_id = $row->id;
-                $order_details->product_name = $row->name;
-                $order_details->color = $row->options->color;
-                $order_details->size = $row->options->size;
-                $order_details->qty = $row->qty;
-                $order_details->single_price = $row->price;
-                $order_details->subtotal_price = $row->price * $row->qty;
-                $order_details->save();
+            foreach (Cart::content() as $row) {
+                OrderDetail::create([
+                    'order_id' => $order->id,
+                    'product_id' => $row->id,
+                    'product_name' => $row->name,
+                    'qty' => $row->qty,
+                    'single_price' => $row->price,
+                    'subtotal_price' => $row->price * $row->qty,
+                ]);
             }
 
-            $subject = 'Order Invoice';
-            $subtotal = Cart::subtotal(2, '.', '');
-            $cart_tax = Cart::tax(2, '.', '');
-            $cart_total = Cart::total(2, '.', '');
-            Mail::to($request->email)->send(new InvoiceMail($order, $cart_content, $subject, $subtotal, $cart_tax, $cart_total));
-            Cart::destroy();
-            if (Session::has('coupon')) {
-                Session::forget('coupon');
-            }
             $data = [
                 'image' => Auth::user()->image,
                 'type' => 'order',
                 'message' => 'A new order has been placed. Please review and process it.',
             ];
+            Mail::to($order->email)->send(new InvoiceMail($order, Cart::content(), 'Order Invoice', Cart::subtotal(), Cart::tax(), Cart::total()));
             $admin = User::findOrFail(1);
             $admin->notify(new OrderNotification($data));
+
+            Cart::destroy();
+            Session::forget(['order_request_data', 'coupon']);
+
             DB::commit();
 
-            if ($request->payment_method == 'Stripe') {
-                return $this->StripePayment($request, $order->total, $order->order_id);
-            } elseif ($request->payment_method == 'PayPal') {
-                return $this->PaypalPayment($request, $order->total, $order->order_id);
-
-            } elseif ($request->payment_method == 'SSLCommerz') {
-
-            }
+            return $order;
         } catch (Exception $e) {
             DB::rollBack();
-        }
 
-        // ====================
-
-        return redirect()->route('homePage')->with('success', 'Order placed successfully.');
-
-        // ====================
-
-        if ($request->payment_method == 'SSLCOMMERZ') {
-
-            $order = new Order;
-            $order->user_id = Auth::user()->id;
-            $order->name = $request->name;
-            $order->email = $request->email;
-            $order->address = $request->address;
-            $order->city = $request->city;
-            $order->post = $request->postalcode;
-            $order->country = $request->country;
-            $order->region_state = $request->region_state;
-            if (Session::has('coupon')) {
-                $order->subtotal = Cart::subtotal(2, '.', '');
-                $order->coupon_code = Session::get('coupon')['name'];
-                $order->coupon_discount = Session::get('coupon')['discount'];
-                $order->after_discount = Session::get('coupon')['after_discount'];
-            } else {
-                $order->subtotal = Cart::subtotal(2, '.', '');
-            }
-            $order->total = Cart::total(2, '.', '');
-            $order->payment_type = 'SSLCOMMERZ';
-            $order->tax = Cart::tax(2, '.', '');
-            $order->shipping_charge = 0;
-            $order->status = 'Pending';
-            $order->order_id = rand(100000, 900000);
-            $order->save();
-            foreach ($cart_content as $row) {
-                $order_details = new OrderDetail;
-                $order_details->order_id = $order->id;
-                $order_details->product_id = $row->id;
-                $order_details->product_name = $row->name;
-                $order_details->color = $row->options->color;
-                $order_details->size = $row->options->size;
-                $order_details->qty = $row->qty;
-                $order_details->single_price = $row->price;
-                $order_details->subtotal_price = $row->price * $row->qty;
-                $order_details->save();
-            }
-            $subject = 'Order Invoice';
-            $subtotal = Cart::subtotal(2, '.', '');
-            $cart_tax = Cart::tax(2, '.', '');
-            $cart_total = Cart::total(2, '.', '');
-            Mail::to($request->email)->send(new InvoiceMail($order, $cart_content, $subject, $subtotal, $cart_tax, $cart_total));
-            Cart::destroy();
-            if (Session::has('coupon')) {
-                Session::forget('coupon');
-            }
-            $data = [
-                'image' => Auth::user()->image,
-                'type' => 'order',
-                'message' => 'A new order has been placed. Please review and process it.',
-            ];
-            $admin = User::findOrFail(1);
-            $admin->notify(new OrderNotification($data));
-
-            $response = Sslcommerz::setOrder($order->total, $order->order_id, 'E-commerce Products')
-                ->setCustomer($order->name, $order->email, $order->address)
-                ->setShippingInfo(1, $order->address)
-                ->makePayment();
-
-            if ($response->success()) {
-                return redirect($response->gatewayPageURL());
-            } else {
-                return redirect()->route('homePage')->with('error', 'Payment gateway failed to initialize.');
-            }
+            return null;
         }
     }
-
-    // ==================================================================================
-    // ==================================================================================
 
     public function StripePayment(Request $request, $total_amount, $orderNumber)
     {
@@ -260,37 +190,22 @@ class CheckoutController extends Controller
         }
     }
 
-    public function Stripesuccess(Request $request)
+    public function StripeSuccess(Request $request)
     {
-        if (isset($request->session_id)) {
-            $stripe = new StripeClient(config('stripe.stripe_sk'));
-            $response = $stripe->checkout->sessions->retrieve($request->session_id);
+        $stripe = new StripeClient(config('stripe.stripe_sk'));
+        $response = $stripe->checkout->sessions->retrieve($request->session_id);
 
-            if ($response) {
-                $order = Order::where('order_id', $response->metadata->order_id)->first();
-                $order->payment_status = $response->payment_status;
-                $order->save();
-            }
+        if ($response->payment_status == 'paid') {
+            $this->saveOrderToDatabase('Stripe');
 
-            return redirect()->route('homePage')->with('success', 'Order is placed successfully.');
-
-        } else {
-            return redirect()->route('stripe_cancel');
+            return redirect()->route('homePage')->with('success', 'Order placed successfully!');
         }
+
+        return redirect()->route('homePage')->with('error', 'Payment failed.');
     }
 
-    public function Stripecancel(Request $request)
+    public function StripeCancel(Request $request)
     {
-        if ($request->has('order_id')) {
-            $order = Order::where('order_id', $request->order_id)->first();
-
-            if ($order) {
-                $order->update([
-                    'payment_status' => 'canceled',
-                ]);
-            }
-        }
-
         return redirect()->route('homePage')->with('success', 'Order is canceled.');
     }
 
@@ -335,51 +250,40 @@ class CheckoutController extends Controller
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
-
         $response = $provider->capturePaymentOrder($request->token);
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+            $this->saveOrderToDatabase('PayPal');
 
-            $orderNumber = session()->get('paypal_order_number');
-
-            $order = Order::where('order_id', $orderNumber)->first();
-
-            if ($order) {
-                $order->payment_status = 'paid';
-                $order->save();
-                session()->forget('paypal_order_number');
-
-                return redirect()->route('homePage')->with('success', 'Payment successful and order placed.');
-            }
+            return redirect()->route('homePage')->with('success', 'Order placed successfully!');
         }
 
-        return redirect()->route('paypal_cancel')->with('error', 'Payment failed or order not found.');
+        return redirect()->route('homePage')->with('error', 'Payment failed.');
     }
 
     public function PaypalCancel()
     {
         return redirect()->route('homePage')->with('success', 'Order is canceled.');
     }
+
     // ====================================
     // ====================================
 
-    public function pay($orderNumber)
+    private function sslPayment($request, $totalAmount, $orderNumber)
     {
-        $order = Order::where('order_number', $orderNumber)->firstOrFail();
-
         $response = Sslcommerz::setOrder(
-            $order->total,                   // Total amount
-            $order->order_number,            // Unique order number
-            'E-commerce Products'            // Product category
+            $totalAmount,                   // Total amount
+            $orderNumber,                   // Unique order number
+            'E-commerce Products'           // Product category
         )
             ->setCustomer(
-                $order->customer_name,           // Customer name
-                'test@test.com',                 // Email
-                $order->customer_phone           // Phone number
+                $request->name,                 // Customer name
+                $request->email,                // Email
+                '01700000000'                   // Phone (request থেকে নিন)
             )
             ->setShippingInfo(
-                1,                               // Item quantity
-                $order->shipping_address         // Customer address
+                1,                              // Item quantity
+                $request->address               // Customer address
             )
             ->makePayment();
 
@@ -387,11 +291,11 @@ class CheckoutController extends Controller
             return redirect($response->gatewayPageURL());
         }
 
-        return redirect()->route('home')->with('error', 'Payment gateway failed to initialize.');
+        return redirect()->route('homePage')->with('error', 'Payment gateway failed to initialize.');
     }
 
     // পেমেন্ট সফল হওয়ার মেথড
-    public function success(Request $request)
+    public function sslSuccess(Request $request)
     {
         $transactionId = $request->input('tran_id');
         $amount = $request->input('amount');
@@ -423,7 +327,7 @@ class CheckoutController extends Controller
     }
 
     // পেমেন্ট ফেইল হওয়ার মেথড
-    public function failure(Request $request)
+    public function sslFailure(Request $request)
     {
         Order::where('order_number', $request->input('tran_id'))->update(['status' => 'failed']);
 
@@ -431,7 +335,7 @@ class CheckoutController extends Controller
     }
 
     // পেমেন্ট ক্যান্সেল হওয়ার মেথড
-    public function cancel(Request $request)
+    public function sslCancel(Request $request)
     {
         Order::where('order_number', $request->input('tran_id'))->update(['status' => 'cancelled']);
 
@@ -439,7 +343,7 @@ class CheckoutController extends Controller
     }
 
     // IPN (Instant Payment Notification) মেথড
-    public function ipn(Request $request)
+    public function sslIpn(Request $request)
     {
         // SSLCommerz থেকে IPN রিকোয়েস্ট হ্যান্ডেল করার জন্য
         return response()->json(['status' => 'success']);
